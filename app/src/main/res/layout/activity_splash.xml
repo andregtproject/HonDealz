@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.SplashActivity"
+    android:background="@color/colorPrimary">
+
+    <!-- Outer Circle with Gradient -->
+    <View
+        android:id="@+id/outer_circle"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:background="@drawable/outer_circle_gradient"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Logo Image -->
+    <ImageView
+        android:id="@+id/app_image"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/app_logo"
+        android:elevation="6dp"
+        app:layout_constraintBottom_toBottomOf="@id/outer_circle"
+        app:layout_constraintEnd_toEndOf="@id/outer_circle"
+        app:layout_constraintStart_toStartOf="@id/outer_circle"
+        app:layout_constraintTop_toTopOf="@id/outer_circle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
