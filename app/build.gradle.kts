@@ -34,6 +34,8 @@ android {
         jvmTarget = "11"
     }
     buildFeatures{
+        viewBinding = true
+        buildConfig = true
         dataBinding = true
     }
 }
@@ -50,4 +52,13 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("com.github.qamarelsafadi:CurvedBottomNavigation:0.1.3")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.converter.gson)
+    implementation(libs.logging.interceptor)
+    implementation(libs.androidx.lifecycle.runtime.ktx) // untuk lifecycleScope
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.activity.ktx)
 }
