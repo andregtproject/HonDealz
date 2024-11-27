@@ -7,7 +7,6 @@
     tools:context=".view.SplashActivity"
     android:background="@color/colorPrimary">
 
-    <!-- Outer Circle with Gradient -->
     <View
         android:id="@+id/outer_circle"
         android:layout_width="220dp"
@@ -18,7 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Logo Image -->
     <ImageView
         android:id="@+id/app_image"
         android:layout_width="140dp"
@@ -31,4 +29,16 @@
         app:layout_constraintStart_toStartOf="@id/outer_circle"
         app:layout_constraintTop_toTopOf="@id/outer_circle" />
 
+    <TextView
+        android:id="@+id/tv_splash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="24dp"
+        android:text="@string/text_splash"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
