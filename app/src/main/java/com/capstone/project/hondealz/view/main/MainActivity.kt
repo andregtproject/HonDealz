@@ -18,6 +18,8 @@ import com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel: MainViewModel by viewModels { ViewModelFactory.getInstance(this) }
+    private var isBottomNavigationInitialized = false
+    private var lastSelectedNavItemId = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,9 +32,21 @@ class MainActivity : AppCompatActivity() {
     private fun checkSessionAndInitializeApp() {
         mainViewModel.getSession().observe(this) { userModel ->
             if (userModel.isLogin) {
-                setupBottomNavigation()
-                replaceFragment(HomeFragment())
-                binding.bottomNavigation.show(1)
+                if (!isBottomNavigationInitialized) {
+                    setupBottomNavigation()
+                    isBottomNavigationInitialized = true
+                }
+
+                val fragmentToShow = when (lastSelectedNavItemId) {
+                    1 -> HomeFragment()
+                    2 -> ScanFragment()
+                    3 -> HistoryFragment()
+                    4 -> ProfileFragment()
+                    else -> HomeFragment()
+                }
+
+                replaceFragment(fragmentToShow)
+                binding.bottomNavigation.show(lastSelectedNavItemId)
             } else {
                 navigateToWelcome()
             }
@@ -54,6 +68,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         binding.bottomNavigation.setOnClickMenuListener {
+            lastSelectedNavItemId = it.id
             when (it.id) {
                 1 -> replaceFragment(HomeFragment())
                 2 -> replaceFragment(ScanFragment())
@@ -73,5 +88,15 @@ class MainActivity : AppCompatActivity() {
     private fun navigateToWelcome() {
         startActivity(Intent(this, WelcomeActivity::class.java))
         finish()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("LAST_SELECTED_NAV_ITEM", lastSelectedNavItemId)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        lastSelectedNavItemId = savedInstanceState.getInt("LAST_SELECTED_NAV_ITEM", 1)
     }
 }
