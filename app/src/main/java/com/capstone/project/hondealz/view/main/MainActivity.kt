@@ -8,8 +8,9 @@ import androidx.fragment.app.Fragment
 import com.capstone.project.hondealz.R
 import com.capstone.project.hondealz.databinding.ActivityMainBinding
 import com.capstone.project.hondealz.view.ViewModelFactory
+import com.capstone.project.hondealz.view.about.AboutActivity
 import com.capstone.project.hondealz.view.fragments.HistoryFragment
-import com.capstone.project.hondealz.view.fragments.ProfileFragment
+import com.capstone.project.hondealz.view.fragments.profile.ProfileFragment
 import com.capstone.project.hondealz.view.fragments.ScanFragment
 import com.capstone.project.hondealz.view.fragments.home.HomeFragment
 import com.capstone.project.hondealz.view.welcome.WelcomeActivity
@@ -88,6 +89,10 @@ class MainActivity : AppCompatActivity() {
     private fun navigateToWelcome() {
         startActivity(Intent(this, WelcomeActivity::class.java))
         finish()
+    }
+
+    fun goToAboutActivity() {
+        startActivity(Intent(this, AboutActivity::class.java))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
