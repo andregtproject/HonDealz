@@ -11,7 +11,7 @@
     <string name="text_navigate_register">Belum memiliki akun? Register</string>
     <string name="register">Register</string>
     <string name="text_navigate_login">Sudah memiliki akun? Login</string>
-    <string name="username">Username</string>
+    <string name="username">Nama Panggilan</string>
     <string name="full_name">Nama Lengkap</string>
     <string name="text_title_welcome">Selamat Datang di HonDealz</string>
     <string name="text_subtitle_welcome">Ketahui nilai jual motor Anda</string>
@@ -63,4 +63,17 @@
     <string name="privacy_policy">Kebijakan Privasi</string>
     <string name="terms_of_service">Persyaratan Layanan</string>
     <string name="about_title">Tentang HonDealz</string>
+    <string name="report_bug">Report Bug</string>
+    <string name="loading">Loading…</string>
+    <string name="panduan">Panduan</string>
+    <string name="bahasa">Bahasa</string>
+    <string name="tema">Tema</string>
+    <string name="tentang">Tentang</string>
+    <string name="profil_saya">Profil Saya</string>
+    <string name="username_email_com">username@email.com</string>
+    <string name="subject">Subject</string>
+    <string name="message">Message</string>
+    <string name="send">Send</string>
+    <string name="save">Save</string>
+    <string name="pengaturan_akun">Pengaturan Akun</string>
 </resources>

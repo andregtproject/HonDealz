@@ -61,6 +61,7 @@
                         android:id="@+id/app_icon"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
+                        android:contentDescription="@string/content_description"
                         android:src="@drawable/app_logo" />
 
                     <TextView

@@ -121,6 +121,8 @@ class HonDealzRepository(
     fun getSession(): Flow<UserModel> {
         return userPreference.getSession()
     }
-}
 
-//TO DO: taruh link drive, bikin function baru.
+    fun getPdfUrl(): String {
+        return "https://drive.google.com/file/d/12vUeulo2NfY3n8VgvQhfZtAhypEFZ-Qa/view?usp=sharing"
+    }
+}

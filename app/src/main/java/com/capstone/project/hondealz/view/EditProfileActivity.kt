@@ -46,16 +46,6 @@ class EditProfileActivity : AppCompatActivity() {
             val newFullName = binding.etFullName.text.toString()
             val newEmail = binding.etEmail.text.toString()
 
-            lifecycleScope.launch {
-                val updateResult = honDealzRepository.updateUserData(newUsername, newFullName, newEmail)
-                if (updateResult is ResultState.Success<UserDataResponse>) {
-                    Toast.makeText(this@EditProfileActivity, "Data Profil berhasil diperbarui", Toast.LENGTH_SHORT).show()
-                    finish()
-                } else {
-                    val error = updateResult as? ResultState.Error
-                    Toast.makeText(this@EditProfileActivity, "Error: ${error?.error}", Toast.LENGTH_SHORT).show()
-                }
-            }
         }
     }
 }
