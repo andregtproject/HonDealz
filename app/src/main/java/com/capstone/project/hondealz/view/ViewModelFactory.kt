@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.project.hondealz.data.HonDealzRepository
 import com.capstone.project.hondealz.data.di.Injection
+import com.capstone.project.hondealz.view.editprofile.EditProfileViewModel
 import com.capstone.project.hondealz.view.fragments.home.HomeViewModel
 import com.capstone.project.hondealz.view.fragments.profile.ProfileViewModel
 import com.capstone.project.hondealz.view.fragments.profile.UserManualViewModel

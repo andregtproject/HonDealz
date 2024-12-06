@@ -92,7 +92,7 @@
                         android:layout_height="match_parent"
                         android:src="@drawable/ic_image_placeholder"
                         android:scaleType="centerCrop"
-                        android:contentDescription="@string/content_description" />
+                        android:contentDescription="@string/profile_picture_description" />
                 </com.google.android.material.card.MaterialCardView>
 
                 <LinearLayout
@@ -185,6 +185,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/languageCardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="true"

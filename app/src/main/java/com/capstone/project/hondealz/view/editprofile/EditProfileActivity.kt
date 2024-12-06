@@ -1,7 +1,6 @@
-package com.capstone.project.hondealz.view
+package com.capstone.project.hondealz.view.editprofile
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.capstone.project.hondealz.data.HonDealzRepository
@@ -9,7 +8,6 @@ import com.capstone.project.hondealz.data.ResultState
 import com.capstone.project.hondealz.data.api.ApiConfig
 import com.capstone.project.hondealz.data.pref.UserPreference
 import com.capstone.project.hondealz.data.pref.dataStore
-import com.capstone.project.hondealz.data.response.UserDataResponse
 import com.capstone.project.hondealz.databinding.ActivityEditProfileBinding
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch

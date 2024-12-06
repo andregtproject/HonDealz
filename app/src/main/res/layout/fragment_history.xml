@@ -60,7 +60,7 @@
                 android:background="@drawable/rounded_background"
                 android:backgroundTint="@color/white"
                 android:iconifiedByDefault="false"
-                android:queryHint="Cari riwayat scan"
+                android:queryHint="@string/search_history"
                 android:searchIcon="@drawable/ic_search_24"
                 android:closeIcon="@drawable/ic_close_24"
                 android:theme="@style/SearchViewStyle"

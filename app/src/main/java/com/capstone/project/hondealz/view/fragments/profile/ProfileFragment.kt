@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -18,7 +19,7 @@ import com.capstone.project.hondealz.data.pref.UserPreference
 import com.capstone.project.hondealz.data.pref.dataStore
 import com.capstone.project.hondealz.databinding.DialogReportBugBinding
 import com.capstone.project.hondealz.databinding.FragmentProfileBinding
-import com.capstone.project.hondealz.view.EditProfileActivity
+import com.capstone.project.hondealz.view.editprofile.EditProfileActivity
 import com.capstone.project.hondealz.view.ViewModelFactory
 import com.capstone.project.hondealz.view.main.MainActivity
 import com.capstone.project.hondealz.view.welcome.WelcomeActivity
@@ -49,6 +50,9 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.languageCardView.setOnClickListener {
+            startActivity(Intent(android.provider.Settings.ACTION_LOCALE_SETTINGS))
+        }
         binding.logoutButton.setOnClickListener { logout() }
         binding.panduanCardView.setOnClickListener {
             val intent = Intent(requireContext(), UserManualActivity::class.java)
@@ -102,6 +106,25 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
+        lifecycleScope.launch {
+            val isDarkMode = userPreference.isDarkMode().first()
+            binding.themeSwitch.isChecked = isDarkMode
+            updateTheme(isDarkMode)
+        }
+
+        binding.themeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            lifecycleScope.launch {
+                userPreference.saveDarkMode(isChecked)
+                updateTheme(isChecked)
+            }
+        }
+    }
+
+    private fun updateTheme(isDarkMode: Boolean) {
+        AppCompatDelegate.setDefaultNightMode(
+            if (isDarkMode) AppCompatDelegate.MODE_NIGHT_YES
+            else AppCompatDelegate.MODE_NIGHT_NO
+        )
     }
 
     override fun onDestroyView() {

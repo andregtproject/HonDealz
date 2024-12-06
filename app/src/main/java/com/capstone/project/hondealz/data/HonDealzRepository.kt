@@ -113,6 +113,20 @@ class HonDealzRepository(
             }
         }
     }
+    suspend fun forgotPassword(email: String): ResultState<String> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = apiService.forgotPassword(email).execute()
+                if (response.isSuccessful) {
+                    ResultState.Success(response.body()?.message ?: "Berhasil")
+                } else {
+                    ResultState.Error(response.message())
+                }
+            } catch (e: Exception) {
+                ResultState.Error(e.message.toString())
+            }
+        }
+    }
 
     private suspend fun saveSession(user: UserModel) {
         userPreference.saveSession(user)

@@ -1,5 +1,6 @@
 package com.capstone.project.hondealz.data.api
 
+import com.capstone.project.hondealz.data.response.ForgotPasswordResponse
 import com.capstone.project.hondealz.data.response.LoginResponse
 import com.capstone.project.hondealz.data.response.RegisterResponse
 import com.capstone.project.hondealz.data.response.UserDataResponse
@@ -41,4 +42,8 @@ interface ApiService {
         @Header("Authorization") token: String,
         @FieldMap requestBody: Map<String, String>
     ): Call<UserDataResponse>
+
+    @FormUrlEncoded
+    @POST("forgot-password")
+    fun forgotPassword(@Field("email") email: String): Call<ForgotPasswordResponse>
 }

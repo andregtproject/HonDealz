@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Hondealz"
         tools:targetApi="31">
         <activity
-            android:name=".view.EditProfileActivity"
+            android:name=".view.editprofile.EditProfileActivity"
             android:exported="false" />
         <activity
             android:name=".view.about.AboutActivity"

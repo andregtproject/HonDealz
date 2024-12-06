@@ -49,7 +49,7 @@
     <string name="riwayat_scan">Riwayat Scan</string>
     <string name="image_history">Image History</string>
     <string name="subtagline_history">Tinjau ulang detail setiap scan motor Anda</string>
-    <string name="logout_button">Logout</string>
+    <string name="logout_button">Keluar</string>
     <string name="user_already_registered">Akun dengan data ini sudah terdaftar. Silakan login untuk melanjutkan!</string>
     <string name="file_not_supported">Format file tidak didukung. Silahkan gunakan format yang sesuai.</string>
     <string name="internal_server_error">Terjadi kesalahan pada server. Silakan coba lagi nanti!</string>
@@ -57,13 +57,13 @@
     <string name="validation_error">Data yang Anda masukkan tidak valid. Silahkan periksa kembali!</string>
     <string name="unknown_error">Terjadi kesalahan yang tidak diketahui: %1$s</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="content_description">This is For Content Description.</string>
+    <string name="content_description">Ini untuk Deskripsi Konten.</string>
     <string name="app_description">HonDealz adalah aplikasi yang didukung oleh AI untuk membantu Anda menemukan harga terbaik untuk motor Honda Vario bekas. Kami membuat proses jual beli menjadi lebih cerdas, mudah, dan adil.</string>
     <string name="developer_name">Capstone Project Team C242-PS271</string>
     <string name="privacy_policy">Kebijakan Privasi</string>
     <string name="terms_of_service">Persyaratan Layanan</string>
     <string name="about_title">Tentang HonDealz</string>
-    <string name="report_bug">Report Bug</string>
+    <string name="report_bug">Laporkan Ketidaksesuaian</string>
     <string name="loading">Loading…</string>
     <string name="panduan">Panduan</string>
     <string name="bahasa">Bahasa</string>
@@ -71,9 +71,12 @@
     <string name="tentang">Tentang</string>
     <string name="profil_saya">Profil Saya</string>
     <string name="username_email_com">username@email.com</string>
-    <string name="subject">Subject</string>
-    <string name="message">Message</string>
-    <string name="send">Send</string>
-    <string name="save">Save</string>
+    <string name="subject">Subjek</string>
+    <string name="message">Pesan</string>
+    <string name="send">Kirim</string>
+    <string name="save">Simpan</string>
     <string name="pengaturan_akun">Pengaturan Akun</string>
+    <string name="profile_picture_description">User Profile Picture</string>
+    <string name="search_history">Cari riwayat scan</string>
+    <string name="reset_password">Reset Password</string>
 </resources>
