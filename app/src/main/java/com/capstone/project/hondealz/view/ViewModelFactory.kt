@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.capstone.project.hondealz.data.HonDealzRepository
 import com.capstone.project.hondealz.data.di.Injection
 import com.capstone.project.hondealz.view.editprofile.EditProfileViewModel
-import com.capstone.project.hondealz.view.forgotpassword.ForgotPasswordViewModel
 import com.capstone.project.hondealz.view.fragments.home.HomeViewModel
 import com.capstone.project.hondealz.view.fragments.profile.ProfileViewModel
 import com.capstone.project.hondealz.view.fragments.profile.UserManualViewModel
@@ -39,9 +38,6 @@ class ViewModelFactory private constructor(private val repository: HonDealzRepos
             }
             modelClass.isAssignableFrom(UserManualViewModel::class.java) -> {
                 UserManualViewModel(repository) as T
-            }
-            modelClass.isAssignableFrom(ForgotPasswordViewModel::class.java) -> {
-                ForgotPasswordViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

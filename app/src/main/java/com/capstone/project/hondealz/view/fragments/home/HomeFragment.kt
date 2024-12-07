@@ -1,5 +1,7 @@
 package com.capstone.project.hondealz.view.fragments.home
 
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import com.capstone.project.hondealz.R
 import com.capstone.project.hondealz.data.ResultState
 import com.capstone.project.hondealz.databinding.FragmentHomeBinding
 import com.capstone.project.hondealz.view.ViewModelFactory
+import com.capstone.project.hondealz.view.login.LoginActivity
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -41,20 +44,39 @@ class HomeFragment : Fragment() {
                 is ResultState.Success -> {
                     binding.progressBar.visibility = View.GONE
                     binding.tvGreeting.visibility = View.VISIBLE
-
-                    val username = result.data.user?.username ?: "User"
+                    val username = result.data.user?.username
                     binding.tvGreeting.text = getString(R.string.greetings, username)
                 }
 
                 is ResultState.Error -> {
                     binding.progressBar.visibility = View.GONE
                     binding.tvGreeting.visibility = View.VISIBLE
-                    binding.tvGreeting.text = getString(R.string.greetings, "User")
+
+                    if (result.statusCode == 401) {
+                        showTokenExpiredDialog()
+                    }
                 }
             }
         }
 
         setupAction()
+    }
+
+    private fun showTokenExpiredDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Session Expired")
+            .setMessage("Your session has expired. Please login again.")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+                //logout dan diarahkeun ke LoginActivty ketika token abisss
+                homeViewModel.logout()
+                val intent = Intent(requireContext(), LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                requireActivity().finish()
+            }
+            .setCancelable(false)
+            .show()
     }
 
     private fun setupAction() {

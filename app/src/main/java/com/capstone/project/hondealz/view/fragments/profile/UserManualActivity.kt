@@ -1,5 +1,6 @@
 package com.capstone.project.hondealz.view.fragments.profile
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -8,6 +9,7 @@ import com.capstone.project.hondealz.R
 
 class UserManualActivity : AppCompatActivity() {
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_manual_activity)

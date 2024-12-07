@@ -19,4 +19,10 @@ class HomeViewModel(private val repository: HonDealzRepository) : ViewModel() {
             _userData.value = repository.getUserData()
         }
     }
+
+    fun logout() {
+        viewModelScope.launch {
+            repository.logout()
+        }
+    }
 }

@@ -78,12 +78,23 @@ class HonDealzRepository(
                         ResultState.Success(userDataResponse)
                     } ?: ResultState.Error(response.code(), "User data response is empty")
                 } else {
-                    ResultState.Error(response.code(), response.message() ?: "Failed to get user data")
+                    // Tambahkan pengecekan khusus untuk error token
+                    if (response.code() == 401) {
+                        // Token sudah tidak valid
+                        logout() // Logout user
+                        ResultState.Error(401, "Token expired. Please login again.")
+                    } else {
+                        ResultState.Error(response.code(), response.message() ?: "Failed to get user data")
+                    }
                 }
             } catch (e: Exception) {
                 ResultState.Error(0, e.message ?: "Network error")
             }
         }
+    }
+
+    suspend fun logout() {
+        userPreference.logout()
     }
 
     suspend fun updateUserData(username: String, name: String, email: String): ResultState<UserDataResponse> {

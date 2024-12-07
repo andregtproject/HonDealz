@@ -134,7 +134,7 @@ class ProfileFragment : Fragment() {
 
     private fun logout() {
         lifecycleScope.launch {
-            userPreference.logout()
+            honDealzRepository.logout()
             startActivity(Intent(requireContext(), WelcomeActivity::class.java))
             requireActivity().finish()
         }
