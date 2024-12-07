@@ -311,7 +311,7 @@
         android:text="@string/report_bug"
         app:backgroundTint="@android:color/transparent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/logoutButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
