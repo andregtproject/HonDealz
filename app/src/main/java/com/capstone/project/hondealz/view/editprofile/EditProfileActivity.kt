@@ -1,5 +1,6 @@
 package com.capstone.project.hondealz.view.editprofile
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -9,6 +10,7 @@ import com.capstone.project.hondealz.data.api.ApiConfig
 import com.capstone.project.hondealz.data.pref.UserPreference
 import com.capstone.project.hondealz.data.pref.dataStore
 import com.capstone.project.hondealz.databinding.ActivityEditProfileBinding
+import com.capstone.project.hondealz.view.forgotpassword.ForgotPasswordActivity
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -44,6 +46,11 @@ class EditProfileActivity : AppCompatActivity() {
             val newFullName = binding.etFullName.text.toString()
             val newEmail = binding.etEmail.text.toString()
 
+        }
+
+        binding.btnForgotPassword.setOnClickListener {
+            val intent = Intent(this, ForgotPasswordActivity::class.java)
+            startActivity(intent)
         }
     }
 }

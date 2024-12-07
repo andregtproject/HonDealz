@@ -79,4 +79,5 @@
     <string name="profile_picture_description">User Profile Picture</string>
     <string name="search_history">Cari riwayat scan</string>
     <string name="reset_password">Reset Password</string>
+    <string name="forgot_password">Forgot Password?</string>
 </resources>

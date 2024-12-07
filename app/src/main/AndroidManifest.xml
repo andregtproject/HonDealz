@@ -49,6 +49,9 @@
         <activity
             android:name=".view.main.MainActivity"
             android:exported="false" />
+        <activity
+            android:name=".view.forgotpassword.ForgotPasswordActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

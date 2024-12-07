@@ -44,6 +44,6 @@ interface ApiService {
     ): Call<UserDataResponse>
 
     @FormUrlEncoded
-    @POST("forgot-password")
+    @POST("user/forgot-password")
     fun forgotPassword(@Field("email") email: String): Call<ForgotPasswordResponse>
 }

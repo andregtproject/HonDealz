@@ -120,10 +120,10 @@ class HonDealzRepository(
                 if (response.isSuccessful) {
                     ResultState.Success(response.body()?.message ?: "Berhasil")
                 } else {
-                    ResultState.Error(response.message())
+                    ResultState.Error(response.code(), response.message() ?: "Failed to update password")
                 }
             } catch (e: Exception) {
-                ResultState.Error(e.message.toString())
+                ResultState.Error(0, e.message.toString())
             }
         }
     }
