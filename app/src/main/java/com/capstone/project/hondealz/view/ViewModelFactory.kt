@@ -5,14 +5,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.project.hondealz.data.HonDealzRepository
 import com.capstone.project.hondealz.data.di.Injection
+import com.capstone.project.hondealz.view.editprofile.EditProfileViewModel
+import com.capstone.project.hondealz.view.forgotpassword.ForgotPasswordViewModel
 import com.capstone.project.hondealz.view.fragments.home.HomeViewModel
+import com.capstone.project.hondealz.view.fragments.profile.ProfileViewModel
+import com.capstone.project.hondealz.view.fragments.profile.UserManualViewModel
 import com.capstone.project.hondealz.view.login.LoginViewModel
 import com.capstone.project.hondealz.view.main.MainViewModel
 import com.capstone.project.hondealz.view.register.RegisterViewModel
 
-class ViewModelFactory private constructor(
-    private val repository: HonDealzRepository
-) : ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory private constructor(private val repository: HonDealzRepository) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -20,19 +22,27 @@ class ViewModelFactory private constructor(
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(repository) as T
             }
-
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 RegisterViewModel(repository) as T
             }
-
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 MainViewModel(repository) as T
             }
-
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(repository) as T
             }
-
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
+                ProfileViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> {
+                EditProfileViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(UserManualViewModel::class.java) -> {
+                UserManualViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(ForgotPasswordViewModel::class.java) -> {
+                ForgotPasswordViewModel(repository) as T
+            }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
@@ -45,9 +55,7 @@ class ViewModelFactory private constructor(
         fun getInstance(context: Context): ViewModelFactory {
             if (INSTANCE == null) {
                 synchronized(ViewModelFactory::class.java) {
-                    INSTANCE = ViewModelFactory(
-                        Injection.provideRepository(context)
-                    )
+                    INSTANCE = ViewModelFactory(Injection.provideRepository(context))
                 }
             }
             return INSTANCE as ViewModelFactory

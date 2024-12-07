@@ -21,7 +21,6 @@ class HonDealzRepository(
             try {
                 val response = apiService.login(email, password).execute()
                 Log.d("HonDealzRepository", "Response Code: ${response.code()}")
-
                 if (response.isSuccessful) {
                     response.body()?.let { loginResponse ->
                         loginResponse.accessToken?.let { token ->
@@ -50,8 +49,7 @@ class HonDealzRepository(
     ): ResultState<RegisterResponse> {
         return withContext(Dispatchers.IO) {
             try {
-                val response =
-                    apiService.register(name, username, email, password, confirmPassword).execute()
+                val response = apiService.register(name, username, email, password, confirmPassword).execute()
                 if (response.isSuccessful) {
                     response.body()?.let { registerResponse ->
                         registerResponse.accessToken?.let { token ->
@@ -74,20 +72,58 @@ class HonDealzRepository(
             try {
                 val userModel = userPreference.getSession().first()
                 val token = "Bearer ${userModel.token}"
-
                 val response = apiService.getUserData(token).execute()
                 if (response.isSuccessful) {
                     response.body()?.let { userDataResponse ->
                         ResultState.Success(userDataResponse)
                     } ?: ResultState.Error(response.code(), "User data response is empty")
                 } else {
-                    ResultState.Error(
-                        response.code(),
-                        response.message() ?: "Failed to get user data"
-                    )
+                    ResultState.Error(response.code(), response.message() ?: "Failed to get user data")
                 }
             } catch (e: Exception) {
                 ResultState.Error(0, e.message ?: "Network error")
+            }
+        }
+    }
+
+    suspend fun updateUserData(username: String, name: String, email: String): ResultState<UserDataResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val userModel = userPreference.getSession().first()
+                val token = "Bearer ${userModel.token}"
+                val requestBody = mapOf(
+                    "username" to username,
+                    "name" to name,
+                    "email" to email
+                )
+                val response = apiService.updateUserData(token, requestBody).execute()
+                if (response.isSuccessful) {
+                    response.body()?.let { userDataResponse ->
+                        if (email != userModel.email) {
+                            val updatedUserModel = userModel.copy(email = email)
+                            saveSession(updatedUserModel)
+                        }
+                        ResultState.Success(userDataResponse)
+                    } ?: ResultState.Error(response.code(), "User data response is empty")
+                } else {
+                    ResultState.Error(response.code(), response.message() ?: "Failed to update user data")
+                }
+            } catch (e: Exception) {
+                ResultState.Error(0, e.message ?: "Network error")
+            }
+        }
+    }
+    suspend fun forgotPassword(email: String): ResultState<String> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = apiService.forgotPassword(email).execute()
+                if (response.isSuccessful) {
+                    ResultState.Success(response.body()?.message ?: "Berhasil")
+                } else {
+                    ResultState.Error(response.code(), response.message() ?: "Failed to update password")
+                }
+            } catch (e: Exception) {
+                ResultState.Error(0, e.message.toString())
             }
         }
     }
@@ -98,5 +134,9 @@ class HonDealzRepository(
 
     fun getSession(): Flow<UserModel> {
         return userPreference.getSession()
+    }
+
+    fun getPdfUrl(): String {
+        return "https://drive.google.com/file/d/12vUeulo2NfY3n8VgvQhfZtAhypEFZ-Qa/view?usp=sharing"
     }
 }
