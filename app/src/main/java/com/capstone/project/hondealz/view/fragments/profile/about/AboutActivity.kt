@@ -1,4 +1,4 @@
-package com.capstone.project.hondealz.view.about
+package com.capstone.project.hondealz.view.fragments.profile.about
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

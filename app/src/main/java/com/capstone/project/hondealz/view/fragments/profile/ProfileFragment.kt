@@ -19,8 +19,10 @@ import com.capstone.project.hondealz.data.pref.UserPreference
 import com.capstone.project.hondealz.data.pref.dataStore
 import com.capstone.project.hondealz.databinding.DialogReportBugBinding
 import com.capstone.project.hondealz.databinding.FragmentProfileBinding
-import com.capstone.project.hondealz.view.editprofile.EditProfileActivity
+import com.capstone.project.hondealz.view.fragments.profile.editprofile.EditProfileActivity
 import com.capstone.project.hondealz.view.ViewModelFactory
+import com.capstone.project.hondealz.view.fragments.profile.usermanual.UserManualActivity
+import com.capstone.project.hondealz.view.fragments.profile.usermanual.UserManualViewModel
 import com.capstone.project.hondealz.view.main.MainActivity
 import com.capstone.project.hondealz.view.welcome.WelcomeActivity
 import kotlinx.coroutines.flow.first
@@ -162,7 +164,7 @@ class ProfileFragment : Fragment() {
 
         val intent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:")
-            putExtra(Intent.EXTRA_EMAIL, arrayOf("rafie7498@gmail.com"))
+            putExtra(Intent.EXTRA_EMAIL, arrayOf("hondealzapp@gmail.com"))
             putExtra(Intent.EXTRA_SUBJECT, subject)
             putExtra(
                 Intent.EXTRA_TEXT,
