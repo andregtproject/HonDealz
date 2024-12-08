@@ -78,7 +78,7 @@
     <string name="pengaturan_akun">Pengaturan Akun</string>
     <string name="profile_picture_description">User Profile Picture</string>
     <string name="search_history">Cari riwayat scan</string>
-    <string name="reset_password">Reset Password</string>
-    <string name="forgot_password">Forgot Password</string>
+    <string name="reset_password">Atur Ulang Kata Sandi</string>
+    <string name="forgot_password">Lupa Password</string>
     <string name="confirmation_message_reset_password">Apakah Anda yakin ingin melakukan reset password? Link reset password akan dikirim ke email %1$s</string>
 </resources>
