@@ -81,4 +81,5 @@
     <string name="reset_password">Atur Ulang Kata Sandi</string>
     <string name="forgot_password">Lupa Password</string>
     <string name="confirmation_message_reset_password">Apakah Anda yakin ingin melakukan reset password? Link reset password akan dikirim ke email %1$s</string>
+    <string name="reset_password_link_sent">Link reset password telah dikirim ke email %1$s.</string>
 </resources>

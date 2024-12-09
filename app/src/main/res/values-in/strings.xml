@@ -9,9 +9,9 @@
     <string name="email">Surel</string>
     <string name="password">Kata Sandi</string>
     <string name="login">Masuk</string>
-    <string name="text_navigate_register">Belum memiliki akun? Daftar</string>
+    <string name="text_navigate_register">Belum memiliki akun? Register</string>
     <string name="register">Daftar</string>
-    <string name="text_navigate_login">Sudah memiliki akun? Masuk</string>
+    <string name="text_navigate_login">Sudah memiliki akun? Login</string>
     <string name="username">Nama Panggilan</string>
     <string name="full_name">Nama Lengkap</string>
     <string name="text_title_welcome">Selamat Datang di HonDealz</string>
