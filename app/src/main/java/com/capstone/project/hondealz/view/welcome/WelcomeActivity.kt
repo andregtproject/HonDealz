@@ -38,8 +38,8 @@ class WelcomeActivity : AppCompatActivity() {
     private fun setupImageSlider() {
         val images = listOf(
             R.drawable.image_slider_1,
-            R.drawable.ic_image_placeholder2,
-            R.drawable.ic_image_placeholder3
+            R.drawable.image_slider_2,
+            R.drawable.image_slider_3
         )
 
         sliderAdapter = ImageSliderAdapter(images)
