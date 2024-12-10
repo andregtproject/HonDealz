@@ -1,6 +1,7 @@
 package com.capstone.project.hondealz.view.scan
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -12,9 +13,15 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.capstone.project.hondealz.R
 import com.capstone.project.hondealz.data.getImageUri
+import com.capstone.project.hondealz.data.reduceFileImage
+import com.capstone.project.hondealz.data.uriToFile
 import com.capstone.project.hondealz.databinding.FragmentScanBinding
+import com.capstone.project.hondealz.view.scan.detail.ScanDetailActivity
 
 class ScanFragment : Fragment() {
 
@@ -62,7 +69,38 @@ class ScanFragment : Fragment() {
     }
 
     private fun uploadImage() {
+        currentImageUri?.let { uri ->
+            try {
+                Log.d("CurrentImageUri", "URI: $uri")
+                // Reduce file image terlebih dahulu
+                val reducedImageFile = uriToFile(uri, requireContext()).reduceFileImage()
 
+                // Buat URI baru dari file yang sudah diresize
+                val reducedImageUri = FileProvider.getUriForFile(
+                    requireContext(),
+                    "${requireContext().packageName}.fileprovider",
+                    reducedImageFile
+                )
+
+                // Kirim URI yang sudah diresize ke ScanDetailActivity
+                val intent = Intent(requireContext(), ScanDetailActivity::class.java).apply {
+                    putExtra(ScanDetailActivity.EXTRA_IMAGE_URI, reducedImageUri)
+                }
+                startActivity(intent)
+
+                // Optionally load the reduced image using Glide
+                Glide.with(this)
+                    .load(reducedImageUri)
+                    .placeholder(R.drawable.ic_image_placeholder)
+                    .into(binding.previewImageView)
+
+            } catch (e: Exception) {
+                Log.e("UploadImageError", "Error processing image", e)
+                Toast.makeText(requireContext(), "Gagal memproses gambar", Toast.LENGTH_SHORT).show()
+            }
+        } ?: run {
+            Toast.makeText(requireContext(), "Pilih gambar terlebih dahulu", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun startGallery() {
@@ -96,7 +134,12 @@ class ScanFragment : Fragment() {
     private fun showImage() {
         currentImageUri?.let {
             Log.d("Image URI", "showImage: $it")
-            binding.previewImageView.setImageURI(it)
+            Glide.with(this)
+                .load(it)
+                .placeholder(R.drawable.ic_image_placeholder) // Optional: Placeholder image while loading
+                .override(800, 800) // Optional: Set desired width and height
+                .into(binding.previewImageView)
         }
     }
+
 }

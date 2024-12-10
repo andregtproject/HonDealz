@@ -37,7 +37,7 @@ class WelcomeActivity : AppCompatActivity() {
 
     private fun setupImageSlider() {
         val images = listOf(
-            R.drawable.ic_image_placeholder,
+            R.drawable.image_slider_1,
             R.drawable.ic_image_placeholder2,
             R.drawable.ic_image_placeholder3
         )

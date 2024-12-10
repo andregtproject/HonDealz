@@ -58,7 +58,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/rounded_background"
-                android:backgroundTint="@color/white"
                 android:iconifiedByDefault="false"
                 android:queryHint="@string/search_history"
                 android:searchIcon="@drawable/ic_search_24"

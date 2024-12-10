@@ -53,7 +53,7 @@ interface ApiService {
 
     @Multipart
     @POST("ai-models/motor-image-recognition")
-    suspend fun uploadMotor(
-        @Part file: MultipartBody.Part
-    ): MotorResponse
+    fun predictMotor(
+        @Part image: MultipartBody.Part
+    ): Call<MotorResponse>
 }

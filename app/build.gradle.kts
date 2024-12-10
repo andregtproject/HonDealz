@@ -66,4 +66,5 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation("androidx.exifinterface:exifinterface:1.3.6")
 
+    implementation ("com.github.bumptech.glide:glide:4.11.0")
 }

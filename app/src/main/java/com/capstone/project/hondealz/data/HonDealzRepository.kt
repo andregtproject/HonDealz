@@ -5,12 +5,14 @@ import com.capstone.project.hondealz.data.api.ApiService
 import com.capstone.project.hondealz.data.pref.UserModel
 import com.capstone.project.hondealz.data.pref.UserPreference
 import com.capstone.project.hondealz.data.response.LoginResponse
+import com.capstone.project.hondealz.data.response.MotorResponse
 import com.capstone.project.hondealz.data.response.RegisterResponse
 import com.capstone.project.hondealz.data.response.UserDataResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
 
 class HonDealzRepository(
     private val apiService: ApiService,
@@ -159,5 +161,26 @@ class HonDealzRepository(
 
     fun getPdfUrl(): String {
         return "https://drive.google.com/file/d/12vUeulo2NfY3n8VgvQhfZtAhypEFZ-Qa/view?usp=sharing"
+    }
+
+    suspend fun predictMotor(imageFile: MultipartBody.Part): ResultState<MotorResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = apiService.predictMotor(imageFile).execute()
+
+                if (response.isSuccessful) {
+                    response.body()?.let { motorResponse ->
+                        Log.d("Repository", "Motor predicted: ${motorResponse.model}")
+                        ResultState.Success(motorResponse)
+                    } ?: ResultState.Error(response.code(), "Prediksi motor gagal")
+                } else {
+                    Log.e("Repository", "Error prediksi motor: ${response.errorBody()?.string()}")
+                    ResultState.Error(response.code(), "Gagal memprediksi motor")
+                }
+            } catch (e: Exception) {
+                Log.e("Repository", "Network error prediksi motor", e)
+                ResultState.Error(0, e.message ?: "Kesalahan jaringan")
+            }
+        }
     }
 }

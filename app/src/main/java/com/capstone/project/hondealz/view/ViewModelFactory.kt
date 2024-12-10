@@ -12,6 +12,7 @@ import com.capstone.project.hondealz.view.profile.usermanual.UserManualViewModel
 import com.capstone.project.hondealz.view.login.LoginViewModel
 import com.capstone.project.hondealz.view.main.MainViewModel
 import com.capstone.project.hondealz.view.register.RegisterViewModel
+import com.capstone.project.hondealz.view.scan.detail.ScanDetailViewModel
 
 class ViewModelFactory private constructor(private val repository: HonDealzRepository) : ViewModelProvider.NewInstanceFactory() {
 
@@ -38,6 +39,9 @@ class ViewModelFactory private constructor(private val repository: HonDealzRepos
             }
             modelClass.isAssignableFrom(UserManualViewModel::class.java) -> {
                 UserManualViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(ScanDetailViewModel::class.java) -> {
+                ScanDetailViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
