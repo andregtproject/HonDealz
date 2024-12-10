@@ -24,6 +24,7 @@
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/content_description"
                 android:src="@drawable/ic_back_24"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 app:layout_constraintStart_toStartOf="parent"
@@ -119,8 +120,8 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnForgotPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/forgot_password"
                 android:textColor="@color/colorAccent"
                 app:backgroundTint="@android:color/transparent"
@@ -131,11 +132,9 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSave"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginBottom="16dp"
-                android:layout_marginTop="-14dp"
                 app:cornerRadius="8dp"
                 android:text="@string/save"
                 android:backgroundTint="@color/colorPrimary" />
