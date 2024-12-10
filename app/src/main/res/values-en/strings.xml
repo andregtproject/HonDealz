@@ -66,7 +66,7 @@
     <string name="about_title">About HonDealz</string>
     <string name="report_bug">Report a Bug</string>
     <string name="loading">Loading…</string>
-    <string name="panduan">Guide</string>
+    <string name="panduan">User Guide</string>
     <string name="bahasa">Language</string>
     <string name="tema">Theme</string>
     <string name="tentang">About</string>
@@ -79,5 +79,8 @@
     <string name="pengaturan_akun">Account Settings</string>
     <string name="profile_picture_description">User Profile Picture</string>
     <string name="search_history">Search scan history</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="confirmation_message_reset_password">Are you sure you want to reset your password? Password reset link will be sent to email %1$s</string>
 
 </resources>
