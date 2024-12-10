@@ -64,4 +64,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
+    implementation("androidx.exifinterface:exifinterface:1.3.6")
+
 }

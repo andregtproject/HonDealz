@@ -1,4 +1,4 @@
-package com.capstone.project.hondealz.view.fragments
+package com.capstone.project.hondealz.view.history
 
 import android.os.Bundle
 import android.view.LayoutInflater

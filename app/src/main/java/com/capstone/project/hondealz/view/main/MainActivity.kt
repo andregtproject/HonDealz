@@ -8,11 +8,11 @@ import androidx.fragment.app.Fragment
 import com.capstone.project.hondealz.R
 import com.capstone.project.hondealz.databinding.ActivityMainBinding
 import com.capstone.project.hondealz.view.ViewModelFactory
-import com.capstone.project.hondealz.view.fragments.profile.about.AboutActivity
-import com.capstone.project.hondealz.view.fragments.HistoryFragment
-import com.capstone.project.hondealz.view.fragments.profile.ProfileFragment
-import com.capstone.project.hondealz.view.fragments.ScanFragment
-import com.capstone.project.hondealz.view.fragments.home.HomeFragment
+import com.capstone.project.hondealz.view.profile.about.AboutActivity
+import com.capstone.project.hondealz.view.history.HistoryFragment
+import com.capstone.project.hondealz.view.profile.ProfileFragment
+import com.capstone.project.hondealz.view.scan.ScanFragment
+import com.capstone.project.hondealz.view.home.HomeFragment
 import com.capstone.project.hondealz.view.welcome.WelcomeActivity
 import com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
 

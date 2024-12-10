@@ -1,4 +1,4 @@
-package com.capstone.project.hondealz.view.fragments.profile
+package com.capstone.project.hondealz.view.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

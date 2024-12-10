@@ -2,16 +2,20 @@ package com.capstone.project.hondealz.data.api
 
 import com.capstone.project.hondealz.data.response.ForgotPasswordResponse
 import com.capstone.project.hondealz.data.response.LoginResponse
+import com.capstone.project.hondealz.data.response.MotorResponse
 import com.capstone.project.hondealz.data.response.RegisterResponse
 import com.capstone.project.hondealz.data.response.UserDataResponse
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 
 interface ApiService {
     @FormUrlEncoded
@@ -46,4 +50,10 @@ interface ApiService {
     @FormUrlEncoded
     @POST("user/forgot-password")
     fun forgotPassword(@Field("email") email: String): Call<ForgotPasswordResponse>
+
+    @Multipart
+    @POST("ai-models/motor-image-recognition")
+    suspend fun uploadMotor(
+        @Part file: MultipartBody.Part
+    ): MotorResponse
 }

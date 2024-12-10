@@ -1,4 +1,4 @@
-package com.capstone.project.hondealz.view.fragments.profile.usermanual
+package com.capstone.project.hondealz.view.profile.usermanual
 
 import android.annotation.SuppressLint
 import android.os.Bundle

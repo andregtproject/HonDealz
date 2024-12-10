@@ -1,8 +1,9 @@
-package com.capstone.project.hondealz.view.fragments.home
+package com.capstone.project.hondealz.view.home
 
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,9 +33,20 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeViewModel.fetchUserData()
+        // Tambahkan log untuk debugging
+        Log.d("HomeFragment", "onViewCreated called")
+
+        // Observasi status login sebelum fetch user data
+        homeViewModel.getSession().observe(viewLifecycleOwner) { userModel ->
+            if (userModel.isLogin) {
+                homeViewModel.fetchUserData()
+            }
+        }
 
         homeViewModel.userData.observe(viewLifecycleOwner) { result ->
+            // Tambahkan log untuk debugging
+            Log.d("HomeFragment", "User data state: $result")
+
             when (result) {
                 is ResultState.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
@@ -49,10 +61,14 @@ class HomeFragment : Fragment() {
                 }
 
                 is ResultState.Error -> {
+                    // Log error untuk debugging
+                    Log.e("HomeFragment", "Error: ${result.error}, Status Code: ${result.statusCode}")
+
                     binding.progressBar.visibility = View.GONE
                     binding.tvGreeting.visibility = View.VISIBLE
 
-                    if (result.statusCode == 401) {
+                    // Pastikan pengecekan token expired
+                    if (result.statusCode == 401 || result.statusCode == 403) {
                         showTokenExpiredDialog()
                     }
                 }
@@ -63,25 +79,27 @@ class HomeFragment : Fragment() {
     }
 
     private fun showTokenExpiredDialog() {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Session Expired")
-            .setMessage("Your session has expired. Please login again.")
-            .setPositiveButton("OK") { dialog, _ ->
-                dialog.dismiss()
-                //logout dan diarahkeun ke LoginActivty ketika token abisss
-                homeViewModel.logout()
-                val intent = Intent(requireContext(), LoginActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-                requireActivity().finish()
-            }
-            .setCancelable(false)
-            .show()
+        // Pastikan dialog ditampilkan di main thread
+        activity?.runOnUiThread {
+            AlertDialog.Builder(requireContext())
+                .setTitle("Session Expired")
+                .setMessage("Your session has expired. Please login again.")
+                .setPositiveButton("OK") { dialog, _ ->
+                    dialog.dismiss()
+                    homeViewModel.logout()
+                    val intent = Intent(requireContext(), LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    requireActivity().finish()
+                }
+                .setCancelable(false)
+                .show()
+        }
     }
 
     private fun setupAction() {
         binding.estimasiButton.setOnClickListener {
-
+            // Implementasi action button
         }
     }
 }

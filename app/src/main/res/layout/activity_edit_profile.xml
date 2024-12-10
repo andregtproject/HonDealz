@@ -121,7 +121,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="@string/forgot_password"
+                android:text="@string/reset_password"
                 android:textColor="@color/colorAccent"
                 app:backgroundTint="@android:color/transparent"
                 app:cornerRadius="8dp"

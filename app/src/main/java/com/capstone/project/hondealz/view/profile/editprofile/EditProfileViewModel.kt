@@ -1,4 +1,4 @@
-package com.capstone.project.hondealz.view.fragments.profile.editprofile
+package com.capstone.project.hondealz.view.profile.editprofile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

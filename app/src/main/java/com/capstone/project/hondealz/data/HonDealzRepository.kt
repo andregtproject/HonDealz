@@ -72,22 +72,32 @@ class HonDealzRepository(
             try {
                 val userModel = userPreference.getSession().first()
                 val token = "Bearer ${userModel.token}"
+
+                // Log token untuk debugging
+                Log.d("Repository", "Token: $token")
+
                 val response = apiService.getUserData(token).execute()
+
+                // Log response details
+                Log.d("Repository", "Response Code: ${response.code()}")
+                Log.d("Repository", "Response Message: ${response.message()}")
+                Log.d("Repository", "Response Error Body: ${response.errorBody()?.string()}")
+
                 if (response.isSuccessful) {
                     response.body()?.let { userDataResponse ->
                         ResultState.Success(userDataResponse)
                     } ?: ResultState.Error(response.code(), "User data response is empty")
                 } else {
-                    // Tambahkan pengecekan khusus untuk error token
-                    if (response.code() == 401) {
-                        // Token sudah tidak valid
-                        logout() // Logout user
-                        ResultState.Error(401, "Token expired. Please login again.")
+                    // Spesifik penanganan token expired
+                    if (response.code() == 401 || response.code() == 403) {
+                        Log.e("Repository", "Token expired with code: ${response.code()}")
+                        ResultState.Error(response.code(), "Token expired. Please login again.")
                     } else {
                         ResultState.Error(response.code(), response.message() ?: "Failed to get user data")
                     }
                 }
             } catch (e: Exception) {
+                Log.e("Repository", "Error fetching user data", e)
                 ResultState.Error(0, e.message ?: "Network error")
             }
         }

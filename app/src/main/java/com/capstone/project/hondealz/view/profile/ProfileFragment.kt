@@ -1,4 +1,4 @@
-package com.capstone.project.hondealz.view.fragments.profile
+package com.capstone.project.hondealz.view.profile
 
 import android.content.Intent
 import android.net.Uri
@@ -19,10 +19,10 @@ import com.capstone.project.hondealz.data.pref.UserPreference
 import com.capstone.project.hondealz.data.pref.dataStore
 import com.capstone.project.hondealz.databinding.DialogReportBugBinding
 import com.capstone.project.hondealz.databinding.FragmentProfileBinding
-import com.capstone.project.hondealz.view.fragments.profile.editprofile.EditProfileActivity
+import com.capstone.project.hondealz.view.profile.editprofile.EditProfileActivity
 import com.capstone.project.hondealz.view.ViewModelFactory
-import com.capstone.project.hondealz.view.fragments.profile.usermanual.UserManualActivity
-import com.capstone.project.hondealz.view.fragments.profile.usermanual.UserManualViewModel
+import com.capstone.project.hondealz.view.profile.usermanual.UserManualActivity
+import com.capstone.project.hondealz.view.profile.usermanual.UserManualViewModel
 import com.capstone.project.hondealz.view.main.MainActivity
 import com.capstone.project.hondealz.view.welcome.WelcomeActivity
 import kotlinx.coroutines.flow.first

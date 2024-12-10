@@ -14,17 +14,21 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.capstone.project.hondealz.R
 import com.capstone.project.hondealz.data.ResultState
 import com.capstone.project.hondealz.databinding.ActivityLoginBinding
 import com.capstone.project.hondealz.view.ViewModelFactory
 import com.capstone.project.hondealz.view.main.MainActivity
 import com.capstone.project.hondealz.view.register.RegisterActivity
+import kotlinx.coroutines.launch
 import www.sanju.motiontoast.MotionToast
 import www.sanju.motiontoast.MotionToastStyle
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private var userEmail: String? = null
+
     private val viewModel by viewModels<LoginViewModel> {
         ViewModelFactory.getInstance(this)
     }
@@ -77,7 +81,6 @@ class LoginActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
-
     private fun playAnimation() {
         val appImage = ObjectAnimator.ofFloat(binding.appImage, View.ALPHA, 1f).setDuration(100)
         val title = ObjectAnimator.ofFloat(binding.tvTitle, View.ALPHA, 1f).setDuration(100)
@@ -127,9 +130,32 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        binding.forgotText.setOnClickListener {
+            showForgotPasswordConfirmationDialog()
+        }
+
         binding.registerTextView.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
             finish()
+        }
+
+        lifecycleScope.launch {
+            viewModel.forgotPasswordResult.collect { result ->
+                when (result) {
+                    is ResultState.Loading -> {
+                        binding.forgotText.isEnabled = false
+                    }
+                    is ResultState.Success -> {
+                        showSuccessToast(getString(R.string.reset_password_link_sent, userEmail))
+                        binding.forgotText.isEnabled = true
+                    }
+                    is ResultState.Error -> {
+                        showErrorToast(result.statusCode, result.error)
+                        binding.forgotText.isEnabled = true
+                    }
+                    null -> {}
+                }
+            }
         }
 
         viewModel.loginResult.observe(this) { result ->
@@ -137,13 +163,11 @@ class LoginActivity : AppCompatActivity() {
                 is ResultState.Loading -> {
                     showLoading(true)
                 }
-
                 is ResultState.Success -> {
                     showLoading(false)
                     showSuccessToast()
                     navigateToMainActivity()
                 }
-
                 is ResultState.Error -> {
                     showLoading(false)
                     showErrorToast(result.statusCode, result.error)
@@ -152,16 +176,41 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun showForgotPasswordConfirmationDialog() {
+        userEmail = binding.emailEditText.text.toString().trim()
+
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle(getString(R.string.reset_password))
+            .setMessage(getString(R.string.confirmation_message_reset_password, userEmail))
+            .setPositiveButton("Ya") { _, _ ->
+                userEmail?.let { email ->
+                    performForgotPassword(email)
+                }
+            }
+            .setNegativeButton("Tidak", null)
+            .show()
+    }
+
+    private fun performForgotPassword(email: String) {
+        viewModel.forgotPassword(email)
+    }
+
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         binding.loginButton.isEnabled = !isLoading
     }
 
-    private fun showSuccessToast() {
+    private fun showSuccessToast(message: String? = null) {
+        val toastMessage = message ?: getString(R.string.toast_success_message_login)
+        val toastTitle = if (message != null)
+            getString(R.string.reset_password)
+        else
+            getString(R.string.toast_success_login)
+
         MotionToast.createColorToast(
             this,
-            getString(R.string.toast_success_login),
-            getString(R.string.toast_success_message_login),
+            toastTitle,
+            toastMessage,
             MotionToastStyle.SUCCESS,
             MotionToast.GRAVITY_BOTTOM,
             MotionToast.LONG_DURATION,

@@ -1,4 +1,4 @@
-package com.capstone.project.hondealz.view.fragments.profile.usermanual
+package com.capstone.project.hondealz.view.profile.usermanual
 
 import androidx.lifecycle.ViewModel
 import com.capstone.project.hondealz.data.HonDealzRepository
