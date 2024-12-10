@@ -71,7 +71,6 @@ class ScanFragment : Fragment() {
     private fun uploadImage() {
         currentImageUri?.let { uri ->
             try {
-                Log.d("CurrentImageUri", "URI: $uri")
                 // Reduce file image terlebih dahulu
                 val reducedImageFile = uriToFile(uri, requireContext()).reduceFileImage()
 
@@ -87,12 +86,6 @@ class ScanFragment : Fragment() {
                     putExtra(ScanDetailActivity.EXTRA_IMAGE_URI, reducedImageUri)
                 }
                 startActivity(intent)
-
-                // Optionally load the reduced image using Glide
-                Glide.with(this)
-                    .load(reducedImageUri)
-                    .placeholder(R.drawable.ic_image_placeholder)
-                    .into(binding.previewImageView)
 
             } catch (e: Exception) {
                 Log.e("UploadImageError", "Error processing image", e)
@@ -136,8 +129,9 @@ class ScanFragment : Fragment() {
             Log.d("Image URI", "showImage: $it")
             Glide.with(this)
                 .load(it)
-                .placeholder(R.drawable.ic_image_placeholder) // Optional: Placeholder image while loading
-                .override(800, 800) // Optional: Set desired width and height
+                .placeholder(R.drawable.ic_image_placeholder)
+                .override(800, 800)  // Batasi ukuran gambar
+                .centerCrop()  // Potong gambar agar sesuai dengan ukuran target
                 .into(binding.previewImageView)
         }
     }

@@ -166,7 +166,12 @@ class HonDealzRepository(
     suspend fun predictMotor(imageFile: MultipartBody.Part): ResultState<MotorResponse> {
         return withContext(Dispatchers.IO) {
             try {
-                val response = apiService.predictMotor(imageFile).execute()
+                // Get the current user's session
+                val userModel = userPreference.getSession().first()
+                val token = "Bearer ${userModel.token}"
+
+                // Make the API call with the token
+                val response = apiService.predictMotor(token, imageFile).execute()
 
                 if (response.isSuccessful) {
                     response.body()?.let { motorResponse ->

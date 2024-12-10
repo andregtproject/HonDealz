@@ -79,16 +79,40 @@ fun File.reduceFileImage(): File {
     val bitmap = BitmapFactory.decodeFile(file.path).getRotatedBitmap(file)
     var compressQuality = 100
     var streamLength: Int
+
+    // Batasi ukuran bitmap
+    val maxWidth = 1024
+    val maxHeight = 1024
+
+    val resizedBitmap = if (bitmap!!.width > maxWidth || bitmap.height > maxHeight) {
+        val scaleWidth = maxWidth.toFloat() / bitmap.width
+        val scaleHeight = maxHeight.toFloat() / bitmap.height
+        val scaleFactor = minOf(scaleWidth, scaleHeight)
+
+        Bitmap.createScaledBitmap(
+            bitmap,
+            (bitmap.width * scaleFactor).toInt(),
+            (bitmap.height * scaleFactor).toInt(),
+            true
+        )
+    } else {
+        bitmap
+    }
+
     do {
         val bmpStream = ByteArrayOutputStream()
-        bitmap?.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
+        resizedBitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
         val bmpPicByteArray = bmpStream.toByteArray()
         streamLength = bmpPicByteArray.size
         compressQuality -= 5
-    } while (streamLength > MAXIMAL_SIZE)
+    } while (streamLength > MAXIMAL_SIZE && compressQuality > 0)
 
     Log.d("ReduceFileImage", "Final compress quality: $compressQuality, Size: $streamLength bytes")
-    bitmap?.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
+
+    FileOutputStream(file).use { out ->
+        resizedBitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, out)
+    }
+
     return file
 }
 

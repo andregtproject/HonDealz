@@ -82,4 +82,28 @@
     <string name="confirmation_message_reset_password">Apakah Anda yakin ingin melakukan reset password? Link reset password akan dikirim ke email %1$s</string>
     <string name="reset_password_link_sent">Link reset password telah dikirim ke email %1$s.</string>
     <string name="forgot_password">Lupa Password?</string>
+
+    <!-- Motor Name Validation Strings -->
+    <string name="empty_motor_name_message">Nama motor tidak boleh kosong</string>
+    <string name="motor_name_length_message">Nama motor terlalu pendek (minimal 2 karakter)</string>
+
+    <!-- Motor Year Validation Strings -->
+    <string name="empty_motor_year_message">Tahun motor tidak boleh kosong</string>
+
+    <!-- Mileage Validation Strings -->
+    <string name="empty_mileage_message">Kilometer tidak boleh kosong</string>
+    <string name="negative_mileage_message">Kilometer tidak boleh negatif</string>
+    <string name="excessive_mileage_message">Kilometer terlalu besar (maksimal 1.000.000 km)</string>
+    <string name="invalid_mileage_message">Format kilometer tidak valid</string>
+
+    <!-- Province Validation Strings -->
+    <string name="empty_province_message">Provinsi tidak boleh kosong</string>
+    <string name="province_length_message">Nama provinsi terlalu pendek (minimal 3 karakter)</string>
+
+    <!-- Engine Size Validation Strings -->
+    <string name="empty_engine_size_message">Ukuran mesin tidak boleh kosong</string>
+    <string name="small_engine_size_message">Ukuran mesin terlalu kecil (minimal 50 cc)</string>
+    <string name="large_engine_size_message">Ukuran mesin terlalu besar (maksimal 2000 cc)</string>
+    <string name="invalid_engine_size_message">Format ukuran mesin tidak valid</string>
+
 </resources>

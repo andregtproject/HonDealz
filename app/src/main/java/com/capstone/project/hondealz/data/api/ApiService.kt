@@ -54,6 +54,7 @@ interface ApiService {
     @Multipart
     @POST("ai-models/motor-image-recognition")
     fun predictMotor(
+        @Header("Authorization") token: String,
         @Part image: MultipartBody.Part
     ): Call<MotorResponse>
 }

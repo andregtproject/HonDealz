@@ -14,7 +14,10 @@ import com.capstone.project.hondealz.view.main.MainViewModel
 import com.capstone.project.hondealz.view.register.RegisterViewModel
 import com.capstone.project.hondealz.view.scan.detail.ScanDetailViewModel
 
-class ViewModelFactory private constructor(private val repository: HonDealzRepository) : ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory private constructor(
+    private val repository: HonDealzRepository,
+    private val context: Context
+) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -41,7 +44,7 @@ class ViewModelFactory private constructor(private val repository: HonDealzRepos
                 UserManualViewModel(repository) as T
             }
             modelClass.isAssignableFrom(ScanDetailViewModel::class.java) -> {
-                ScanDetailViewModel(repository) as T
+                ScanDetailViewModel(repository, context) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
@@ -49,16 +52,14 @@ class ViewModelFactory private constructor(private val repository: HonDealzRepos
 
     companion object {
         @Volatile
-        private var INSTANCE: ViewModelFactory? = null
-
-        @JvmStatic
+        private var instance: ViewModelFactory? = null
         fun getInstance(context: Context): ViewModelFactory {
-            if (INSTANCE == null) {
-                synchronized(ViewModelFactory::class.java) {
-                    INSTANCE = ViewModelFactory(Injection.provideRepository(context))
-                }
+            return instance ?: synchronized(this) {
+                instance ?: ViewModelFactory(
+                    Injection.provideRepository(context),
+                    context
+                ).also { instance = it }
             }
-            return INSTANCE as ViewModelFactory
         }
     }
 }

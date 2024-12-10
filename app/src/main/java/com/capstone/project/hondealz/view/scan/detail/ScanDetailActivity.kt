@@ -4,11 +4,16 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.capstone.project.hondealz.R
 import com.capstone.project.hondealz.data.ResultState
+import com.capstone.project.hondealz.data.reduceFileImage
+import com.capstone.project.hondealz.data.uriToFile
 import com.capstone.project.hondealz.databinding.ActivityScanDetailBinding
 import com.capstone.project.hondealz.view.ViewModelFactory
 
@@ -32,7 +37,14 @@ class ScanDetailActivity : AppCompatActivity() {
 
         // Tampilkan gambar di ImageView
         imageUri?.let {
-            binding.imageUpload.setImageURI(it)
+            Glide.with(this)
+                .load(it)
+                .placeholder(R.drawable.ic_image_placeholder)
+                .override(800, 800)
+                .centerCrop()
+                .into(binding.imageUpload)
+
+            viewModel.predictMotor(it)
         }
 
         playAnimation()
@@ -68,12 +80,17 @@ class ScanDetailActivity : AppCompatActivity() {
             when (result) {
                 is ResultState.Success -> {
                     showLoading(false)
-                    val motorModel = result.data.model ?: "Motor Tidak Dikenali"
-                    binding.motorNameEditText.setText(motorModel)
+                    val motorModel = result.data.model
+                    Log.d("ScanDetailActivity", "Motor Model: $motorModel")
+
+                    // Set nama motor ke EditText, gunakan "Motor Tidak Dikenali" jika kosong
+                    binding.motorNameEditText.setText(motorModel ?: "Motor Tidak Dikenali")
                 }
                 is ResultState.Error -> {
                     showLoading(false)
+                    binding.motorNameEditText.setText("Motor Tidak Dikenali")
                     Toast.makeText(this, result.error, Toast.LENGTH_SHORT).show()
+                    Log.e("ScanDetailActivity", "Error: ${result.error}")
                 }
                 is ResultState.Loading -> {
                     showLoading(true)
@@ -81,6 +98,7 @@ class ScanDetailActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun setupAction(imageUri: Uri?) {
         binding.analyzeButton.setOnClickListener {
@@ -119,11 +137,29 @@ class ScanDetailActivity : AppCompatActivity() {
                 }
             }
 
-            // Proses prediksi motor jika semua input terisi
-            imageUri?.let {
-                viewModel.predictMotor(it)
+            imageUri?.let { uri ->
+                try {
+                    // Konversi URI ke file
+                    val file = uriToFile(uri, this)
+                    val reducedFile = file.reduceFileImage()
+
+                    // Update ImageView dengan file yang sudah dikurangi
+                    Glide.with(this)
+                        .load(reducedFile)
+                        .placeholder(R.drawable.ic_image_placeholder)
+                        .override(800, 800)
+                        .into(binding.imageUpload)
+
+                    // Prediksi motor menggunakan URI asli
+                    viewModel.predictMotor(uri)
+                } catch (e: Exception) {
+                    Log.e("ImageProcessing", "Error processing image", e)
+                    Toast.makeText(this, "Gagal memproses gambar", Toast.LENGTH_SHORT).show()
+                    binding.motorNameEditText.setText("Motor Tidak Dikenali")
+                }
             } ?: run {
                 Toast.makeText(this, "Gambar tidak tersedia", Toast.LENGTH_SHORT).show()
+                binding.motorNameEditText.setText("Motor Tidak Dikenali")
             }
         }
     }

@@ -9,6 +9,7 @@ import android.util.AttributeSet
 import android.util.Patterns
 import com.capstone.project.hondealz.R
 import com.google.android.material.textfield.TextInputEditText
+import java.time.Year
 
 class CustomEditText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -35,28 +36,21 @@ class CustomEditText @JvmOverloads constructor(
 
     internal fun validateInput() {
         val input = text.toString()
-        when (inputType) {
-            InputType.TYPE_TEXT_VARIATION_PERSON_NAME or InputType.TYPE_CLASS_TEXT -> {
-                validateName(input)
-            }
+        when (id) {
+            // Registration and Login validations
+            R.id.name_edit_text -> validateName(input)
+            R.id.username_edit_text -> validateUsername(input)
+            R.id.email_edit_text -> validateEmail(input)
+            R.id.password_edit_text -> validatePassword(input)
+            R.id.confirm_password_edit_text -> validateConfirmPassword(input)
 
-            InputType.TYPE_CLASS_TEXT -> {
-                validateUsername(input)
-            }
-
-            InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS or InputType.TYPE_CLASS_TEXT -> {
-                validateEmail(input)
-            }
-
-            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD,
-            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD -> {
-                validatePassword(input)
-            }
+            // Scan Detail validations
+            R.id.motor_name_edit_text -> validateMotorName(input)
+            R.id.motor_year_edit_text -> validateMotorYear(input)
+            R.id.mileage_edit_text -> validateMileage(input)
+            R.id.province_edit_text -> validateProvince(input)
+            R.id.engine_size_edit_text -> validateEngineSize(input)
         }
-        // Tambahkan validasi khusus untuk konfirmasi password
-        if (id == R.id.confirm_password_edit_text) {
-            validateConfirmPassword(input)
-        } 
     }
 
     private fun validateConfirmPassword(confirmPassword: String) {
@@ -137,6 +131,81 @@ class CustomEditText @JvmOverloads constructor(
             setError(combinedErrorMessage, null)
         } else {
             error = null
+        }
+    }
+
+    private fun validateMotorName(motorName: String) {
+        if (motorName.isEmpty()) {
+            setError(context.getString(R.string.empty_motor_name_message), null)
+        } else if (motorName.length < 2) {
+            setError(context.getString(R.string.motor_name_length_message), null)
+        } else {
+            error = null
+        }
+    }
+
+    private fun validateMotorYear(yearStr: String) {
+        if (yearStr.isEmpty()) {
+            setError(context.getString(R.string.empty_motor_year_message), null)
+            return
+        }
+    }
+
+    private fun validateMileage(mileageStr: String) {
+        if (mileageStr.isEmpty()) {
+            setError(context.getString(R.string.empty_mileage_message), null)
+            return
+        }
+
+        try {
+            val mileage = mileageStr.toInt()
+            when {
+                mileage < 0 -> {
+                    setError(context.getString(R.string.negative_mileage_message), null)
+                }
+                mileage > 1000000 -> {
+                    setError(context.getString(R.string.excessive_mileage_message), null)
+                }
+                else -> {
+                    error = null
+                }
+            }
+        } catch (e: NumberFormatException) {
+            setError(context.getString(R.string.invalid_mileage_message), null)
+        }
+    }
+
+    private fun validateProvince(province: String) {
+        if (province.isEmpty()) {
+            setError(context.getString(R.string.empty_province_message), null)
+        } else if (province.length < 3) {
+            setError(context.getString(R.string.province_length_message), null)
+        } else {
+            error = null
+        }
+    }
+
+    private fun validateEngineSize(engineSizeStr: String) {
+        if (engineSizeStr.isEmpty()) {
+            setError(context.getString(R.string.empty_engine_size_message), null)
+            return
+        }
+
+        try {
+            val engineSize = engineSizeStr.toInt()
+            when {
+                engineSize < 50 -> {
+                    setError(context.getString(R.string.small_engine_size_message), null)
+                }
+                engineSize > 2000 -> {
+                    setError(context.getString(R.string.large_engine_size_message), null)
+                }
+                else -> {
+                    error = null
+                }
+            }
+        } catch (e: NumberFormatException) {
+            setError(context.getString(R.string.invalid_engine_size_message), null)
         }
     }
 
