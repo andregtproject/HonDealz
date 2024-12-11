@@ -17,8 +17,15 @@ class EditProfileViewModel(private val honDealzRepository: HonDealzRepository) :
     private val _userProfileResult = MutableStateFlow<ResultState<UserDataResponse>?>(null)
     val userProfileResult: StateFlow<ResultState<UserDataResponse>?> = _userProfileResult
 
-    private val _forgotPasswordResult = MutableStateFlow<ResultState<String>?>(null)
-    val forgotPasswordResult: StateFlow<ResultState<String>?> = _forgotPasswordResult
+    private val _updatePasswordResult = MutableStateFlow<ResultState<String>?>(null)
+    val updatePasswordResult: StateFlow<ResultState<String>?> = _updatePasswordResult
+
+    fun updatePassword(oldPassword: String, newPassword: String, confirmNewPassword: String) {
+        viewModelScope.launch {
+            _updatePasswordResult.value = ResultState.Loading
+            _updatePasswordResult.value = honDealzRepository.updatePassword(oldPassword, newPassword, confirmNewPassword)
+        }
+    }
 
     fun updateUserData(newUsername: String, newFullName: String, newEmail: String) {
         viewModelScope.launch {
@@ -34,10 +41,4 @@ class EditProfileViewModel(private val honDealzRepository: HonDealzRepository) :
         }
     }
 
-    fun forgotPassword(email: String) {
-        viewModelScope.launch {
-            _forgotPasswordResult.value = ResultState.Loading
-            _forgotPasswordResult.value = honDealzRepository.forgotPassword(email)
-        }
-    }
 }

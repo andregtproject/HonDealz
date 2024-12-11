@@ -13,6 +13,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
@@ -46,6 +47,13 @@ interface ApiService {
         @Header("Authorization") token: String,
         @FieldMap requestBody: Map<String, String>
     ): Call<UserDataResponse>
+
+    @FormUrlEncoded
+    @PATCH("user/password")
+    fun updatePassword(
+        @Header("Authorization") token: String,
+        @FieldMap requestBody: Map<String, String>
+    ): Call<ForgotPasswordResponse>
 
     @FormUrlEncoded
     @POST("user/forgot-password")
