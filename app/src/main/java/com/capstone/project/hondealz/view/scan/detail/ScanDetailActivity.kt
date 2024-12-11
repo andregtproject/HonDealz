@@ -2,6 +2,7 @@ package com.capstone.project.hondealz.view.scan.detail
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
@@ -19,6 +20,7 @@ import com.capstone.project.hondealz.data.reduceFileImage
 import com.capstone.project.hondealz.data.uriToFile
 import com.capstone.project.hondealz.databinding.ActivityScanDetailBinding
 import com.capstone.project.hondealz.view.ViewModelFactory
+import com.capstone.project.hondealz.view.scan.result.ResultActivity
 
 class ScanDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScanDetailBinding
@@ -230,8 +232,8 @@ class ScanDetailActivity : AppCompatActivity() {
     private fun setupAction(imageUri: Uri?) {
         binding.analyzeButton.setOnClickListener {
             val motorName = binding.motorNameEditText.text.toString()
-            val motorYear = binding.motorYearEditText.text.toString()
-            val mileage = binding.mileageEditText.text.toString()
+            val motorYear = binding.motorYearEditText.text.toString().toInt()
+            val mileage = binding.mileageEditText.text.toString().toInt()
             val location = binding.locationEditText.text.toString()
             val taxStatus = binding.taxEditText.text.toString()
 
@@ -241,12 +243,12 @@ class ScanDetailActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
-                motorYear.isEmpty() -> {
+                motorYear == 0 -> {
                     binding.motorYearInputLayout.requestFocus()
                     return@setOnClickListener
                 }
 
-                mileage.isEmpty() -> {
+                mileage == 0 -> {
                     binding.mileageEditText.requestFocus()
                     return@setOnClickListener
                 }
@@ -259,6 +261,20 @@ class ScanDetailActivity : AppCompatActivity() {
                 taxStatus.isEmpty() -> {
                     binding.taxEditText.requestFocus()
                     return@setOnClickListener
+                }
+
+                else -> {
+                    val intent = Intent(this, ResultActivity::class.java).apply {
+                        putExtra(ResultActivity.EXTRA_MODEL, motorName)
+                        putExtra(ResultActivity.EXTRA_YEAR, motorYear)
+                        putExtra(ResultActivity.EXTRA_MILEAGE, mileage)
+                        putExtra(ResultActivity.EXTRA_LOCATION, location)
+                        putExtra(ResultActivity.EXTRA_TAX_STATUS, taxStatus)
+                        imageUri?.let { uri ->
+                            putExtra(ResultActivity.EXTRA_IMAGE_URI, uri)
+                        }
+                    }
+                    startActivity(intent)
                 }
             }
 

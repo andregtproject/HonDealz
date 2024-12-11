@@ -6,6 +6,7 @@ import com.capstone.project.hondealz.data.pref.UserModel
 import com.capstone.project.hondealz.data.pref.UserPreference
 import com.capstone.project.hondealz.data.response.LoginResponse
 import com.capstone.project.hondealz.data.response.MotorResponse
+import com.capstone.project.hondealz.data.response.PriceResponse
 import com.capstone.project.hondealz.data.response.RegisterResponse
 import com.capstone.project.hondealz.data.response.UserDataResponse
 import kotlinx.coroutines.Dispatchers
@@ -188,6 +189,51 @@ class HonDealzRepository(
                 }
             } catch (e: Exception) {
                 Log.e("Repository", "Network error prediksi motor", e)
+                ResultState.Error(0, "Terjadi kesalahan: ${e.message ?: "Kesalahan jaringan"}")
+            }
+        }
+    }
+
+    suspend fun predictPrice(
+        model: String,
+        year: Int,
+        mileage: Int,
+        location: String,
+        tax: String
+    ): ResultState<PriceResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val userModel = userPreference.getSession().first()
+                val token = "Bearer ${userModel.token}"
+
+                val response = apiService.predictPrice(
+                    token,
+                    model,
+                    year,
+                    mileage,
+                    location,
+                    tax
+                ).execute()
+
+                if (response.isSuccessful) {
+                    response.body()?.let { priceResponse ->
+                        ResultState.Success(priceResponse)
+                    } ?: ResultState.Error(response.code(), "Respon prediksi harga kosong")
+                } else {
+                    // Parse pesan error dari body respon
+                    val errorBody = response.errorBody()?.string()
+                    val errorMessage = try {
+                        val jsonError = JSONObject(errorBody ?: "")
+                        jsonError.optString("detail", "Gagal memprediksi harga")
+                    } catch (e: Exception) {
+                        "Gagal memprediksi harga"
+                    }
+
+                    Log.e("Repository", "Error prediksi harga: $errorMessage")
+                    ResultState.Error(response.code(), errorMessage)
+                }
+            } catch (e: Exception) {
+                Log.e("Repository", "Network error prediksi harga", e)
                 ResultState.Error(0, "Terjadi kesalahan: ${e.message ?: "Kesalahan jaringan"}")
             }
         }

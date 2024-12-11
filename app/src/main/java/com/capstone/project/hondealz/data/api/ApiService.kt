@@ -3,6 +3,7 @@ package com.capstone.project.hondealz.data.api
 import com.capstone.project.hondealz.data.response.ForgotPasswordResponse
 import com.capstone.project.hondealz.data.response.LoginResponse
 import com.capstone.project.hondealz.data.response.MotorResponse
+import com.capstone.project.hondealz.data.response.PriceResponse
 import com.capstone.project.hondealz.data.response.RegisterResponse
 import com.capstone.project.hondealz.data.response.UserDataResponse
 import okhttp3.MultipartBody
@@ -57,4 +58,15 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Part image: MultipartBody.Part
     ): Call<MotorResponse>
+
+    @FormUrlEncoded
+    @POST("ai-models/motor-price-estimator")
+    fun predictPrice(
+        @Header("Authorization") token: String,
+        @Field("model") model: String,
+        @Field("year") year: Int,
+        @Field("mileage") mileage: Int,
+        @Field("location") location: String,
+        @Field("tax") tax: String
+    ): Call<PriceResponse>
 }

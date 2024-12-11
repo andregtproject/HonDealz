@@ -51,8 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_image_placeholder"
-                    android:transitionName="story_image" />
+                    android:src="@drawable/ic_image_placeholder" />
 
             </androidx.cardview.widget.CardView>
 
