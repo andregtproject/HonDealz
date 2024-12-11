@@ -135,6 +135,7 @@ class HonDealzRepository(
             }
         }
     }
+
     suspend fun forgotPassword(email: String): ResultState<String> {
         return withContext(Dispatchers.IO) {
             try {
@@ -146,6 +147,35 @@ class HonDealzRepository(
                 }
             } catch (e: Exception) {
                 ResultState.Error(0, e.message.toString())
+            }
+        }
+    }
+
+    suspend fun updatePassword(oldPassword: String, newPassword: String, confirmNewPassword: String): ResultState<String> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val userModel = userPreference.getSession().first()
+                val token = "Bearer ${userModel.token}"
+                val requestBody = mapOf(
+                    "old_password" to oldPassword,
+                    "new_password" to newPassword,
+                    "confirm_new_password" to confirmNewPassword
+                )
+                val response = apiService.updatePassword(token, requestBody).execute()
+                if (response.isSuccessful) {
+                    ResultState.Success(response.body()?.message ?: "Password updated successfully")
+                } else {
+                    val errorBody = response.errorBody()?.string()
+                    val errorMessage = try {
+                        val jsonError = JSONObject(errorBody ?: "")
+                        jsonError.optString("detail", "Failed to update password")
+                    } catch (e: Exception) {
+                        "Failed to update password"
+                    }
+                    ResultState.Error(response.code(), errorMessage)
+                }
+            } catch (e: Exception) {
+                ResultState.Error(0, e.message ?: "Network error")
             }
         }
     }

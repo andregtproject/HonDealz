@@ -65,7 +65,7 @@
     <string name="about_title">Tentang HonDealz</string>
     <string name="report_bug">Laporkan Ketidaksesuaian</string>
     <string name="loading">Loading…</string>
-    <string name="panduan">Panduan</string>
+    <string name="panduan">Panduan Pengguna</string>
     <string name="bahasa">Bahasa</string>
     <string name="tema">Tema</string>
     <string name="tentang">Tentang</string>
@@ -101,5 +101,8 @@
     <string name="small_engine_size_message">Ukuran mesin terlalu kecil (minimal 50 cc)</string>
     <string name="large_engine_size_message">Ukuran mesin terlalu besar (maksimal 2000 cc)</string>
     <string name="invalid_engine_size_message">Format ukuran mesin tidak valid</string>
+    <string name="password_lama_anda">Password Lama Anda</string>
+    <string name="password_baru_anda">Password Baru Anda</string>
+    <string name="konfirmasi_password_baru_anda">Konfirmasi Password Baru Anda</string>
 
 </resources>
