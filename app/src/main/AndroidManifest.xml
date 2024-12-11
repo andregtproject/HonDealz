@@ -42,7 +42,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.scan.ResultActivity"
+            android:name=".view.scan.result.ResultActivity"
             android:exported="false" />
         <activity
             android:name=".view.scan.detail.ScanDetailActivity"

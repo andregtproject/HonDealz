@@ -58,12 +58,12 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/motor_name_input_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:alpha="0"
                 app:boxStrokeColor="@color/box_stroke_color"
-                app:cursorColor="@color/colorPrimary"
                 app:layout_constraintBottom_toTopOf="@id/motor_year_input_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -72,13 +72,13 @@
                 app:startIconTint="@color/colorAccent"
                 tools:alpha="100">
 
-                <com.capstone.project.hondealz.view.CustomEditText
+                <AutoCompleteTextView
                     android:id="@+id/motor_name_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/opensans"
                     android:hint="Nama Motor"
-                    android:inputType="text"
+                    android:inputType="none"
                     android:textColorHint="@android:color/darker_gray"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -91,6 +91,7 @@
                 android:alpha="0"
                 app:boxStrokeColor="@color/box_stroke_color"
                 app:cursorColor="@color/colorPrimary"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 app:layout_constraintBottom_toTopOf="@id/mileage_input_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -99,17 +100,16 @@
                 app:startIconTint="@color/colorAccent"
                 tools:alpha="100">
 
-                <com.capstone.project.hondealz.view.CustomEditText
+                <AutoCompleteTextView
                     android:id="@+id/motor_year_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/opensans"
                     android:hint="Tahun Motor"
-                    android:inputType="number"
+                    android:inputType="none"
                     android:textColorHint="@android:color/darker_gray"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/mileage_input_layout"
                 android:layout_width="match_parent"
@@ -118,7 +118,7 @@
                 android:alpha="0"
                 app:boxStrokeColor="@color/box_stroke_color"
                 app:cursorColor="@color/colorPrimary"
-                app:layout_constraintBottom_toTopOf="@id/province_input_layout"
+                app:layout_constraintBottom_toTopOf="@id/location_input_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/motor_year_input_layout"
@@ -138,14 +138,15 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/province_input_layout"
+                android:id="@+id/location_input_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:alpha="0"
                 app:boxStrokeColor="@color/box_stroke_color"
                 app:cursorColor="@color/colorPrimary"
-                app:layout_constraintBottom_toTopOf="@id/engine_size_input_layout"
+                app:layout_constraintBottom_toTopOf="@id/tax_input_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/mileage_input_layout"
@@ -153,19 +154,20 @@
                 app:startIconTint="@color/colorAccent"
                 tools:alpha="100">
 
-                <com.capstone.project.hondealz.view.CustomEditText
-                    android:id="@+id/province_edit_text"
+                <AutoCompleteTextView
+                    android:id="@+id/location_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/opensans"
-                    android:hint="Provinsi"
-                    android:inputType="text"
+                    android:hint="Lokasi"
+                    android:inputType="none"
                     android:textColorHint="@android:color/darker_gray"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/engine_size_input_layout"
+                android:id="@+id/tax_input_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -174,22 +176,21 @@
                 app:cursorColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/province_input_layout"
+                app:layout_constraintTop_toBottomOf="@id/location_input_layout"
                 app:startIconDrawable="@drawable/ic_engine_size_24"
                 app:startIconTint="@color/colorAccent"
                 tools:alpha="100">
 
-                <com.capstone.project.hondealz.view.CustomEditText
-                    android:id="@+id/engine_size_edit_text"
+                <AutoCompleteTextView
+                    android:id="@+id/tax_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/opensans"
-                    android:hint="Engine Size"
-                    android:inputType="number"
+                    android:hint="Status Pajak"
+                    android:inputType="none"
                     android:textColorHint="@android:color/darker_gray"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/analyze_button"
                 android:layout_width="0dp"
@@ -206,7 +207,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/engine_size_input_layout"
+                app:layout_constraintTop_toBottomOf="@+id/tax_input_layout"
                 app:rippleColor="@color/colorSecondary"
                 tools:alpha="100" />
 

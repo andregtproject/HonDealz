@@ -83,9 +83,6 @@
     <string name="reset_password_link_sent">Link reset sandi wis dikirim menyang email %1$s.</string>
     <string name="forgot_password">Lali Sandi?</string>
 
-    <string name="empty_motor_name_message">Jeneng motor ora kena kosong</string>
-    <string name="motor_name_length_message">Jeneng motor terlalu cekak (minimal 2 karakter)</string>
-
     <string name="empty_motor_year_message">Tahun motor ora kena kosong</string>
 
     <string name="empty_mileage_message">Kilometer ora kena kosong</string>

@@ -1,10 +1,356 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.scan.ResultActivity">
+    android:layout_height="match_parent">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="Hasil Scan Motor"
+            app:navigationIcon="@drawable/ic_back_24"
+            android:background="@drawable/bottom_rounded_bg"
+            app:titleTextColor="@color/colorSecondary"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_motor_image"
+                android:layout_width="0dp"
+                android:layout_height="250dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <ImageView
+                    android:id="@+id/image_motor"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_image_placeholder"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_motor_detail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                app:layout_constraintTop_toBottomOf="@id/card_motor_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/title_motor_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Detail Motor"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/label_motor_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Nama Motor"
+                        android:textStyle="bold"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintTop_toBottomOf="@id/title_motor_detail"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tv_motor_name"/>
+
+                    <TextView
+                        android:id="@+id/tv_motor_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="Honda Beat"
+                        android:textAlignment="textStart"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintTop_toBottomOf="@id/title_motor_detail"
+                        app:layout_constraintStart_toEndOf="@id/label_motor_name"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/divider1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_motor_name"/>
+
+                    <TextView
+                        android:id="@+id/label_motor_year"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Tahun"
+                        android:textStyle="bold"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/divider1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tv_motor_year"/>
+
+                    <TextView
+                        android:id="@+id/tv_motor_year"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="2020"
+                        android:textAlignment="textStart"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/divider1"
+                        app:layout_constraintStart_toEndOf="@id/label_motor_year"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/divider2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_motor_year"/>
+
+                    <TextView
+                        android:id="@+id/label_mileage"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Kilometer"
+                        android:textStyle="bold"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/divider2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tv_mileage"/>
+
+                    <TextView
+                        android:id="@+id/tv_mileage"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="15.000 km"
+                        android:textAlignment="textStart"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/divider2"
+                        app:layout_constraintStart_toEndOf="@id/label_mileage"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/divider3"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_mileage"/>
+
+                    <TextView
+                        android:id="@+id/label_location"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Lokasi"
+                        android:textStyle="bold"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/divider3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tv_location"/>
+
+                    <TextView
+                        android:id="@+id/tv_location"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="DKI Jakarta"
+                        android:textAlignment="textStart"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/divider3"
+                        app:layout_constraintStart_toEndOf="@id/label_location"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/divider4"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_location"/>
+
+                    <TextView
+                        android:id="@+id/label_tax_status"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Status Pajak"
+                        android:textStyle="bold"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/divider4"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tv_tax_status"/>
+
+                    <TextView
+                        android:id="@+id/tv_tax_status"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="Aktif"
+                        android:textAlignment="textStart"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/divider4"
+                        app:layout_constraintStart_toEndOf="@id/label_tax_status"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_prediction"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                app:layout_constraintTop_toBottomOf="@id/card_motor_detail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/title_prediction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hasil Prediksi"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/label_prediction_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Estimasi Harga"
+                        android:textStyle="bold"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintTop_toBottomOf="@id/title_prediction"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tv_prediction_price"/>
+
+                    <TextView
+                        android:id="@+id/tv_prediction_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="Rp 25.000.000"
+                        android:textColor="@color/colorAccent"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:textAlignment="textEnd"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintTop_toBottomOf="@id/title_prediction"
+                        app:layout_constraintStart_toEndOf="@id/label_prediction_price"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/divider_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_prediction_price"/>
+
+                    <TextView
+                        android:id="@+id/label_price_min"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Harga Minimum"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/divider_price"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tv_price_min"/>
+
+                    <TextView
+                        android:id="@+id/tv_price_min"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="Rp 22.000.000"
+                        android:textColor="@color/colorAccent"
+                        android:textAlignment="textEnd"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/divider_price"
+                        app:layout_constraintStart_toEndOf="@id/label_price_min"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <View
+                        android:id="@+id/divider_price_min"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_price_min"/>
+
+                    <TextView
+                        android:id="@+id/label_price_max"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Harga Maksimum"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/divider_price_min"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tv_price_max"/>
+
+                    <TextView
+                        android:id="@+id/tv_price_max"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="Rp 28.000.000"
+                        android:textColor="@color/colorAccent"
+                        android:textAlignment="textEnd"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/divider_price_min"
+                        app:layout_constraintStart_toEndOf="@id/label_price_max"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/tv_disclaimer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="*Estimasi harga berdasarkan data yang dimasukkan"
+                        android:textSize="12sp"
+                        android:textColor="@android:color/darker_gray"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_price_max"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

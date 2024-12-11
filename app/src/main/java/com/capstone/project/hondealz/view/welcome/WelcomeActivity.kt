@@ -29,7 +29,6 @@ class WelcomeActivity : AppCompatActivity() {
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupView()
         setupAction()
         setupImageSlider()
         playAnimation()
@@ -47,7 +46,6 @@ class WelcomeActivity : AppCompatActivity() {
         binding.indicator.setViewPager(binding.imageSlider)
         binding.imageSlider.isUserInputEnabled = true
 
-        // Otomatis slide
         setupAutoSlide(images)
     }
 
@@ -62,7 +60,6 @@ class WelcomeActivity : AppCompatActivity() {
         }
         sliderHandler.postDelayed(sliderRunnable, 3000)
 
-        // Hentikan auto slide saat pengguna menyentuh slider
         binding.imageSlider.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -75,19 +72,6 @@ class WelcomeActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         sliderHandler.removeCallbacks(sliderRunnable)
-    }
-
-    private fun setupView() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            @Suppress("DEPRECATION")
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
-        supportActionBar?.hide()
     }
 
     private fun setupAction() {

@@ -83,9 +83,6 @@
     <string name="reset_password_link_sent">Tautan reset kecap sandi parantos dikirim ka email %1$s.</string>
     <string name="forgot_password">Hilap Kecap Sandi?</string>
 
-    <string name="empty_motor_name_message">Ngaran motor teu meunang kosong</string>
-    <string name="motor_name_length_message">Ngaran motor teuing pondok (minimal 2 karakter)</string>
-
     <string name="empty_motor_year_message">Tahun motor teu meunang kosong</string>
 
     <string name="empty_mileage_message">Kilometer teu meunang kosong</string>

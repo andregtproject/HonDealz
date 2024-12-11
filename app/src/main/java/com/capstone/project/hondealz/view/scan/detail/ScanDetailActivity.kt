@@ -4,8 +4,11 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.net.Uri
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -25,12 +28,53 @@ class ScanDetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_IMAGE_URI = "extra_image_uri"
+        private val MOTOR_NAMES = arrayOf(
+            "All New Honda Vario 125 & 150",
+            "All New Honda Vario 125 & 150 Keyless",
+            "Vario 110",
+            "Vario 110 ESP",
+            "Vario 160",
+            "Vario Techno 110",
+            "Vario Techno 125 FI"
+        )
+
+        private val MOTOR_YEAR_RANGES = mapOf(
+            "Vario 110" to (2006..2014),
+            "Vario Techno 110" to (2009..2013),
+            "Vario Techno 125 FI" to (2012..2015),
+            "Vario 110 ESP" to (2015..2020),
+            "All New Honda Vario 125 & 150" to (2015..2018),
+            "All New Honda Vario 125 & 150 Keyless" to (2018..2022),
+            "Vario 160" to (2022..2024)
+        )
+
+        private val LOCATIONS = arrayOf(
+            "Jakarta",
+            "Jawa Barat",
+            "Banten",
+            "Jawa Tengah",
+            "Yogyakarta",
+            "Jawa Timur",
+            "Bali",
+            "Lainnya"
+        )
+
+        private val TAX_STATUS = arrayOf(
+            "hidup",
+            "mati"
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityScanDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Setup dropdown for motor names
+        setupMotorNameDropdown()
+        setupMotorYearDropdown()
+        setupLocationDropdown()
+        setupTaxStatusDropdown()
 
         // Ambil URI gambar dari intent
         val imageUri = intent.getParcelableExtra<Uri>(EXTRA_IMAGE_URI)
@@ -52,13 +96,74 @@ class ScanDetailActivity : AppCompatActivity() {
         setupAction(imageUri)
     }
 
+    private fun setupMotorNameDropdown() {
+        val adapter = ArrayAdapter(
+            this,
+            R.layout.list_item_dropdown,
+            MOTOR_NAMES
+        )
+        (binding.motorNameInputLayout.editText as? AutoCompleteTextView)?.apply {
+            setAdapter(adapter)
+            setOnItemClickListener { _, _, position, _ ->
+                // Update year dropdown when motor name changes
+                updateYearDropdown(MOTOR_NAMES[position])
+            }
+        }
+    }
+
+    private fun updateYearDropdown(motorName: String) {
+        val yearRangeForMotor = MOTOR_YEAR_RANGES[motorName] ?: emptyList()
+        val yearAdapter = ArrayAdapter(
+            this,
+            R.layout.list_item_dropdown,
+            yearRangeForMotor.toList()
+        )
+        (binding.motorYearInputLayout.editText as? AutoCompleteTextView)?.apply {
+            setAdapter(yearAdapter)
+            setText("") // Mengosongkan pilihan sebelumnya
+        }
+    }
+
+    private fun setupMotorYearDropdown() {
+        (binding.motorYearInputLayout.editText as? AutoCompleteTextView)?.apply {
+            inputType = InputType.TYPE_NULL // Disable manual text input
+            setOnClickListener { showDropDown() }
+        }
+    }
+
+    private fun setupLocationDropdown() {
+        val locationAdapter = ArrayAdapter(
+            this,
+            R.layout.list_item_dropdown,
+            LOCATIONS
+        )
+        (binding.locationInputLayout.editText as? AutoCompleteTextView)?.apply {
+            setAdapter(locationAdapter)
+            inputType = InputType.TYPE_NULL // Disable manual text input
+            setOnClickListener { showDropDown() }
+        }
+    }
+
+    private fun setupTaxStatusDropdown() {
+        val taxStatusAdapter = ArrayAdapter(
+            this,
+            R.layout.list_item_dropdown,
+            TAX_STATUS
+        )
+        (binding.taxInputLayout.editText as? AutoCompleteTextView)?.apply {
+            setAdapter(taxStatusAdapter)
+            inputType = InputType.TYPE_NULL // Disable manual text input
+            setOnClickListener { showDropDown() }
+        }
+    }
+
     private fun playAnimation() {
         val motorImage = ObjectAnimator.ofFloat(binding.cardImage, View.ALPHA, 1f).setDuration(100)
         val motorName = ObjectAnimator.ofFloat(binding.motorNameInputLayout, View.ALPHA, 1f).setDuration(100)
         val motorYear = ObjectAnimator.ofFloat(binding.motorYearInputLayout, View.ALPHA, 1f).setDuration(100)
         val mileage = ObjectAnimator.ofFloat(binding.mileageInputLayout, View.ALPHA, 1f).setDuration(100)
-        val province = ObjectAnimator.ofFloat(binding.provinceInputLayout, View.ALPHA, 1f).setDuration(100)
-        val engineSize = ObjectAnimator.ofFloat(binding.engineSizeInputLayout, View.ALPHA, 1f).setDuration(100)
+        val location = ObjectAnimator.ofFloat(binding.locationInputLayout, View.ALPHA, 1f).setDuration(100)
+        val taxStatus = ObjectAnimator.ofFloat(binding.taxInputLayout, View.ALPHA, 1f).setDuration(100)
         val analyzeButton = ObjectAnimator.ofFloat(binding.analyzeButton, View.ALPHA, 1f).setDuration(100)
 
         AnimatorSet().apply {
@@ -67,8 +172,8 @@ class ScanDetailActivity : AppCompatActivity() {
                 motorName,
                 motorYear,
                 mileage,
-                province,
-                engineSize,
+                location,
+                taxStatus,
                 analyzeButton
             )
             startDelay = 100
@@ -83,12 +188,11 @@ class ScanDetailActivity : AppCompatActivity() {
                     val motorModel = result.data.model
                     Log.d("ScanDetailActivity", "Motor Model: $motorModel")
 
-                    // Set nama motor ke EditText, gunakan "Motor Tidak Dikenali" jika kosong
-                    binding.motorNameEditText.setText(motorModel ?: "Motor Tidak Dikenali")
+                    setMotorNameFromPrediction(motorModel)
                 }
                 is ResultState.Error -> {
                     showLoading(false)
-                    binding.motorNameEditText.setText("Motor Tidak Dikenali")
+                    setMotorNameFromPrediction(null)
                     Toast.makeText(this, result.error, Toast.LENGTH_SHORT).show()
                     Log.e("ScanDetailActivity", "Error: ${result.error}")
                 }
@@ -99,17 +203,38 @@ class ScanDetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun setMotorNameFromPrediction(motorModel: String?) {
+        val motorNameEditText = binding.motorNameEditText
+
+        val selectedMotorName = if (motorModel != null) {
+            MOTOR_NAMES.find { it.equals(motorModel, ignoreCase = true) }
+                ?: MOTOR_NAMES.find { it.contains(motorModel, ignoreCase = true) }
+                ?: MOTOR_NAMES[0]
+        } else {
+            MOTOR_NAMES[0]
+        }
+
+        motorNameEditText.setText(selectedMotorName)
+        updateYearDropdown(selectedMotorName)
+
+        (binding.motorNameInputLayout.editText as? AutoCompleteTextView)?.apply {
+            setAdapter(ArrayAdapter(
+                this@ScanDetailActivity,
+                R.layout.list_item_dropdown,
+                MOTOR_NAMES
+            ))
+            setOnClickListener { showDropDown() }
+        }
+    }
 
     private fun setupAction(imageUri: Uri?) {
         binding.analyzeButton.setOnClickListener {
-            // Ambil nilai dari input
             val motorName = binding.motorNameEditText.text.toString()
             val motorYear = binding.motorYearEditText.text.toString()
             val mileage = binding.mileageEditText.text.toString()
-            val province = binding.provinceEditText.text.toString()
-            val engineSize = binding.engineSizeEditText.text.toString()
+            val location = binding.locationEditText.text.toString()
+            val taxStatus = binding.taxEditText.text.toString()
 
-            // Validasi input
             when {
                 motorName.isEmpty() -> {
                     binding.motorNameEditText.requestFocus()
@@ -126,40 +251,37 @@ class ScanDetailActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
-                province.isEmpty() -> {
-                    binding.provinceEditText.requestFocus()
+                location.isEmpty() -> {
+                    binding.locationEditText.requestFocus()
                     return@setOnClickListener
                 }
 
-                engineSize.isEmpty() -> {
-                    binding.engineSizeEditText.requestFocus()
+                taxStatus.isEmpty() -> {
+                    binding.taxEditText.requestFocus()
                     return@setOnClickListener
                 }
             }
 
             imageUri?.let { uri ->
                 try {
-                    // Konversi URI ke file
                     val file = uriToFile(uri, this)
                     val reducedFile = file.reduceFileImage()
 
-                    // Update ImageView dengan file yang sudah dikurangi
                     Glide.with(this)
                         .load(reducedFile)
                         .placeholder(R.drawable.ic_image_placeholder)
                         .override(800, 800)
                         .into(binding.imageUpload)
 
-                    // Prediksi motor menggunakan URI asli
                     viewModel.predictMotor(uri)
                 } catch (e: Exception) {
                     Log.e("ImageProcessing", "Error processing image", e)
                     Toast.makeText(this, "Gagal memproses gambar", Toast.LENGTH_SHORT).show()
-                    binding.motorNameEditText.setText("Motor Tidak Dikenali")
+                    setMotorNameFromPrediction(null)
                 }
             } ?: run {
                 Toast.makeText(this, "Gambar tidak tersedia", Toast.LENGTH_SHORT).show()
-                binding.motorNameEditText.setText("Motor Tidak Dikenali")
+                setMotorNameFromPrediction(null)
             }
         }
     }

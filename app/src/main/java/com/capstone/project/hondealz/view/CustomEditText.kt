@@ -45,11 +45,10 @@ class CustomEditText @JvmOverloads constructor(
             R.id.confirm_password_edit_text -> validateConfirmPassword(input)
 
             // Scan Detail validations
-            R.id.motor_name_edit_text -> validateMotorName(input)
             R.id.motor_year_edit_text -> validateMotorYear(input)
             R.id.mileage_edit_text -> validateMileage(input)
-            R.id.province_edit_text -> validateProvince(input)
-            R.id.engine_size_edit_text -> validateEngineSize(input)
+            R.id.location_edit_text -> validateProvince(input)
+            R.id.tax_edit_text -> validateEngineSize(input)
         }
     }
 
@@ -129,16 +128,6 @@ class CustomEditText @JvmOverloads constructor(
         if (errorMessages.isNotEmpty()) {
             val combinedErrorMessage = errorMessages.joinToString("\n")
             setError(combinedErrorMessage, null)
-        } else {
-            error = null
-        }
-    }
-
-    private fun validateMotorName(motorName: String) {
-        if (motorName.isEmpty()) {
-            setError(context.getString(R.string.empty_motor_name_message), null)
-        } else if (motorName.length < 2) {
-            setError(context.getString(R.string.motor_name_length_message), null)
         } else {
             error = null
         }

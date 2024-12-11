@@ -83,8 +83,6 @@
     <string name="reset_password_link_sent">Password reset link has been sent to %1$s email.</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="confirmation_message_reset_password">Are you sure you want to reset your password? Password reset link will be sent to email %1$s</string>
-    <string name="empty_motor_name_message">Motorcycle name cannot be empty</string>
-    <string name="motor_name_length_message">Motorcycle name is too short (at least 2 characters)</string>
     <string name="empty_motor_year_message">The motor year must not be empty</string>
     <string name="empty_mileage_message">Kilometers cannot be empty</string>
     <string name="negative_mileage_message">Kilometers cannot be negative</string>

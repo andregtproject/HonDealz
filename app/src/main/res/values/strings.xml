@@ -83,10 +83,6 @@
     <string name="reset_password_link_sent">Link reset password telah dikirim ke email %1$s.</string>
     <string name="forgot_password">Lupa Password?</string>
 
-    <!-- Motor Name Validation Strings -->
-    <string name="empty_motor_name_message">Nama motor tidak boleh kosong</string>
-    <string name="motor_name_length_message">Nama motor terlalu pendek (minimal 2 karakter)</string>
-
     <!-- Motor Year Validation Strings -->
     <string name="empty_motor_year_message">Tahun motor tidak boleh kosong</string>
 

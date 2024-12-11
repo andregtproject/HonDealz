@@ -83,9 +83,6 @@
     <string name="reset_password_link_sent">Pautan tetapan semula kata laluan telah dihantar ke e-mel %1$s.</string>
     <string name="forgot_password">Lupa Kata Laluan?</string>
 
-    <string name="empty_motor_name_message">Nama motosikal tidak boleh kosong</string>
-    <string name="motor_name_length_message">Nama motosikal terlalu pendek (minimum 2 aksara)</string>
-
     <string name="empty_motor_year_message">Tahun motosikal tidak boleh kosong</string>
 
     <string name="empty_mileage_message">Kilometer tidak boleh kosong</string>

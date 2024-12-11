@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
+import org.json.JSONObject
 
 class HonDealzRepository(
     private val apiService: ApiService,
@@ -75,12 +76,10 @@ class HonDealzRepository(
                 val userModel = userPreference.getSession().first()
                 val token = "Bearer ${userModel.token}"
 
-                // Log token untuk debugging
                 Log.d("Repository", "Token: $token")
 
                 val response = apiService.getUserData(token).execute()
 
-                // Log response details
                 Log.d("Repository", "Response Code: ${response.code()}")
                 Log.d("Repository", "Response Message: ${response.message()}")
                 Log.d("Repository", "Response Error Body: ${response.errorBody()?.string()}")
@@ -90,7 +89,6 @@ class HonDealzRepository(
                         ResultState.Success(userDataResponse)
                     } ?: ResultState.Error(response.code(), "User data response is empty")
                 } else {
-                    // Spesifik penanganan token expired
                     if (response.code() == 401 || response.code() == 403) {
                         Log.e("Repository", "Token expired with code: ${response.code()}")
                         ResultState.Error(response.code(), "Token expired. Please login again.")
@@ -166,11 +164,8 @@ class HonDealzRepository(
     suspend fun predictMotor(imageFile: MultipartBody.Part): ResultState<MotorResponse> {
         return withContext(Dispatchers.IO) {
             try {
-                // Get the current user's session
                 val userModel = userPreference.getSession().first()
                 val token = "Bearer ${userModel.token}"
-
-                // Make the API call with the token
                 val response = apiService.predictMotor(token, imageFile).execute()
 
                 if (response.isSuccessful) {
@@ -179,12 +174,21 @@ class HonDealzRepository(
                         ResultState.Success(motorResponse)
                     } ?: ResultState.Error(response.code(), "Prediksi motor gagal")
                 } else {
-                    Log.e("Repository", "Error prediksi motor: ${response.errorBody()?.string()}")
-                    ResultState.Error(response.code(), "Gagal memprediksi motor")
+                    // Parse error body untuk mendapatkan pesan error yang lebih spesifik
+                    val errorBody = response.errorBody()?.string()
+                    val errorMessage = try {
+                        val jsonError = JSONObject(errorBody ?: "")
+                        jsonError.optString("detail", "Gagal memprediksi motor")
+                    } catch (e: Exception) {
+                        "Gagal memprediksi motor"
+                    }
+
+                    Log.e("Repository", "Error prediksi motor: $errorMessage")
+                    ResultState.Error(response.code(), errorMessage)
                 }
             } catch (e: Exception) {
                 Log.e("Repository", "Network error prediksi motor", e)
-                ResultState.Error(0, e.message ?: "Kesalahan jaringan")
+                ResultState.Error(0, "Terjadi kesalahan: ${e.message ?: "Kesalahan jaringan"}")
             }
         }
     }
