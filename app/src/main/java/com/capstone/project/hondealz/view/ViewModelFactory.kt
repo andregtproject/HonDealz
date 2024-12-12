@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.project.hondealz.data.HonDealzRepository
 import com.capstone.project.hondealz.data.di.Injection
+import com.capstone.project.hondealz.view.history.HistoryViewModel
 import com.capstone.project.hondealz.view.home.HomeViewModel
 import com.capstone.project.hondealz.view.profile.ProfileViewModel
 import com.capstone.project.hondealz.view.profile.editprofile.EditProfileViewModel
@@ -45,6 +46,9 @@ class ViewModelFactory private constructor(
             }
             modelClass.isAssignableFrom(ScanDetailViewModel::class.java) -> {
                 ScanDetailViewModel(repository, context) as T
+            }
+            modelClass.isAssignableFrom(HistoryViewModel::class.java) -> {
+                HistoryViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
