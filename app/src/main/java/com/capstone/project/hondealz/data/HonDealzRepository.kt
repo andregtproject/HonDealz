@@ -9,6 +9,7 @@ import com.capstone.project.hondealz.data.response.LoginResponse
 import com.capstone.project.hondealz.data.response.MotorResponse
 import com.capstone.project.hondealz.data.response.PriceResponse
 import com.capstone.project.hondealz.data.response.RegisterResponse
+import com.capstone.project.hondealz.data.response.SpesificHistoryResponse
 import com.capstone.project.hondealz.data.response.UserDataResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -306,6 +307,26 @@ class HonDealzRepository(
                         response.code(),
                         response.message() ?: "Failed to get histories"
                     )
+                }
+            } catch (e: Exception) {
+                ResultState.Error(0, e.message ?: "Network error")
+            }
+        }
+    }
+
+    suspend fun getSpecificHistory(id: Int): ResultState<SpesificHistoryResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val userModel = userPreference.getSession().first()
+                val token = "Bearer ${userModel.token}"
+                val response = apiService.getSpesificHistory(token, id).execute()
+
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        ResultState.Success(it)
+                    } ?: ResultState.Error(response.code(), "History details are empty")
+                } else {
+                    ResultState.Error(response.code(), response.message() ?: "Failed to get history details")
                 }
             } catch (e: Exception) {
                 ResultState.Error(0, e.message ?: "Network error")

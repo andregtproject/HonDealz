@@ -14,7 +14,11 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class HistoryAdapter : ListAdapter<HistoriesItem, HistoryAdapter.HistoryViewHolder>(DIFF_CALLBACK) {
+    private var onItemClickListener: ((Int) -> Unit)? = null
 
+    fun setOnItemClickListener(listener: (Int) -> Unit) {
+        onItemClickListener = listener
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
         val binding = HistoryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return HistoryViewHolder(binding)
@@ -23,6 +27,10 @@ class HistoryAdapter : ListAdapter<HistoriesItem, HistoryAdapter.HistoryViewHold
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         val history = getItem(position)
         holder.bind(history)
+
+        holder.itemView.setOnClickListener {
+            history.id?.let { id -> onItemClickListener?.invoke(id) }
+        }
     }
 
     inner class HistoryViewHolder(private val binding: HistoryItemBinding) :

@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.capstone.project.hondealz.data.HonDealzRepository
 import com.capstone.project.hondealz.data.ResultState
 import com.capstone.project.hondealz.data.response.MotorResponse
-import com.capstone.project.hondealz.data.response.PriceResponse
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -22,8 +21,6 @@ class ScanDetailViewModel(
 ) : ViewModel() {
     private val _motorResult = MutableLiveData<ResultState<MotorResponse>>()
     val motorResult: LiveData<ResultState<MotorResponse>> = _motorResult
-    private val _priceResult = MutableLiveData<ResultState<PriceResponse>>()
-    val priceResult: LiveData<ResultState<PriceResponse>> = _priceResult
 
     fun predictMotor(imageUri: Uri) {
         viewModelScope.launch {
@@ -55,31 +52,4 @@ class ScanDetailViewModel(
             }
         }
     }
-
-    fun predictPrice(
-        idPicture: Int,
-        model: String,
-        year: Int,
-        mileage: Int,
-        location: String,
-        tax: String
-    ) {
-        viewModelScope.launch {
-            _priceResult.value = ResultState.Loading
-            try {
-                val result = repository.predictPrice(
-                    idPicture,
-                    model,
-                    year,
-                    mileage,
-                    location,
-                    tax
-                )
-                _priceResult.value = result
-            } catch (e: Exception) {
-                _priceResult.value = ResultState.Error(0, e.message ?: "Terjadi kesalahan")
-            }
-        }
-    }
-
 }
