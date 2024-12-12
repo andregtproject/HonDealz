@@ -4,6 +4,7 @@ import android.util.Log
 import com.capstone.project.hondealz.data.api.ApiService
 import com.capstone.project.hondealz.data.pref.UserModel
 import com.capstone.project.hondealz.data.pref.UserPreference
+import com.capstone.project.hondealz.data.response.ListHistoryResponse
 import com.capstone.project.hondealz.data.response.LoginResponse
 import com.capstone.project.hondealz.data.response.MotorResponse
 import com.capstone.project.hondealz.data.response.PriceResponse
@@ -53,7 +54,8 @@ class HonDealzRepository(
     ): ResultState<RegisterResponse> {
         return withContext(Dispatchers.IO) {
             try {
-                val response = apiService.register(name, username, email, password, confirmPassword).execute()
+                val response =
+                    apiService.register(name, username, email, password, confirmPassword).execute()
                 if (response.isSuccessful) {
                     response.body()?.let { registerResponse ->
                         registerResponse.accessToken?.let { token ->
@@ -94,7 +96,10 @@ class HonDealzRepository(
                         Log.e("Repository", "Token expired with code: ${response.code()}")
                         ResultState.Error(response.code(), "Token expired. Please login again.")
                     } else {
-                        ResultState.Error(response.code(), response.message() ?: "Failed to get user data")
+                        ResultState.Error(
+                            response.code(),
+                            response.message() ?: "Failed to get user data"
+                        )
                     }
                 }
             } catch (e: Exception) {
@@ -108,7 +113,11 @@ class HonDealzRepository(
         userPreference.logout()
     }
 
-    suspend fun updateUserData(username: String, name: String, email: String): ResultState<UserDataResponse> {
+    suspend fun updateUserData(
+        username: String,
+        name: String,
+        email: String
+    ): ResultState<UserDataResponse> {
         return withContext(Dispatchers.IO) {
             try {
                 val userModel = userPreference.getSession().first()
@@ -128,7 +137,10 @@ class HonDealzRepository(
                         ResultState.Success(userDataResponse)
                     } ?: ResultState.Error(response.code(), "User data response is empty")
                 } else {
-                    ResultState.Error(response.code(), response.message() ?: "Failed to update user data")
+                    ResultState.Error(
+                        response.code(),
+                        response.message() ?: "Failed to update user data"
+                    )
                 }
             } catch (e: Exception) {
                 ResultState.Error(0, e.message ?: "Network error")
@@ -143,7 +155,10 @@ class HonDealzRepository(
                 if (response.isSuccessful) {
                     ResultState.Success(response.body()?.message ?: "Berhasil")
                 } else {
-                    ResultState.Error(response.code(), response.message() ?: "Failed to update password")
+                    ResultState.Error(
+                        response.code(),
+                        response.message() ?: "Failed to update password"
+                    )
                 }
             } catch (e: Exception) {
                 ResultState.Error(0, e.message.toString())
@@ -151,7 +166,11 @@ class HonDealzRepository(
         }
     }
 
-    suspend fun updatePassword(oldPassword: String, newPassword: String, confirmNewPassword: String): ResultState<String> {
+    suspend fun updatePassword(
+        oldPassword: String,
+        newPassword: String,
+        confirmNewPassword: String
+    ): ResultState<String> {
         return withContext(Dispatchers.IO) {
             try {
                 val userModel = userPreference.getSession().first()
@@ -268,4 +287,28 @@ class HonDealzRepository(
             }
         }
     }
+
+    suspend fun getHistories(): ResultState<ListHistoryResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val userModel = userPreference.getSession().first()
+                val token = "Bearer ${userModel.token}"
+                val response = apiService.getHistories(token).execute()
+
+                if (response.isSuccessful) {
+                    response.body()?.let { listHistoryResponse ->
+                        ResultState.Success(listHistoryResponse)
+                    } ?: ResultState.Error(response.code(), "History response is empty")
+                } else {
+                    ResultState.Error(
+                        response.code(),
+                        response.message() ?: "Failed to get histories"
+                    )
+                }
+            } catch (e: Exception) {
+                ResultState.Error(0, e.message ?: "Network error")
+            }
+        }
+    }
+
 }

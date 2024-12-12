@@ -48,6 +48,7 @@
     <string name="start_estimasi_instan">Mulai Estimasi</string>
     <string name="riwayat_scan">Riwayat Scan</string>
     <string name="image_history">Image History</string>
+    <string name="image_preview">Image Preview</string>
     <string name="subtagline_history">Tinjau ulang detail setiap scan motor Anda</string>
     <string name="logout_button">Keluar</string>
     <string name="user_already_registered">Akun dengan data ini sudah terdaftar. Silakan login untuk melanjutkan!</string>
@@ -96,13 +97,17 @@
     <string name="empty_province_message">Provinsi tidak boleh kosong</string>
     <string name="province_length_message">Nama provinsi terlalu pendek (minimal 3 karakter)</string>
 
-    <!-- Engine Size Validation Strings -->
-    <string name="empty_engine_size_message">Ukuran mesin tidak boleh kosong</string>
-    <string name="small_engine_size_message">Ukuran mesin terlalu kecil (minimal 50 cc)</string>
-    <string name="large_engine_size_message">Ukuran mesin terlalu besar (maksimal 2000 cc)</string>
-    <string name="invalid_engine_size_message">Format ukuran mesin tidak valid</string>
     <string name="password_lama_anda">Password Lama Anda</string>
     <string name="password_baru_anda">Password Baru Anda</string>
     <string name="konfirmasi_password_baru_anda">Konfirmasi Password Baru Anda</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="upload">Upload</string>
+    <string name="analisis">Analisis</string>
+    <string name="tax">Tax Status</string>
+    <string name="mileage">Mileage</string>
+    <string name="location">Location</string>
+    <string name="motor_name">Motorcycle Name</string>
+    <string name="year">Year</string>
 
 </resources>

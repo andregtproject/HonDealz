@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,10 +15,10 @@
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Detail Motor"
-            app:navigationIcon="@drawable/ic_back_24"
             android:background="@drawable/bottom_rounded_bg"
-            app:titleTextColor="@color/colorSecondary"/>
+            app:navigationIcon="@drawable/ic_back_24"
+            app:title="Detail Motor"
+            app:titleTextColor="@color/colorSecondary" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -31,16 +30,16 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp">
+            android:layout_height="wrap_content">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_image"
                 android:layout_width="0dp"
                 android:layout_height="300dp"
+                android:layout_margin="16dp"
+                android:alpha="0"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
-                android:alpha="0"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -50,6 +49,7 @@
                     android:id="@+id/image_upload"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:contentDescription="@string/image_preview"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_image_placeholder" />
 
@@ -60,7 +60,9 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:alpha="0"
                 app:boxStrokeColor="@color/box_stroke_color"
                 app:layout_constraintBottom_toTopOf="@id/motor_year_input_layout"
@@ -76,21 +78,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/opensans"
-                    android:hint="Nama Motor"
+                    android:hint="@string/motor_name"
                     android:inputType="none"
                     android:textColorHint="@android:color/darker_gray"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    tools:ignore="SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/motor_year_input_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:alpha="0"
                 app:boxStrokeColor="@color/box_stroke_color"
                 app:cursorColor="@color/colorPrimary"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 app:layout_constraintBottom_toTopOf="@id/mileage_input_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -104,16 +109,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/opensans"
-                    android:hint="Tahun Motor"
+                    android:hint="@string/year"
                     android:inputType="none"
                     android:textColorHint="@android:color/darker_gray"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    tools:ignore="SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/mileage_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:alpha="0"
                 app:boxStrokeColor="@color/box_stroke_color"
                 app:cursorColor="@color/colorPrimary"
@@ -130,7 +139,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/opensans"
-                    android:hint="Kilometer Motor"
+                    android:hint="@string/mileage"
                     android:inputType="number"
                     android:textColorHint="@android:color/darker_gray"
                     android:textSize="14sp" />
@@ -141,7 +150,9 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:alpha="0"
                 app:boxStrokeColor="@color/box_stroke_color"
                 app:cursorColor="@color/colorPrimary"
@@ -158,10 +169,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/opensans"
-                    android:hint="Lokasi"
+                    android:hint="@string/location"
                     android:inputType="none"
                     android:textColorHint="@android:color/darker_gray"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    tools:ignore="SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -169,7 +181,9 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:alpha="0"
                 app:boxStrokeColor="@color/box_stroke_color"
                 app:cursorColor="@color/colorPrimary"
@@ -185,20 +199,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/opensans"
-                    android:hint="Status Pajak"
+                    android:hint="@string/tax"
                     android:inputType="none"
                     android:textColorHint="@android:color/darker_gray"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    tools:ignore="SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/analyze_button"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:alpha="0"
                 android:backgroundTint="@color/colorPrimary"
                 android:fontFamily="@font/anta"
-                android:text="Analisis"
+                android:text="@string/analisis"
                 android:textColor="@color/colorSecondary"
                 android:textSize="16sp"
                 app:cornerRadius="8dp"

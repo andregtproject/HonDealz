@@ -1,6 +1,8 @@
 package com.capstone.project.hondealz.view.scan
 
 import android.Manifest
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -34,9 +36,11 @@ class ScanFragment : Fragment() {
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-                Toast.makeText(requireContext(), "Permission request granted", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Permission request granted", Toast.LENGTH_LONG)
+                    .show()
             } else {
-                Toast.makeText(requireContext(), "Permission request denied", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Permission request denied", Toast.LENGTH_LONG)
+                    .show()
             }
         }
 
@@ -65,23 +69,39 @@ class ScanFragment : Fragment() {
         binding.cameraButton.setOnClickListener { startCamera() }
         binding.uploadButton.setOnClickListener { uploadImage() }
 
+        playAnimation()
+
         return binding.root
+    }
+
+    private fun playAnimation() {
+        val motorImage = ObjectAnimator.ofFloat(binding.cardImage, View.ALPHA, 1f).setDuration(100)
+        val cameraGalleryLayout =
+            ObjectAnimator.ofFloat(binding.cameraGalleryLayout, View.ALPHA, 1f).setDuration(100)
+        val uploadButton =
+            ObjectAnimator.ofFloat(binding.uploadButton, View.ALPHA, 1f).setDuration(100)
+
+        AnimatorSet().apply {
+            playSequentially(
+                motorImage,
+                cameraGalleryLayout,
+                uploadButton
+            )
+            startDelay = 100
+        }.start()
     }
 
     private fun uploadImage() {
         currentImageUri?.let { uri ->
             try {
-                // Reduce file image terlebih dahulu
                 val reducedImageFile = uriToFile(uri, requireContext()).reduceFileImage()
 
-                // Buat URI baru dari file yang sudah diresize
                 val reducedImageUri = FileProvider.getUriForFile(
                     requireContext(),
                     "${requireContext().packageName}.fileprovider",
                     reducedImageFile
                 )
 
-                // Kirim URI yang sudah diresize ke ScanDetailActivity
                 val intent = Intent(requireContext(), ScanDetailActivity::class.java).apply {
                     putExtra(ScanDetailActivity.EXTRA_IMAGE_URI, reducedImageUri)
                 }
@@ -89,10 +109,12 @@ class ScanFragment : Fragment() {
 
             } catch (e: Exception) {
                 Log.e("UploadImageError", "Error processing image", e)
-                Toast.makeText(requireContext(), "Gagal memproses gambar", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Gagal memproses gambar", Toast.LENGTH_SHORT)
+                    .show()
             }
         } ?: run {
-            Toast.makeText(requireContext(), "Pilih gambar terlebih dahulu", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Pilih gambar terlebih dahulu", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -130,8 +152,8 @@ class ScanFragment : Fragment() {
             Glide.with(this)
                 .load(it)
                 .placeholder(R.drawable.ic_image_placeholder)
-                .override(800, 800)  // Batasi ukuran gambar
-                .centerCrop()  // Potong gambar agar sesuai dengan ukuran target
+                .override(800, 800)
+                .centerCrop()
                 .into(binding.previewImageView)
         }
     }

@@ -72,16 +72,13 @@ class ScanDetailActivity : AppCompatActivity() {
         binding = ActivityScanDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Setup dropdown for motor names
         setupMotorNameDropdown()
         setupMotorYearDropdown()
         setupLocationDropdown()
         setupTaxStatusDropdown()
 
-        // Ambil URI gambar dari intent
-        val imageUri = intent.getParcelableExtra<Uri>(EXTRA_IMAGE_URI)
+        @Suppress("DEPRECATION") val imageUri = intent.getParcelableExtra<Uri>(EXTRA_IMAGE_URI)
 
-        // Tampilkan gambar di ImageView
         imageUri?.let {
             Glide.with(this)
                 .load(it)
@@ -107,7 +104,6 @@ class ScanDetailActivity : AppCompatActivity() {
         (binding.motorNameInputLayout.editText as? AutoCompleteTextView)?.apply {
             setAdapter(adapter)
             setOnItemClickListener { _, _, position, _ ->
-                // Update year dropdown when motor name changes
                 updateYearDropdown(MOTOR_NAMES[position])
             }
         }
@@ -122,13 +118,13 @@ class ScanDetailActivity : AppCompatActivity() {
         )
         (binding.motorYearInputLayout.editText as? AutoCompleteTextView)?.apply {
             setAdapter(yearAdapter)
-            setText("") // Mengosongkan pilihan sebelumnya
+            setText("")
         }
     }
 
     private fun setupMotorYearDropdown() {
         (binding.motorYearInputLayout.editText as? AutoCompleteTextView)?.apply {
-            inputType = InputType.TYPE_NULL // Disable manual text input
+            inputType = InputType.TYPE_NULL
             setOnClickListener { showDropDown() }
         }
     }
@@ -141,7 +137,7 @@ class ScanDetailActivity : AppCompatActivity() {
         )
         (binding.locationInputLayout.editText as? AutoCompleteTextView)?.apply {
             setAdapter(locationAdapter)
-            inputType = InputType.TYPE_NULL // Disable manual text input
+            inputType = InputType.TYPE_NULL
             setOnClickListener { showDropDown() }
         }
     }
@@ -154,19 +150,25 @@ class ScanDetailActivity : AppCompatActivity() {
         )
         (binding.taxInputLayout.editText as? AutoCompleteTextView)?.apply {
             setAdapter(taxStatusAdapter)
-            inputType = InputType.TYPE_NULL // Disable manual text input
+            inputType = InputType.TYPE_NULL
             setOnClickListener { showDropDown() }
         }
     }
 
     private fun playAnimation() {
         val motorImage = ObjectAnimator.ofFloat(binding.cardImage, View.ALPHA, 1f).setDuration(100)
-        val motorName = ObjectAnimator.ofFloat(binding.motorNameInputLayout, View.ALPHA, 1f).setDuration(100)
-        val motorYear = ObjectAnimator.ofFloat(binding.motorYearInputLayout, View.ALPHA, 1f).setDuration(100)
-        val mileage = ObjectAnimator.ofFloat(binding.mileageInputLayout, View.ALPHA, 1f).setDuration(100)
-        val location = ObjectAnimator.ofFloat(binding.locationInputLayout, View.ALPHA, 1f).setDuration(100)
-        val taxStatus = ObjectAnimator.ofFloat(binding.taxInputLayout, View.ALPHA, 1f).setDuration(100)
-        val analyzeButton = ObjectAnimator.ofFloat(binding.analyzeButton, View.ALPHA, 1f).setDuration(100)
+        val motorName =
+            ObjectAnimator.ofFloat(binding.motorNameInputLayout, View.ALPHA, 1f).setDuration(100)
+        val motorYear =
+            ObjectAnimator.ofFloat(binding.motorYearInputLayout, View.ALPHA, 1f).setDuration(100)
+        val mileage =
+            ObjectAnimator.ofFloat(binding.mileageInputLayout, View.ALPHA, 1f).setDuration(100)
+        val location =
+            ObjectAnimator.ofFloat(binding.locationInputLayout, View.ALPHA, 1f).setDuration(100)
+        val taxStatus =
+            ObjectAnimator.ofFloat(binding.taxInputLayout, View.ALPHA, 1f).setDuration(100)
+        val analyzeButton =
+            ObjectAnimator.ofFloat(binding.analyzeButton, View.ALPHA, 1f).setDuration(100)
 
         AnimatorSet().apply {
             playSequentially(
@@ -192,12 +194,14 @@ class ScanDetailActivity : AppCompatActivity() {
 
                     setMotorNameFromPrediction(motorModel)
                 }
+
                 is ResultState.Error -> {
                     showLoading(false)
                     setMotorNameFromPrediction(null)
                     Toast.makeText(this, result.error, Toast.LENGTH_SHORT).show()
                     Log.e("ScanDetailActivity", "Error: ${result.error}")
                 }
+
                 is ResultState.Loading -> {
                     showLoading(true)
                 }
@@ -220,11 +224,13 @@ class ScanDetailActivity : AppCompatActivity() {
         updateYearDropdown(selectedMotorName)
 
         (binding.motorNameInputLayout.editText as? AutoCompleteTextView)?.apply {
-            setAdapter(ArrayAdapter(
-                this@ScanDetailActivity,
-                R.layout.list_item_dropdown,
-                MOTOR_NAMES
-            ))
+            setAdapter(
+                ArrayAdapter(
+                    this@ScanDetailActivity,
+                    R.layout.list_item_dropdown,
+                    MOTOR_NAMES
+                )
+            )
             setOnClickListener { showDropDown() }
         }
     }

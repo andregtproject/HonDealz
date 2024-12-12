@@ -1,6 +1,7 @@
 package com.capstone.project.hondealz.data.api
 
 import com.capstone.project.hondealz.data.response.ForgotPasswordResponse
+import com.capstone.project.hondealz.data.response.ListHistoryResponse
 import com.capstone.project.hondealz.data.response.LoginResponse
 import com.capstone.project.hondealz.data.response.MotorResponse
 import com.capstone.project.hondealz.data.response.PriceResponse
@@ -77,4 +78,9 @@ interface ApiService {
         @Field("location") location: String,
         @Field("tax") tax: String
     ): Call<PriceResponse>
+
+    @GET("histories")
+    fun getHistories(
+        @Header("Authorization") token: String
+    ): Call<ListHistoryResponse>
 }

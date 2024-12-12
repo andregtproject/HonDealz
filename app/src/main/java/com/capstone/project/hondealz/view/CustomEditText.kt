@@ -3,13 +3,11 @@ package com.capstone.project.hondealz.view
 import android.content.Context
 import android.graphics.Canvas
 import android.text.Editable
-import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.util.Patterns
 import com.capstone.project.hondealz.R
 import com.google.android.material.textfield.TextInputEditText
-import java.time.Year
 
 class CustomEditText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -37,18 +35,15 @@ class CustomEditText @JvmOverloads constructor(
     internal fun validateInput() {
         val input = text.toString()
         when (id) {
-            // Registration and Login validations
             R.id.name_edit_text -> validateName(input)
             R.id.username_edit_text -> validateUsername(input)
             R.id.email_edit_text -> validateEmail(input)
             R.id.password_edit_text -> validatePassword(input)
             R.id.confirm_password_edit_text -> validateConfirmPassword(input)
 
-            // Scan Detail validations
             R.id.motor_year_edit_text -> validateMotorYear(input)
             R.id.mileage_edit_text -> validateMileage(input)
             R.id.location_edit_text -> validateProvince(input)
-            R.id.tax_edit_text -> validateEngineSize(input)
         }
     }
 
@@ -58,7 +53,6 @@ class CustomEditText @JvmOverloads constructor(
             return
         }
 
-        // Ambil password dari input sebelumnya (password_edit_text)
         val passwordEditText = rootView.findViewById<CustomEditText>(R.id.password_edit_text)
         val password = passwordEditText.text.toString()
 
@@ -171,30 +165,6 @@ class CustomEditText @JvmOverloads constructor(
             setError(context.getString(R.string.province_length_message), null)
         } else {
             error = null
-        }
-    }
-
-    private fun validateEngineSize(engineSizeStr: String) {
-        if (engineSizeStr.isEmpty()) {
-            setError(context.getString(R.string.empty_engine_size_message), null)
-            return
-        }
-
-        try {
-            val engineSize = engineSizeStr.toInt()
-            when {
-                engineSize < 50 -> {
-                    setError(context.getString(R.string.small_engine_size_message), null)
-                }
-                engineSize > 2000 -> {
-                    setError(context.getString(R.string.large_engine_size_message), null)
-                }
-                else -> {
-                    error = null
-                }
-            }
-        } catch (e: NumberFormatException) {
-            setError(context.getString(R.string.invalid_engine_size_message), null)
         }
     }
 

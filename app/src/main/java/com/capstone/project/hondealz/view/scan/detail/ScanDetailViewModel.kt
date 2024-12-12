@@ -27,11 +27,9 @@ class ScanDetailViewModel(
 
     fun predictMotor(imageUri: Uri) {
         viewModelScope.launch {
-            // Set loading state
             _motorResult.value = ResultState.Loading
 
             try {
-                // Gunakan content resolver untuk mendapatkan file yang benar
                 val contentResolver = context.contentResolver
                 val inputStream = contentResolver.openInputStream(imageUri)
 
@@ -40,7 +38,6 @@ class ScanDetailViewModel(
                     return@launch
                 }
 
-                // Simpan stream ke file sementara
                 val tempFile = File(context.cacheDir, "temp_image.jpg")
                 tempFile.outputStream().use { fileOut ->
                     inputStream.copyTo(fileOut)
@@ -52,7 +49,6 @@ class ScanDetailViewModel(
                 val result = repository.predictMotor(body)
                 _motorResult.value = result
 
-                // Hapus file sementara
                 tempFile.delete()
             } catch (e: Exception) {
                 _motorResult.value = ResultState.Error(0, "Gagal memprediksi motor: ${e.message}")
@@ -67,8 +63,9 @@ class ScanDetailViewModel(
                 val result = repository.predictPrice(model, year, mileage, location, tax)
                 _priceResult.value = result
             } catch (e: Exception) {
-                _priceResult.value = ResultState.Error(0,e.message ?: "Terjadi kesalahan")
+                _priceResult.value = ResultState.Error(0, e.message ?: "Terjadi kesalahan")
             }
         }
     }
+
 }
