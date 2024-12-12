@@ -109,5 +109,7 @@
     <string name="location">Location</string>
     <string name="motor_name">Motorcycle Name</string>
     <string name="year">Year</string>
+    <string name="no_history_found">No history found</string>
+    <string name="see_all">See All</string>
 
 </resources>

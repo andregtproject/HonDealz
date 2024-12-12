@@ -1,6 +1,7 @@
 package com.capstone.project.hondealz.view.profile
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,11 +20,11 @@ import com.capstone.project.hondealz.data.pref.UserPreference
 import com.capstone.project.hondealz.data.pref.dataStore
 import com.capstone.project.hondealz.databinding.DialogReportBugBinding
 import com.capstone.project.hondealz.databinding.FragmentProfileBinding
-import com.capstone.project.hondealz.view.profile.editprofile.EditProfileActivity
 import com.capstone.project.hondealz.view.ViewModelFactory
+import com.capstone.project.hondealz.view.main.MainActivity
+import com.capstone.project.hondealz.view.profile.editprofile.EditProfileActivity
 import com.capstone.project.hondealz.view.profile.usermanual.UserManualActivity
 import com.capstone.project.hondealz.view.profile.usermanual.UserManualViewModel
-import com.capstone.project.hondealz.view.main.MainActivity
 import com.capstone.project.hondealz.view.welcome.WelcomeActivity
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -46,7 +47,10 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         userPreference = UserPreference.getInstance(requireContext().dataStore)
         honDealzRepository = HonDealzRepository(ApiConfig.getApiService(), userPreference)
-        userManualViewModel = ViewModelProvider(requireActivity(), ViewModelFactory.getInstance(requireContext()))[UserManualViewModel::class.java]
+        userManualViewModel = ViewModelProvider(
+            requireActivity(),
+            ViewModelFactory.getInstance(requireContext())
+        )[UserManualViewModel::class.java]
         return binding.root
     }
 
@@ -88,6 +92,7 @@ class ProfileFragment : Fragment() {
                         binding.profileContent.visibility = View.GONE
                         binding.loadingIndicator.visibility = View.VISIBLE
                     }
+
                     is ResultState.Success -> {
                         binding.profileContent.visibility = View.VISIBLE
                         binding.loadingIndicator.visibility = View.GONE
@@ -101,6 +106,7 @@ class ProfileFragment : Fragment() {
                             startActivity(intent)
                         }
                     }
+
                     is ResultState.Error -> {
                         binding.profileContent.visibility = View.GONE
                         binding.loadingIndicator.visibility = View.GONE
@@ -108,25 +114,59 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
+
         lifecycleScope.launch {
+            val isThemeSwitched = userPreference.isThemeSwitched().first()
             val isDarkMode = userPreference.isDarkMode().first()
-            binding.themeSwitch.isChecked = isDarkMode
-            updateTheme(isDarkMode)
+            val currentNightMode =
+                resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+            val isSystemDarkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES
+
+            when {
+                !isThemeSwitched -> {
+                    binding.themeSwitch.isChecked = isSystemDarkMode
+                    updateTheme(null)
+                }
+
+                else -> {
+                    binding.themeSwitch.isChecked = isDarkMode
+                    updateTheme(isDarkMode)
+                }
+            }
         }
 
         binding.themeSwitch.setOnCheckedChangeListener { _, isChecked ->
             lifecycleScope.launch {
                 userPreference.saveDarkMode(isChecked)
+                userPreference.setThemeSwitched(true)
+
                 updateTheme(isChecked)
             }
         }
     }
 
-    private fun updateTheme(isDarkMode: Boolean) {
-        AppCompatDelegate.setDefaultNightMode(
-            if (isDarkMode) AppCompatDelegate.MODE_NIGHT_YES
-            else AppCompatDelegate.MODE_NIGHT_NO
-        )
+    private fun updateTheme(isDarkMode: Boolean?) {
+        lifecycleScope.launch {
+            val currentNightMode =
+                resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+
+            if (!userPreference.isThemeSwitched().first()) {
+                val isSystemDarkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES
+
+                binding.themeSwitch.isChecked = isSystemDarkMode
+                userPreference.saveDarkMode(isSystemDarkMode)
+
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                return@launch
+            }
+
+            val themeMode = when {
+                isDarkMode == null -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                isDarkMode -> AppCompatDelegate.MODE_NIGHT_YES
+                else -> AppCompatDelegate.MODE_NIGHT_NO
+            }
+            AppCompatDelegate.setDefaultNightMode(themeMode)
+        }
     }
 
     override fun onDestroyView() {

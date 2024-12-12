@@ -56,11 +56,25 @@ class ScanDetailViewModel(
         }
     }
 
-    fun predictPrice(model: String, year: Int, mileage: Int, location: String, tax: String) {
+    fun predictPrice(
+        idPicture: Int,
+        model: String,
+        year: Int,
+        mileage: Int,
+        location: String,
+        tax: String
+    ) {
         viewModelScope.launch {
             _priceResult.value = ResultState.Loading
             try {
-                val result = repository.predictPrice(model, year, mileage, location, tax)
+                val result = repository.predictPrice(
+                    idPicture,
+                    model,
+                    year,
+                    mileage,
+                    location,
+                    tax
+                )
                 _priceResult.value = result
             } catch (e: Exception) {
                 _priceResult.value = ResultState.Error(0, e.message ?: "Terjadi kesalahan")

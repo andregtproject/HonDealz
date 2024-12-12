@@ -224,7 +224,6 @@ class HonDealzRepository(
                         ResultState.Success(motorResponse)
                     } ?: ResultState.Error(response.code(), "Prediksi motor gagal")
                 } else {
-                    // Parse error body untuk mendapatkan pesan error yang lebih spesifik
                     val errorBody = response.errorBody()?.string()
                     val errorMessage = try {
                         val jsonError = JSONObject(errorBody ?: "")
@@ -244,6 +243,7 @@ class HonDealzRepository(
     }
 
     suspend fun predictPrice(
+        idPicture: Int,
         model: String,
         year: Int,
         mileage: Int,
@@ -255,8 +255,11 @@ class HonDealzRepository(
                 val userModel = userPreference.getSession().first()
                 val token = "Bearer ${userModel.token}"
 
+                Log.d("Repository", "Predict Price Params: idPicture = $idPicture, model=$model, year=$year, mileage=$mileage, location=$location, tax=$tax")
+
                 val response = apiService.predictPrice(
                     token,
+                    idPicture,
                     model,
                     year,
                     mileage,
@@ -269,7 +272,6 @@ class HonDealzRepository(
                         ResultState.Success(priceResponse)
                     } ?: ResultState.Error(response.code(), "Respon prediksi harga kosong")
                 } else {
-                    // Parse pesan error dari body respon
                     val errorBody = response.errorBody()?.string()
                     val errorMessage = try {
                         val jsonError = JSONObject(errorBody ?: "")

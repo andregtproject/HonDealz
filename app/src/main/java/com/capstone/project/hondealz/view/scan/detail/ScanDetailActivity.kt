@@ -243,6 +243,14 @@ class ScanDetailActivity : AppCompatActivity() {
             val location = binding.locationEditText.text.toString()
             val taxStatus = binding.taxEditText.text.toString()
 
+            // Get idPicture from the motor prediction result
+            val idPicture = viewModel.motorResult.value?.let { result ->
+                when (result) {
+                    is ResultState.Success -> result.data.idPicture ?: 0
+                    else -> 0
+                }
+            } ?: 0
+
             when {
                 motorName.isEmpty() -> {
                     binding.motorNameEditText.requestFocus()
@@ -276,6 +284,7 @@ class ScanDetailActivity : AppCompatActivity() {
                         putExtra(ResultActivity.EXTRA_MILEAGE, mileage)
                         putExtra(ResultActivity.EXTRA_LOCATION, location)
                         putExtra(ResultActivity.EXTRA_TAX_STATUS, taxStatus)
+                        putExtra(ResultActivity.EXTRA_ID_PICTURE, idPicture)
                         imageUri?.let { uri ->
                             putExtra(ResultActivity.EXTRA_IMAGE_URI, uri)
                         }

@@ -72,6 +72,7 @@ interface ApiService {
     @POST("ai-models/motor-price-estimator")
     fun predictPrice(
         @Header("Authorization") token: String,
+        @Field("id_picture") idPicture: Int,
         @Field("model") model: String,
         @Field("year") year: Int,
         @Field("mileage") mileage: Int,

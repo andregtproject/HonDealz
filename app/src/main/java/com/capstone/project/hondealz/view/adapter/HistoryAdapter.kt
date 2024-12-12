@@ -46,16 +46,17 @@ class HistoryAdapter : ListAdapter<HistoriesItem, HistoryAdapter.HistoryViewHold
                     .placeholder(R.drawable.ic_image_placeholder)
                     .into(ivMotor)
 
-                // Format and set date
                 try {
-                    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS", Locale.getDefault())
+                    val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                     val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                    val date = history.createdAt?.let { inputFormat.parse(it) }
-                    date?.let {
-                        tvDate.text = outputFormat.format(it)
+
+                    history.createdAt?.let { dateString ->
+                        // Ambil hanya bagian tanggal (sebelum T jika ada)
+                        val cleanDateString = dateString.split("T").firstOrNull() ?: dateString
+                        val parsedDate = inputFormat.parse(cleanDateString)
+                        tvDate.text = parsedDate?.let { outputFormat.format(it) } ?: cleanDateString
                     }
                 } catch (e: Exception) {
-                    // Fallback to original date string or empty
                     tvDate.text = history.createdAt ?: ""
                 }
             }

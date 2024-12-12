@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.project.hondealz.data.HonDealzRepository
 import com.capstone.project.hondealz.data.di.Injection
+import com.capstone.project.hondealz.data.pref.UserPreference
+import com.capstone.project.hondealz.data.pref.dataStore
+import com.capstone.project.hondealz.view.history.HistoryViewModel
 import com.capstone.project.hondealz.view.home.HomeViewModel
 import com.capstone.project.hondealz.view.profile.ProfileViewModel
 import com.capstone.project.hondealz.view.profile.editprofile.EditProfileViewModel
@@ -16,6 +19,7 @@ import com.capstone.project.hondealz.view.scan.detail.ScanDetailViewModel
 
 class ViewModelFactory private constructor(
     private val repository: HonDealzRepository,
+    private val userPreference: UserPreference,
     private val context: Context
 ) : ViewModelProvider.NewInstanceFactory() {
 
@@ -29,7 +33,7 @@ class ViewModelFactory private constructor(
                 RegisterViewModel(repository) as T
             }
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-                MainViewModel(repository) as T
+                MainViewModel(repository, userPreference) as T
             }
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(repository) as T
@@ -46,6 +50,9 @@ class ViewModelFactory private constructor(
             modelClass.isAssignableFrom(ScanDetailViewModel::class.java) -> {
                 ScanDetailViewModel(repository, context) as T
             }
+            modelClass.isAssignableFrom(HistoryViewModel::class.java) -> {
+                HistoryViewModel(repository) as T
+            }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
@@ -57,6 +64,7 @@ class ViewModelFactory private constructor(
             return instance ?: synchronized(this) {
                 instance ?: ViewModelFactory(
                     Injection.provideRepository(context),
+                    UserPreference.getInstance(context.dataStore),
                     context
                 ).also { instance = it }
             }

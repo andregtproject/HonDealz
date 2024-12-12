@@ -30,6 +30,7 @@ class ResultActivity : AppCompatActivity() {
         const val EXTRA_LOCATION = "extra_location"
         const val EXTRA_TAX_STATUS = "extra_tax_status"
         const val EXTRA_IMAGE_URI = "extra_image_uri"
+        const val EXTRA_ID_PICTURE = "extra_id_picture"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +38,7 @@ class ResultActivity : AppCompatActivity() {
         binding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Retrieve data from intent
+        val idPicture = intent.getIntExtra(EXTRA_ID_PICTURE, 0)
         val motorModel = intent.getStringExtra(EXTRA_MODEL)
         val motorYear = intent.getIntExtra(EXTRA_YEAR, 0)
         val mileage = intent.getIntExtra(EXTRA_MILEAGE, 0)
@@ -45,14 +46,13 @@ class ResultActivity : AppCompatActivity() {
         val taxStatus = intent.getStringExtra(EXTRA_TAX_STATUS)
         val imageUri = intent.getParcelableExtra<Uri>(EXTRA_IMAGE_URI)
 
-        // Setup back button
         binding.topAppBar.setNavigationOnClickListener { onBackPressed() }
 
-        // Display motor details
         displayMotorDetails(motorModel, motorYear, mileage, location, taxStatus, imageUri)
 
         if (motorModel != null && motorYear > 0 && mileage > 0 && !location.isNullOrEmpty() && !taxStatus.isNullOrEmpty()) {
             viewModel.predictPrice(
+                idPicture = idPicture,
                 model = motorModel,
                 year = motorYear,
                 mileage = mileage,
@@ -64,26 +64,20 @@ class ResultActivity : AppCompatActivity() {
         }
 
 
-        // Observe price prediction
         setupPricePredictionObserver()
         playAnimation()
-
-        // Setup save button
-        setupSaveButton()
     }
 
     private fun playAnimation() {
         val motorImage = ObjectAnimator.ofFloat(binding.cardMotorImage, View.ALPHA, 1f).setDuration(100)
         val motorDetail = ObjectAnimator.ofFloat(binding.cardMotorDetail, View.ALPHA, 1f).setDuration(100)
         val motorPrice = ObjectAnimator.ofFloat(binding.cardPrediction, View.ALPHA, 1f).setDuration(100)
-        val saveButton = ObjectAnimator.ofFloat(binding.saveButton, View.ALPHA, 1f).setDuration(100)
 
         AnimatorSet().apply {
             playSequentially(
                 motorImage,
                 motorDetail,
-                motorPrice,
-                saveButton
+                motorPrice
             )
             startDelay = 100
         }.start()
@@ -97,7 +91,6 @@ class ResultActivity : AppCompatActivity() {
         taxStatus: String?,
         imageUri: Uri?
     ) {
-        // Display motor image
         imageUri?.let {
             Glide.with(this)
                 .load(it)
@@ -105,7 +98,6 @@ class ResultActivity : AppCompatActivity() {
                 .into(binding.imageMotor)
         }
 
-        // Set motor details
         binding.tvMotorName.text = motorModel ?: "N/A"
         binding.tvMotorYear.text = motorYear.toString()
         binding.tvMileage.text = "${NumberFormat.getNumberInstance(Locale("id", "ID")).format(mileage)} km"
@@ -120,7 +112,6 @@ class ResultActivity : AppCompatActivity() {
                     showLoading(false)
                     val priceResponse = result.data
 
-                    // Format prices with Indonesian number format
                     val numberFormat = NumberFormat.getNumberInstance(Locale("id", "ID"))
 
                     binding.tvPredictionPrice.text = "Rp ${numberFormat.format(priceResponse.predictedPrice)}"
@@ -130,7 +121,6 @@ class ResultActivity : AppCompatActivity() {
                 is ResultState.Error -> {
                     showLoading(false)
                     Toast.makeText(this, "Gagal mendapatkan prediksi harga: ${result.error}", Toast.LENGTH_SHORT).show()
-                    // Optional: Set default or fallback values
                     binding.tvPredictionPrice.text = "Rp -"
                     binding.tvPriceMin.text = "Rp -"
                     binding.tvPriceMax.text = "Rp -"
@@ -139,13 +129,6 @@ class ResultActivity : AppCompatActivity() {
                     showLoading(true)
                 }
             }
-        }
-    }
-
-    private fun setupSaveButton() {
-        binding.saveButton.setOnClickListener {
-            // Implement save functionality if needed
-            Toast.makeText(this, "Fitur simpan akan segera hadir", Toast.LENGTH_SHORT).show()
         }
     }
 

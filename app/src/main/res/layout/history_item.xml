@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginBottom="16dp"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp">
 
@@ -13,35 +14,39 @@
         android:layout_height="wrap_content"
         android:background="@color/colorSecondary">
 
-        <ImageView
-            android:id="@+id/iv_motor"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:contentDescription="@string/image_history"
-            android:scaleType="centerCrop"
-            android:layout_margin="8dp"
-            android:src="@drawable/ic_image_placeholder"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@android:color/transparent"
+            app:cardCornerRadius="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_motor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_image_placeholder"
+                tools:ignore="ContentDescription"/>
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/tv_motor_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:ellipsize="end"
             android:maxLines="1"
             tools:text="Vario 160"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
-            android:textStyle="bold"
+            android:fontFamily="@font/anta"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_motor"
+            app:layout_constraintStart_toEndOf="@id/card_image"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -50,6 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             tools:text="2024"
+            android:textSize="14sp"
+            android:fontFamily="@font/opensans"
             android:textColor="@color/colorPrimary"
             app:layout_constraintStart_toStartOf="@id/tv_motor_name"
             app:layout_constraintTop_toBottomOf="@id/tv_motor_name" />
@@ -61,9 +68,9 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             tools:text="Rp7.000.000"
-            android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"
+            android:fontFamily="@font/anta"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_motor_name"
             app:layout_constraintTop_toBottomOf="@id/tv_motor_year" />
@@ -74,6 +81,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             tools:text="21/11/2024"
+            android:fontFamily="@font/opensans"
+            android:textSize="14sp"
             android:textColor="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="@id/tv_motor_price"
             app:layout_constraintEnd_toEndOf="parent" />

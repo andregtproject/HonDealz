@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.capstone.project.hondealz.data.HonDealzRepository
 import com.capstone.project.hondealz.data.ResultState
 import com.capstone.project.hondealz.data.pref.UserModel
+import com.capstone.project.hondealz.data.response.ListHistoryResponse
 import com.capstone.project.hondealz.data.response.UserDataResponse
 import kotlinx.coroutines.launch
 
@@ -16,13 +17,33 @@ class HomeViewModel(private val repository: HonDealzRepository) : ViewModel() {
     private val _userData = MutableLiveData<ResultState<UserDataResponse>>()
     val userData: LiveData<ResultState<UserDataResponse>> = _userData
 
+    private val _recentHistories = MutableLiveData<ResultState<ListHistoryResponse>>()
+    val recentHistories: LiveData<ResultState<ListHistoryResponse>> = _recentHistories
+
     fun fetchUserData() {
         viewModelScope.launch {
-            // Log untuk debugging
             Log.d("HomeViewModel", "Fetching user data...")
-
             _userData.value = ResultState.Loading
             _userData.value = repository.getUserData()
+        }
+    }
+
+    fun fetchRecentHistories() {
+        viewModelScope.launch {
+            _recentHistories.value = ResultState.Loading
+            val result = repository.getHistories()
+
+            if (result is ResultState.Success) {
+                val sortedHistories = result.data.histories
+                    ?.filterNotNull()
+                    ?.sortedByDescending { it.createdAt }
+                    ?.take(5)
+
+                val recentHistoriesResponse = ListHistoryResponse(sortedHistories)
+                _recentHistories.value = ResultState.Success(recentHistoriesResponse)
+            } else {
+                _recentHistories.value = result
+            }
         }
     }
 
@@ -32,7 +53,6 @@ class HomeViewModel(private val repository: HonDealzRepository) : ViewModel() {
         }
     }
 
-    // Tambahkan method untuk mendapatkan session
     fun getSession(): LiveData<UserModel> {
         return repository.getSession().asLiveData()
     }
