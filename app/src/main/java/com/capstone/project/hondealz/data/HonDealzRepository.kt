@@ -209,7 +209,7 @@ class HonDealzRepository(
     }
 
     fun getPdfUrl(): String {
-        return "https://drive.google.com/file/d/12vUeulo2NfY3n8VgvQhfZtAhypEFZ-Qa/view?usp=sharing"
+        return "https://drive.google.com/file/d/1DmoEFY2_uxFMASjh-ITu7mwiFJYhLCEY/view?usp=sharing"
     }
 
     suspend fun predictMotor(imageFile: MultipartBody.Part): ResultState<MotorResponse> {
