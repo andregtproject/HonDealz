@@ -44,7 +44,7 @@ fun getImageUri(context: Context): Uri {
 
 private fun getImageUriForPreQ(context: Context): Uri {
     val filesDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-    val imageFile = File(filesDir, "/SiStory/$timeStamp.jpg")
+    val imageFile = File(filesDir, "/HonDealz/$timeStamp.jpg")
     if (imageFile.parentFile?.exists() == false) imageFile.parentFile?.mkdir()
     return FileProvider.getUriForFile(
         context,
@@ -80,7 +80,6 @@ fun File.reduceFileImage(): File {
     var compressQuality = 100
     var streamLength: Int
 
-    // Batasi ukuran bitmap
     val maxWidth = 1024
     val maxHeight = 1024
 

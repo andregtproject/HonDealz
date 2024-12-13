@@ -21,10 +21,6 @@
         android:theme="@style/Theme.Hondealz"
         tools:targetApi="31">
         <activity
-            android:name=".view.history.detail.HistoryDetailActivity"
-            android:exported="false"
-            android:label="Detail Riwayat"/>
-        <activity
             android:name=".view.profile.editprofile.EditProfileActivity"
             android:exported="false" />
         <activity

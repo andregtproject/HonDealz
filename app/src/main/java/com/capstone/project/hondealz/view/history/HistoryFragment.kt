@@ -1,6 +1,5 @@
 package com.capstone.project.hondealz.view.history
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +13,6 @@ import com.capstone.project.hondealz.data.ResultState
 import com.capstone.project.hondealz.databinding.FragmentHistoryBinding
 import com.capstone.project.hondealz.view.ViewModelFactory
 import com.capstone.project.hondealz.view.adapter.HistoryAdapter
-import com.capstone.project.hondealz.view.history.detail.HistoryDetailActivity
 
 class HistoryFragment : Fragment() {
     private var _binding: FragmentHistoryBinding? = null
@@ -47,13 +45,6 @@ class HistoryFragment : Fragment() {
         binding.rvHistoryScan.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = historyAdapter
-        }
-
-        historyAdapter.setOnItemClickListener { historyId ->
-            val intent = Intent(requireContext(), HistoryDetailActivity::class.java).apply {
-                putExtra(HistoryDetailActivity.EXTRA_HISTORY_ID, historyId)
-            }
-            startActivity(intent)
         }
     }
 

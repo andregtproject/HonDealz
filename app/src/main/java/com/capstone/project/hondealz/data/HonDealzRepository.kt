@@ -319,16 +319,28 @@ class HonDealzRepository(
             try {
                 val userModel = userPreference.getSession().first()
                 val token = "Bearer ${userModel.token}"
+                val historiesResult = getHistories()
                 val response = apiService.getSpesificHistory(token, id).execute()
 
                 if (response.isSuccessful) {
-                    response.body()?.let {
-                        ResultState.Success(it)
+                    response.body()?.let { historyResponse ->
+                        val imageUrl = if (historyResponse.imageUrl.isNullOrEmpty() && historiesResult is ResultState.Success) {
+                            historiesResult.data.histories?.find { it!!.id == id }?.imageUrl
+                        } else {
+                            historyResponse.imageUrl
+                        }
+
+                        val updatedHistoryResponse = historyResponse.copy(imageUrl = imageUrl)
+
+                        Log.d("Repository", "Updated Image URL: $imageUrl")
+
+                        ResultState.Success(updatedHistoryResponse)
                     } ?: ResultState.Error(response.code(), "History details are empty")
                 } else {
                     ResultState.Error(response.code(), response.message() ?: "Failed to get history details")
                 }
             } catch (e: Exception) {
+                Log.e("Repository", "Error getting specific history", e)
                 ResultState.Error(0, e.message ?: "Network error")
             }
         }

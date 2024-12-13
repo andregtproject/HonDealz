@@ -135,6 +135,7 @@ class ScanFragment : Fragment() {
 
     private fun startCamera() {
         currentImageUri = getImageUri(requireContext())
+        Log.d("Camera", "Camera URI: $currentImageUri")
         launcherIntentCamera.launch(currentImageUri)
     }
 
@@ -142,7 +143,12 @@ class ScanFragment : Fragment() {
         ActivityResultContracts.TakePicture()
     ) { isSuccess ->
         if (isSuccess) {
+            Log.d("Camera", "Photo capture successful")
+            Log.d("Camera", "Current Image URI: $currentImageUri")
             showImage()
+        } else {
+            Log.d("Camera", "Photo capture failed")
+            Toast.makeText(requireContext(), "Failed to capture photo", Toast.LENGTH_SHORT).show()
         }
     }
 

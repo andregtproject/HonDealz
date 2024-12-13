@@ -8,7 +8,6 @@ import com.capstone.project.hondealz.data.di.Injection
 import com.capstone.project.hondealz.data.pref.UserPreference
 import com.capstone.project.hondealz.data.pref.dataStore
 import com.capstone.project.hondealz.view.history.HistoryViewModel
-import com.capstone.project.hondealz.view.history.detail.HistoryDetailViewModel
 import com.capstone.project.hondealz.view.home.HomeViewModel
 import com.capstone.project.hondealz.view.profile.ProfileViewModel
 import com.capstone.project.hondealz.view.profile.editprofile.EditProfileViewModel
@@ -57,9 +56,6 @@ class ViewModelFactory private constructor(
             }
             modelClass.isAssignableFrom(ResultViewModel::class.java) -> {
                 ResultViewModel(repository) as T
-            }
-            modelClass.isAssignableFrom(HistoryDetailViewModel::class.java) -> {
-                HistoryDetailViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
