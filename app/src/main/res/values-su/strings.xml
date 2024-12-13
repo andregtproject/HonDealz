@@ -39,7 +39,7 @@
     <string name="toast_success_register">Registrasi Suksés</string>
     <string name="toast_success_message_register">Akun anjeun parantos hasil didamel. Wilujeng sumping di HonDealz!</string>
     <string name="toast_fail_register">Registrasi Gagal</string>
-    <string name="username_format">^[a–zA-Z0-9_]+$</string>
+    <string name="username_format">^[a–zA–Z0–9_]+$</string>
     <string name="greetings">Halo, %1$s!</string>
     <string name="title_home">Hoyong Terang Harga Motor Anjeun?</string>
     <string name="subtitle_home">Candak perkiraan harga motor anjeun langsung tina data pasar</string>

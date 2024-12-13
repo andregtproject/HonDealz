@@ -39,7 +39,7 @@
     <string name="toast_success_register">Registrasi Kasil</string>
     <string name="toast_success_message_register">Akun sampeyan kasil digawe. Sugeng rawuh ing HonDealz!</string>
     <string name="toast_fail_register">Registrasi Gagal</string>
-    <string name="username_format">^[a–zA–Z0-9_]+$</string>
+    <string name="username_format">^[a–zA–Z0–9_]+$</string>
     <string name="greetings">Halo, %1$s!</string>
     <string name="title_home">Pengin Ngerti Rega Motor Sampeyan?</string>
     <string name="subtitle_home">Entuk perkiraan rega motor sampeyan langsung saka data pasar</string>
