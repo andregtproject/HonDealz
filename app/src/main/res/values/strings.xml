@@ -65,7 +65,7 @@
     <string name="terms_of_service">Persyaratan Layanan</string>
     <string name="about_title">Tentang HonDealz</string>
     <string name="report_bug">Laporkan Bug</string>
-    <string name="update_password">Update Password</string>
+    <string name="update_password" translatable="false">Update Password</string>
     <string name="loading">Loading…</string>
     <string name="panduan">Panduan Pengguna</string>
     <string name="bahasa">Bahasa</string>
