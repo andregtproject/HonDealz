@@ -48,7 +48,7 @@
     <string name="start_estimasi_instan">Mulai Estimasi</string>
     <string name="riwayat_scan">Riwayat Scan</string>
     <string name="image_history">Image History</string>
-    <string name="image_preview">Image Preview</string>
+    <string name="image_preview" translatable="false">Image Preview</string>
     <string name="subtagline_history">Tinjau ulang detail setiap scan motor Anda</string>
     <string name="logout_button">Logout</string>
     <string name="user_already_registered">Akun dengan data ini sudah terdaftar. Silakan login untuk melanjutkan!</string>
