@@ -17,8 +17,9 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@drawable/bottom_rounded_bg"
             app:navigationIcon="@drawable/ic_back_24"
-            app:title="Detail Motor"
-            app:titleTextColor="@color/colorSecondary" />
+            app:title="@string/detail_motor"
+            app:titleTextColor="@color/colorSecondary"
+            app:titleTextAppearance="@style/CustomToolbarTitle"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

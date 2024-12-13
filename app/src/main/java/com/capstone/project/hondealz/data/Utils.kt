@@ -32,7 +32,7 @@ fun getImageUri(context: Context): Uri {
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, "$timeStamp.jpg")
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-            put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/SiStory/")
+            put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/HonDealz/")
         }
         uri = context.contentResolver.insert(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,

@@ -14,10 +14,11 @@ class ProfileViewModel(private val honDealzRepository: HonDealzRepository) : Vie
     private val _email = MutableLiveData<String>()
     val email: LiveData<String> = _email
 
-    fun getUserData(): LiveData<ResultState<com.capstone.project.hondealz.data.response.UserDataResponse>> = liveData {
-        emit(ResultState.Loading)
-        emit(honDealzRepository.getUserData())
-    }
+    fun getUserData(): LiveData<ResultState<com.capstone.project.hondealz.data.response.UserDataResponse>> =
+        liveData {
+            emit(ResultState.Loading)
+            emit(honDealzRepository.getUserData())
+        }
 
     fun updateUserData(fullname: String, email: String) {
         _fullname.value = fullname

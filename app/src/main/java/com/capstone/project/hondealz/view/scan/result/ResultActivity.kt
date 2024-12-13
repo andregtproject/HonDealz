@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -14,6 +13,8 @@ import com.capstone.project.hondealz.R
 import com.capstone.project.hondealz.data.ResultState
 import com.capstone.project.hondealz.databinding.ActivityResultBinding
 import com.capstone.project.hondealz.view.ViewModelFactory
+import www.sanju.motiontoast.MotionToast
+import www.sanju.motiontoast.MotionToastStyle
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -43,7 +44,10 @@ class ResultActivity : AppCompatActivity() {
         val historyId = intent.getIntExtra(EXTRA_HISTORY_ID, 0)
         val fromHistory = historyId > 0
 
-        binding.topAppBar.setNavigationOnClickListener { onBackPressed() }
+        binding.topAppBar.setNavigationOnClickListener {
+            @Suppress("DEPRECATION")
+            onBackPressed()
+        }
 
         if (fromHistory) {
             viewModel.getSpecificHistory(historyId)
@@ -55,9 +59,10 @@ class ResultActivity : AppCompatActivity() {
             val mileage = intent.getIntExtra(EXTRA_MILEAGE, 0)
             val location = intent.getStringExtra(EXTRA_LOCATION)
             val taxStatus = intent.getStringExtra(EXTRA_TAX_STATUS)
-            val imageUri = intent.getParcelableExtra<Uri>(EXTRA_IMAGE_URI)
+            @Suppress("DEPRECATION") val imageUri = intent.getParcelableExtra<Uri>(EXTRA_IMAGE_URI)
 
-            displayMotorDetails(motorModel, motorYear, mileage, location, taxStatus,
+            displayMotorDetails(
+                motorModel, motorYear, mileage, location, taxStatus,
                 imageUri.toString()
             )
 
@@ -71,7 +76,7 @@ class ResultActivity : AppCompatActivity() {
                     tax = taxStatus
                 )
             } else {
-                Toast.makeText(this, "Tidak cukup data untuk prediksi harga", Toast.LENGTH_SHORT).show()
+                showErrorToast(getString(R.string.not_enough_data_for_price_prediction))
             }
 
             setupPricePredictionObserver()
@@ -113,24 +118,39 @@ class ResultActivity : AppCompatActivity() {
                     )
 
                     val numberFormat = NumberFormat.getNumberInstance(Locale("id", "ID"))
-                    binding.tvPredictionPrice.text = "Rp ${numberFormat.format(historyDetail.predictedPrice ?: 0)}"
-                    binding.tvPriceMin.text = "Rp ${numberFormat.format(historyDetail.minPrice ?: 0)}"
-                    binding.tvPriceMax.text = "Rp ${numberFormat.format(historyDetail.maxPrice ?: 0)}"
+                    binding.tvPredictionPrice.text = getString(
+                        R.string.rp,
+                        numberFormat.format(historyDetail.predictedPrice ?: 0)
+                    )
+                    binding.tvPriceMin.text = getString(
+                        R.string.rp,
+                        numberFormat.format(historyDetail.minPrice ?: 0)
+                    )
+                    binding.tvPriceMax.text = getString(
+                        R.string.rp,
+                        numberFormat.format(historyDetail.maxPrice ?: 0)
+                    )
                 }
+
                 is ResultState.Error -> {
                     showLoading(false)
-                    Toast.makeText(this, "Gagal mendapatkan detail riwayat: ${result.error}", Toast.LENGTH_SHORT).show()
+                    showErrorToast(getString(R.string.failed_to_get_detail_history, result.error))
                 }
+
                 is ResultState.Loading -> {
                     showLoading(true)
                 }
             }
         }
     }
+
     private fun playAnimation() {
-        val motorImage = ObjectAnimator.ofFloat(binding.cardMotorImage, View.ALPHA, 1f).setDuration(100)
-        val motorDetail = ObjectAnimator.ofFloat(binding.cardMotorDetail, View.ALPHA, 1f).setDuration(100)
-        val motorPrice = ObjectAnimator.ofFloat(binding.cardPrediction, View.ALPHA, 1f).setDuration(100)
+        val motorImage =
+            ObjectAnimator.ofFloat(binding.cardMotorImage, View.ALPHA, 1f).setDuration(100)
+        val motorDetail =
+            ObjectAnimator.ofFloat(binding.cardMotorDetail, View.ALPHA, 1f).setDuration(100)
+        val motorPrice =
+            ObjectAnimator.ofFloat(binding.cardPrediction, View.ALPHA, 1f).setDuration(100)
 
         AnimatorSet().apply {
             playSequentially(
@@ -159,7 +179,8 @@ class ResultActivity : AppCompatActivity() {
 
         binding.tvMotorName.text = motorModel ?: "N/A"
         binding.tvMotorYear.text = motorYear.toString()
-        binding.tvMileage.text = "${NumberFormat.getNumberInstance(Locale("id", "ID")).format(mileage)} km"
+        binding.tvMileage.text =
+            "${NumberFormat.getNumberInstance(Locale("id", "ID")).format(mileage)} km"
         binding.tvLocation.text = location ?: "N/A"
         binding.tvTaxStatus.text = taxStatus ?: "N/A"
     }
@@ -173,17 +194,24 @@ class ResultActivity : AppCompatActivity() {
 
                     val numberFormat = NumberFormat.getNumberInstance(Locale("id", "ID"))
 
-                    binding.tvPredictionPrice.text = "Rp ${numberFormat.format(priceResponse.predictedPrice)}"
-                    binding.tvPriceMin.text = "Rp ${numberFormat.format(priceResponse.minPrice)}"
-                    binding.tvPriceMax.text = "Rp ${numberFormat.format(priceResponse.maxPrice)}"
+                    binding.tvPredictionPrice.text =
+                        getString(R.string.rp, numberFormat.format(priceResponse.predictedPrice))
+                    binding.tvPriceMin.text =
+                        getString(R.string.rp, numberFormat.format(priceResponse.minPrice))
+                    binding.tvPriceMax.text =
+                        getString(R.string.rp, numberFormat.format(priceResponse.maxPrice))
+
+                    showSuccessToast(getString(R.string.price_prediction_success))
                 }
+
                 is ResultState.Error -> {
                     showLoading(false)
-                    Toast.makeText(this, "Gagal mendapatkan prediksi harga: ${result.error}", Toast.LENGTH_SHORT).show()
-                    binding.tvPredictionPrice.text = "Rp -"
-                    binding.tvPriceMin.text = "Rp -"
-                    binding.tvPriceMax.text = "Rp -"
+                    showErrorToast(getString(R.string.failed_to_predict_price, result.error))
+                    binding.tvPredictionPrice.text = getString(R.string.rp_empty)
+                    binding.tvPriceMin.text = getString(R.string.rp_empty)
+                    binding.tvPriceMax.text = getString(R.string.rp_empty)
                 }
+
                 is ResultState.Loading -> {
                     showLoading(true)
                 }
@@ -193,5 +221,29 @@ class ResultActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showSuccessToast(message: String) {
+        MotionToast.createColorToast(
+            this,
+            getString(R.string.success),
+            message,
+            MotionToastStyle.SUCCESS,
+            MotionToast.GRAVITY_BOTTOM,
+            MotionToast.LONG_DURATION,
+            null
+        )
+    }
+
+    private fun showErrorToast(message: String) {
+        MotionToast.createColorToast(
+            this,
+            getString(R.string.fail),
+            message,
+            MotionToastStyle.ERROR,
+            MotionToast.GRAVITY_BOTTOM,
+            MotionToast.LONG_DURATION,
+            null
+        )
     }
 }

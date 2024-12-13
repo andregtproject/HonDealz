@@ -14,7 +14,8 @@ class ResultViewModel(
     private val repository: HonDealzRepository
 ) : ViewModel() {
     private val _specificHistoryResult = MutableLiveData<ResultState<SpesificHistoryResponse>>()
-    val specificHistoryResult: LiveData<ResultState<SpesificHistoryResponse>> = _specificHistoryResult
+    val specificHistoryResult: LiveData<ResultState<SpesificHistoryResponse>> =
+        _specificHistoryResult
 
     private val _priceResult = MutableLiveData<ResultState<PriceResponse>>()
     val priceResult: LiveData<ResultState<PriceResponse>> = _priceResult
@@ -26,7 +27,8 @@ class ResultViewModel(
                 val result = repository.getSpecificHistory(id)
                 _specificHistoryResult.value = result
             } catch (e: Exception) {
-                _specificHistoryResult.value = ResultState.Error(0, e.message ?: "Terjadi kesalahan")
+                _specificHistoryResult.value =
+                    ResultState.Error(0, e.message ?: "Terjadi kesalahan")
             }
         }
     }

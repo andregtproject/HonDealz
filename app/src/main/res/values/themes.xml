@@ -9,5 +9,9 @@
         <item name="android:editTextColor">@color/colorPrimary</item>
         <item name="android:textColorHint">@android:color/darker_gray</item>
     </style>
+    <style name="CustomToolbarTitle" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/anta</item>
+        <item name="android:textSize">20sp</item>
+    </style>
     <style name="Theme.Hondealz" parent="Base.Theme.HonDealz" />
 </resources>

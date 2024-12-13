@@ -23,14 +23,16 @@ class EditProfileViewModel(private val honDealzRepository: HonDealzRepository) :
     fun updatePassword(oldPassword: String, newPassword: String, confirmNewPassword: String) {
         viewModelScope.launch {
             _updatePasswordResult.value = ResultState.Loading
-            _updatePasswordResult.value = honDealzRepository.updatePassword(oldPassword, newPassword, confirmNewPassword)
+            _updatePasswordResult.value =
+                honDealzRepository.updatePassword(oldPassword, newPassword, confirmNewPassword)
         }
     }
 
     fun updateUserData(newUsername: String, newFullName: String, newEmail: String) {
         viewModelScope.launch {
             _updateUserDataResult.value = ResultState.Loading
-            _updateUserDataResult.value = honDealzRepository.updateUserData(newUsername, newFullName, newEmail)
+            _updateUserDataResult.value =
+                honDealzRepository.updateUserData(newUsername, newFullName, newEmail)
         }
     }
 

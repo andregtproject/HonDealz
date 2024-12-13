@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.capstone.project.hondealz.R
 import com.capstone.project.hondealz.data.HonDealzRepository
 import com.capstone.project.hondealz.data.ResultState
 import com.capstone.project.hondealz.data.api.ApiConfig
@@ -28,6 +29,8 @@ import com.capstone.project.hondealz.view.profile.usermanual.UserManualViewModel
 import com.capstone.project.hondealz.view.welcome.WelcomeActivity
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import www.sanju.motiontoast.MotionToast
+import www.sanju.motiontoast.MotionToastStyle
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
@@ -198,21 +201,51 @@ class ProfileFragment : Fragment() {
         dialog.show()
     }
 
+    private fun showSuccessToast(message: String) {
+        MotionToast.createColorToast(
+            requireActivity(),
+            getString(R.string.success),
+            message,
+            MotionToastStyle.SUCCESS,
+            MotionToast.GRAVITY_BOTTOM,
+            MotionToast.LONG_DURATION,
+            null
+        )
+    }
+
+    private fun showErrorToast(message: String) {
+        MotionToast.createColorToast(
+            requireActivity(),
+            getString(R.string.fail),
+            message,
+            MotionToastStyle.ERROR,
+            MotionToast.GRAVITY_BOTTOM,
+            MotionToast.LONG_DURATION,
+            null
+        )
+    }
+
     private fun sendEmail(subject: String, message: String) {
         val email = profileViewModel.email.value ?: binding.tvEmail.text.toString()
         val fullname = profileViewModel.fullname.value ?: binding.tvfullName.text.toString()
 
         val intent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:")
-            putExtra(Intent.EXTRA_EMAIL, arrayOf("hondealzapp@gmail.com"))
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.email_report)))
             putExtra(Intent.EXTRA_SUBJECT, subject)
             putExtra(
                 Intent.EXTRA_TEXT,
-                "Fullname: $fullname\n" +
-                        "Email: $email\n\n" +
+                getString(R.string.fullname_format, fullname) +
+                        getString(R.string.email_format, email) +
                         message
             )
         }
-        startActivity(Intent.createChooser(intent, "Send email"))
+
+        try {
+            startActivity(Intent.createChooser(intent, getString(R.string.send_email)))
+            showSuccessToast(getString(R.string.email_report_success))
+        } catch (e: Exception) {
+            showErrorToast(getString(R.string.email_report_failed))
+        }
     }
 }

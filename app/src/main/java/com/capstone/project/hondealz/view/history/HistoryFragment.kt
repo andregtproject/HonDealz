@@ -4,15 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.capstone.project.hondealz.R
 import com.capstone.project.hondealz.data.ResultState
 import com.capstone.project.hondealz.databinding.FragmentHistoryBinding
 import com.capstone.project.hondealz.view.ViewModelFactory
 import com.capstone.project.hondealz.view.adapter.HistoryAdapter
+import www.sanju.motiontoast.MotionToast
+import www.sanju.motiontoast.MotionToastStyle
 
 class HistoryFragment : Fragment() {
     private var _binding: FragmentHistoryBinding? = null
@@ -68,6 +70,7 @@ class HistoryFragment : Fragment() {
                 is ResultState.Loading -> {
                     showLoading(true)
                 }
+
                 is ResultState.Success -> {
                     showLoading(false)
                     val histories = result.data.histories
@@ -78,10 +81,11 @@ class HistoryFragment : Fragment() {
                         historyAdapter.submitList(histories.filterNotNull())
                     }
                 }
+
                 is ResultState.Error -> {
                     showLoading(false)
                     showEmptyState(true)
-                    Toast.makeText(context, result.error, Toast.LENGTH_SHORT).show()
+                    showErrorToast(result.error)
                 }
             }
         }
@@ -99,5 +103,17 @@ class HistoryFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun showErrorToast(message: String) {
+        MotionToast.createColorToast(
+            requireActivity(),
+            getString(R.string.fail),
+            message,
+            MotionToastStyle.ERROR,
+            MotionToast.GRAVITY_BOTTOM,
+            MotionToast.LONG_DURATION,
+            null
+        )
     }
 }

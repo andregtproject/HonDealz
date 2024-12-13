@@ -22,7 +22,8 @@ class RegisterViewModel(private val repository: HonDealzRepository) : ViewModel(
     ) {
         viewModelScope.launch {
             _registerResult.value = ResultState.Loading
-            _registerResult.value = repository.register(name, username, email, password, confirmPassword)
+            _registerResult.value =
+                repository.register(name, username, email, password, confirmPassword)
         }
     }
 }

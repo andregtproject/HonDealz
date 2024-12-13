@@ -146,9 +146,11 @@ class CustomEditText @JvmOverloads constructor(
                 mileage < 0 -> {
                     setError(context.getString(R.string.negative_mileage_message), null)
                 }
+
                 mileage > 1000000 -> {
                     setError(context.getString(R.string.excessive_mileage_message), null)
                 }
+
                 else -> {
                     error = null
                 }

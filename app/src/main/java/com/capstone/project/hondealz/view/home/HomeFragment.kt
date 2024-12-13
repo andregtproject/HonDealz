@@ -165,9 +165,9 @@ class HomeFragment : Fragment() {
     private fun showTokenExpiredDialog() {
         activity?.runOnUiThread {
             AlertDialog.Builder(requireContext())
-                .setTitle("Session Expired")
-                .setMessage("Your session has expired. Please login again.")
-                .setPositiveButton("OK") { dialog, _ ->
+                .setTitle(getString(R.string.session_expired))
+                .setMessage(getString(R.string.your_session_has_expired_please_login_again))
+                .setPositiveButton(getString(R.string.ok)) { dialog, _ ->
                     dialog.dismiss()
                     homeViewModel.logout()
                     val intent = Intent(requireContext(), LoginActivity::class.java)

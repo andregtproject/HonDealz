@@ -256,7 +256,10 @@ class HonDealzRepository(
                 val userModel = userPreference.getSession().first()
                 val token = "Bearer ${userModel.token}"
 
-                Log.d("Repository", "Predict Price Params: idPicture = $idPicture, model=$model, year=$year, mileage=$mileage, location=$location, tax=$tax")
+                Log.d(
+                    "Repository",
+                    "Predict Price Params: idPicture = $idPicture, model=$model, year=$year, mileage=$mileage, location=$location, tax=$tax"
+                )
 
                 val response = apiService.predictPrice(
                     token,
@@ -324,11 +327,12 @@ class HonDealzRepository(
 
                 if (response.isSuccessful) {
                     response.body()?.let { historyResponse ->
-                        val imageUrl = if (historyResponse.imageUrl.isNullOrEmpty() && historiesResult is ResultState.Success) {
-                            historiesResult.data.histories?.find { it!!.id == id }?.imageUrl
-                        } else {
-                            historyResponse.imageUrl
-                        }
+                        val imageUrl =
+                            if (historyResponse.imageUrl.isNullOrEmpty() && historiesResult is ResultState.Success) {
+                                historiesResult.data.histories?.find { it!!.id == id }?.imageUrl
+                            } else {
+                                historyResponse.imageUrl
+                            }
 
                         val updatedHistoryResponse = historyResponse.copy(imageUrl = imageUrl)
 
@@ -337,7 +341,10 @@ class HonDealzRepository(
                         ResultState.Success(updatedHistoryResponse)
                     } ?: ResultState.Error(response.code(), "History details are empty")
                 } else {
-                    ResultState.Error(response.code(), response.message() ?: "Failed to get history details")
+                    ResultState.Error(
+                        response.code(),
+                        response.message() ?: "Failed to get history details"
+                    )
                 }
             } catch (e: Exception) {
                 Log.e("Repository", "Error getting specific history", e)

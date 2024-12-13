@@ -25,7 +25,6 @@ class HistoryViewModel(private val repository: HonDealzRepository) : ViewModel()
             val result = repository.getHistories()
             _histories.value = result
 
-            // Store original list for searching
             if (result is ResultState.Success) {
                 originalHistories = result.data
             }

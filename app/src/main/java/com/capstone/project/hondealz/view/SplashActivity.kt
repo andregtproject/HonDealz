@@ -24,7 +24,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setAppLocale("in") // Use setAppLocale instead of setLocale
+        setAppLocale("in")
         setContentView(R.layout.activity_splash)
 
         appImage = findViewById(R.id.app_image)

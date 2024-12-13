@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".view.profile.ProfileFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
+<!--    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,6 +34,52 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>-->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_rounded_bg"
+            android:paddingStart="24dp"
+            android:paddingTop="32dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="32dp">
+
+            <TextView
+                android:id="@+id/profileTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/profil_saya"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:fontFamily="@font/anta"
+                android:letterSpacing="0.05"
+                android:lineSpacingMultiplier="1.2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_subtitle_profile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/opensans"
+                android:lineSpacingExtra="2dp"
+                android:text="@string/subtagline_profile"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profileTitle" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -303,7 +349,8 @@
         android:id="@+id/reportBugButton"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_margin="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
         app:cornerRadius="8dp"
         app:strokeColor="@color/colorAccent"
         app:strokeWidth="0.6dp"
@@ -312,14 +359,17 @@
         app:backgroundTint="@android:color/transparent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/logoutButton"
+        android:id="@+id/logout_button"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_marginStart="16dp"
-        app:cornerRadius="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="-14dp"
+        android:layout_marginHorizontal="16dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/anta"
         android:text="@string/logout_button"
-        android:backgroundTint="@color/colorPrimary" />
+        android:textColor="@color/colorSecondary"
+        android:textSize="16sp"
+        app:cornerRadius="8dp"
+        app:iconGravity="textStart"
+        app:rippleColor="@color/colorSecondary" />
+
 </LinearLayout>

@@ -54,13 +54,13 @@ class LoginActivity : AppCompatActivity() {
         spannableString.setSpan(
             ForegroundColorSpan(firstPartColor),
             0,
-            regisText.indexOf("Register"),
+            regisText.indexOf(getString(R.string.register)),
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
         spannableString.setSpan(
             ForegroundColorSpan(secondPartColor),
-            regisText.indexOf("Register"),
+            regisText.indexOf(getString(R.string.register)),
             regisText.length,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
@@ -145,14 +145,17 @@ class LoginActivity : AppCompatActivity() {
                     is ResultState.Loading -> {
                         binding.forgotText.isEnabled = false
                     }
+
                     is ResultState.Success -> {
                         showSuccessToast(getString(R.string.reset_password_link_sent, userEmail))
                         binding.forgotText.isEnabled = true
                     }
+
                     is ResultState.Error -> {
                         showErrorToast(result.statusCode, result.error)
                         binding.forgotText.isEnabled = true
                     }
+
                     null -> {}
                 }
             }
@@ -163,11 +166,13 @@ class LoginActivity : AppCompatActivity() {
                 is ResultState.Loading -> {
                     showLoading(true)
                 }
+
                 is ResultState.Success -> {
                     showLoading(false)
                     showSuccessToast()
                     navigateToMainActivity()
                 }
+
                 is ResultState.Error -> {
                     showLoading(false)
                     showErrorToast(result.statusCode, result.error)
@@ -182,12 +187,12 @@ class LoginActivity : AppCompatActivity() {
         androidx.appcompat.app.AlertDialog.Builder(this)
             .setTitle(getString(R.string.reset_password))
             .setMessage(getString(R.string.confirmation_message_reset_password, userEmail))
-            .setPositiveButton("Ya") { _, _ ->
+            .setPositiveButton(getString(R.string.yes)) { _, _ ->
                 userEmail?.let { email ->
                     performForgotPassword(email)
                 }
             }
-            .setNegativeButton("Tidak", null)
+            .setNegativeButton(getString(R.string.no), null)
             .show()
     }
 

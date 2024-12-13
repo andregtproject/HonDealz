@@ -33,7 +33,7 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
         buildConfig = true
         dataBinding = true
@@ -51,9 +51,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.curvedbottomnavigation)
-    implementation (libs.circleimageview)
-    implementation (libs.motiontoast)
-    implementation (libs.circleindicator)
+    implementation(libs.circleimageview)
+    implementation(libs.motiontoast)
+    implementation(libs.circleindicator)
 
     implementation(libs.retrofit)
     implementation(libs.retrofit2.converter.gson)
@@ -64,7 +64,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
-    implementation("androidx.exifinterface:exifinterface:1.3.6")
+    implementation(libs.androidx.exifinterface)
 
-    implementation ("com.github.bumptech.glide:glide:4.11.0")
+    implementation(libs.glide)
 }

@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -21,6 +20,8 @@ import com.capstone.project.hondealz.data.uriToFile
 import com.capstone.project.hondealz.databinding.ActivityScanDetailBinding
 import com.capstone.project.hondealz.view.ViewModelFactory
 import com.capstone.project.hondealz.view.scan.result.ResultActivity
+import www.sanju.motiontoast.MotionToast
+import www.sanju.motiontoast.MotionToastStyle
 
 class ScanDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScanDetailBinding
@@ -71,6 +72,10 @@ class ScanDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityScanDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.topAppBar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
 
         setupMotorNameDropdown()
         setupMotorYearDropdown()
@@ -155,6 +160,30 @@ class ScanDetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun showSuccessToast(message: String) {
+        MotionToast.createColorToast(
+            this,
+            getString(R.string.success),
+            message,
+            MotionToastStyle.SUCCESS,
+            MotionToast.GRAVITY_BOTTOM,
+            MotionToast.LONG_DURATION,
+            null
+        )
+    }
+
+    private fun showErrorToast(message: String) {
+        MotionToast.createColorToast(
+            this,
+            getString(R.string.fail),
+            message,
+            MotionToastStyle.ERROR,
+            MotionToast.GRAVITY_BOTTOM,
+            MotionToast.LONG_DURATION,
+            null
+        )
+    }
+
     private fun playAnimation() {
         val motorImage = ObjectAnimator.ofFloat(binding.cardImage, View.ALPHA, 1f).setDuration(100)
         val motorName =
@@ -198,7 +227,7 @@ class ScanDetailActivity : AppCompatActivity() {
                 is ResultState.Error -> {
                     showLoading(false)
                     setMotorNameFromPrediction(null)
-                    Toast.makeText(this, result.error, Toast.LENGTH_SHORT).show()
+                    showErrorToast(result.error)
                     Log.e("ScanDetailActivity", "Error: ${result.error}")
                 }
 
@@ -243,7 +272,6 @@ class ScanDetailActivity : AppCompatActivity() {
             val location = binding.locationEditText.text.toString()
             val taxStatus = binding.taxEditText.text.toString()
 
-            // Get idPicture from the motor prediction result
             val idPicture = viewModel.motorResult.value?.let { result ->
                 when (result) {
                     is ResultState.Success -> result.data.idPicture ?: 0
@@ -278,6 +306,7 @@ class ScanDetailActivity : AppCompatActivity() {
                 }
 
                 else -> {
+                    showSuccessToast(getString(R.string.success_motor_analysis))
                     val intent = Intent(this, ResultActivity::class.java).apply {
                         putExtra(ResultActivity.EXTRA_MODEL, motorName)
                         putExtra(ResultActivity.EXTRA_YEAR, motorYear)
@@ -307,11 +336,11 @@ class ScanDetailActivity : AppCompatActivity() {
                     viewModel.predictMotor(uri)
                 } catch (e: Exception) {
                     Log.e("ImageProcessing", "Error processing image", e)
-                    Toast.makeText(this, "Gagal memproses gambar", Toast.LENGTH_SHORT).show()
+                    showErrorToast(getString(R.string.failed_process_image))
                     setMotorNameFromPrediction(null)
                 }
             } ?: run {
-                Toast.makeText(this, "Gambar tidak tersedia", Toast.LENGTH_SHORT).show()
+                showErrorToast(getString(R.string.image_not_available))
                 setMotorNameFromPrediction(null)
             }
         }

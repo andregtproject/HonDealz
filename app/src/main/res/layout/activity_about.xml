@@ -11,25 +11,19 @@
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_arrow_back_24"
-            android:layout_marginStart="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/about_title"
-                android:textSize="20sp"
-                android:textColor="@android:color/white"
-                android:layout_gravity="center" />
-
-        </androidx.appcompat.widget.Toolbar>
-
+            android:background="@drawable/bottom_rounded_bg"
+            app:navigationIcon="@drawable/ic_back_24"
+            app:title="@string/about_title"
+            app:titleTextColor="@color/colorSecondary"
+            app:titleTextAppearance="@style/CustomToolbarTitle" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView

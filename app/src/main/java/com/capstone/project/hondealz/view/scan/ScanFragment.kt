@@ -11,7 +11,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -24,6 +23,8 @@ import com.capstone.project.hondealz.data.reduceFileImage
 import com.capstone.project.hondealz.data.uriToFile
 import com.capstone.project.hondealz.databinding.FragmentScanBinding
 import com.capstone.project.hondealz.view.scan.detail.ScanDetailActivity
+import www.sanju.motiontoast.MotionToast
+import www.sanju.motiontoast.MotionToastStyle
 
 class ScanFragment : Fragment() {
 
@@ -36,11 +37,9 @@ class ScanFragment : Fragment() {
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-                Toast.makeText(requireContext(), "Permission request granted", Toast.LENGTH_LONG)
-                    .show()
+                showSuccessToast(getString(R.string.permission_request_granted))
             } else {
-                Toast.makeText(requireContext(), "Permission request denied", Toast.LENGTH_LONG)
-                    .show()
+                showErrorToast(getString(R.string.permission_request_denied))
             }
         }
 
@@ -109,12 +108,10 @@ class ScanFragment : Fragment() {
 
             } catch (e: Exception) {
                 Log.e("UploadImageError", "Error processing image", e)
-                Toast.makeText(requireContext(), "Gagal memproses gambar", Toast.LENGTH_SHORT)
-                    .show()
+                showErrorToast(getString(R.string.failed_process_image))
             }
         } ?: run {
-            Toast.makeText(requireContext(), "Pilih gambar terlebih dahulu", Toast.LENGTH_SHORT)
-                .show()
+            showErrorToast(getString(R.string.choose_image_first))
         }
     }
 
@@ -148,7 +145,7 @@ class ScanFragment : Fragment() {
             showImage()
         } else {
             Log.d("Camera", "Photo capture failed")
-            Toast.makeText(requireContext(), "Failed to capture photo", Toast.LENGTH_SHORT).show()
+            showErrorToast(getString(R.string.failed_to_capture_photo))
         }
     }
 
@@ -164,4 +161,27 @@ class ScanFragment : Fragment() {
         }
     }
 
+    private fun showSuccessToast(message: String) {
+        MotionToast.createColorToast(
+            requireActivity(),
+            getString(R.string.success),
+            message,
+            MotionToastStyle.SUCCESS,
+            MotionToast.GRAVITY_BOTTOM,
+            MotionToast.LONG_DURATION,
+            null
+        )
+    }
+
+    private fun showErrorToast(message: String) {
+        MotionToast.createColorToast(
+            requireActivity(),
+            getString(R.string.fail),
+            message,
+            MotionToastStyle.ERROR,
+            MotionToast.GRAVITY_BOTTOM,
+            MotionToast.LONG_DURATION,
+            null
+        )
+    }
 }

@@ -51,13 +51,13 @@ class RegisterActivity : AppCompatActivity() {
         spannableString.setSpan(
             ForegroundColorSpan(firstPartColor),
             0,
-            loginText.indexOf("Login"),
+            loginText.indexOf(getString(R.string.login)),
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
         spannableString.setSpan(
             ForegroundColorSpan(secondPartColor),
-            loginText.indexOf("Login"),
+            loginText.indexOf(getString(R.string.login)),
             loginText.length,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
@@ -91,7 +91,8 @@ class RegisterActivity : AppCompatActivity() {
         val passwordEditTextLayout =
             ObjectAnimator.ofFloat(binding.passwordInputLayout, View.ALPHA, 1f).setDuration(100)
         val confirmPasswordEditTextLayout =
-            ObjectAnimator.ofFloat(binding.confirmPasswordInputLayout, View.ALPHA, 1f).setDuration(100)
+            ObjectAnimator.ofFloat(binding.confirmPasswordInputLayout, View.ALPHA, 1f)
+                .setDuration(100)
         val register =
             ObjectAnimator.ofFloat(binding.registerButton, View.ALPHA, 1f).setDuration(100)
         val login = ObjectAnimator.ofFloat(binding.loginTextView, View.ALPHA, 1f).setDuration(100)
