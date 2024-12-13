@@ -40,7 +40,7 @@
     <string name="toast_success_register">Registration Successful</string>
     <string name="toast_success_message_register">Your account has been successfully created. Welcome to HonDealz!</string>
     <string name="toast_fail_register">Registration Failed</string>
-    <string name="username_format">^[a–zA–Z0–9_]+$</string>
+    <string name="username_format">^[a-zA-Z0-9_]+$</string>
     <string name="greetings">Hello, %1$s!</string>
     <string name="title_home">Want to Know Your Motorcycle Price?</string>
     <string name="subtitle_home">Get an instant estimate of your motorcycle price based on market data</string>

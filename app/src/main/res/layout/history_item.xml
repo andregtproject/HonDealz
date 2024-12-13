@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorSecondary">
+        android:background="@color/colorPrimary">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_image"
@@ -42,7 +42,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             tools:text="Vario 160"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorSecondary"
             android:textSize="16sp"
             android:fontFamily="@font/anta"
             app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +57,7 @@
             tools:text="2024"
             android:textSize="14sp"
             android:fontFamily="@font/opensans"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorSecondary"
             app:layout_constraintStart_toStartOf="@id/tv_motor_name"
             app:layout_constraintTop_toBottomOf="@id/tv_motor_name" />
 
@@ -83,7 +83,7 @@
             tools:text="21/11/2024"
             android:fontFamily="@font/opensans"
             android:textSize="14sp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorSecondary"
             app:layout_constraintBottom_toBottomOf="@id/tv_motor_price"
             app:layout_constraintEnd_toEndOf="parent" />
 

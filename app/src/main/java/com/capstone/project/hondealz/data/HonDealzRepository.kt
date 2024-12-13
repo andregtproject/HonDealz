@@ -353,4 +353,32 @@ class HonDealzRepository(
         }
     }
 
+    suspend fun deleteAccount(): ResultState<String> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val userModel = userPreference.getSession().first()
+                val token = "Bearer ${userModel.token}"
+                val response = apiService.deleteUserAccount(token).execute()
+
+                if (response.isSuccessful) {
+                    logout()
+                    ResultState.Success(response.body()?.message ?: "Akun berhasil dihapus")
+                } else {
+                    val errorBody = response.errorBody()?.string()
+                    val errorMessage = try {
+                        val jsonError = JSONObject(errorBody ?: "")
+                        jsonError.optString("detail", "Gagal menghapus akun")
+                    } catch (e: Exception) {
+                        "Gagal menghapus akun"
+                    }
+
+                    Log.e("Repository", "Error menghapus akun: $errorMessage")
+                    ResultState.Error(response.code(), errorMessage)
+                }
+            } catch (e: Exception) {
+                Log.e("Repository", "Network error menghapus akun", e)
+                ResultState.Error(0, "Terjadi kesalahan: ${e.message ?: "Kesalahan jaringan"}")
+            }
+        }
+    }
 }

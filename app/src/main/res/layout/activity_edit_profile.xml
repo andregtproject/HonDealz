@@ -9,42 +9,19 @@
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:elevation="0dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:background="@drawable/bottom_rounded_bg"
-            android:paddingStart="24dp"
-            android:paddingTop="32dp"
-            android:paddingEnd="24dp"
-            android:paddingBottom="32dp">
-
-            <ImageButton
-                android:id="@+id/btnBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/content_description"
-                android:src="@drawable/ic_back_24"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <TextView
-                android:id="@+id/profileTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/pengaturan_akun"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:alpha="0"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:navigationIcon="@drawable/ic_back_24"
+            app:title="@string/pengaturan_akun"
+            app:titleTextColor="@color/colorSecondary"
+            app:titleTextAppearance="@style/CustomToolbarTitle" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
@@ -65,14 +42,12 @@
                 android:layout_height="100dp"
                 android:src="@drawable/ic_profile_24"
                 app:civ_circle_background_color="@color/colorAccent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:alpha="0"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="38dp"
+                android:layout_marginTop="16dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:boxStrokeColor="@color/box_stroke_color">
 
@@ -82,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/username"
                     android:inputType="text"
+                    android:textColorHint="@android:color/darker_gray"
                     android:alpha="0"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,6 +74,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/full_name"
                     android:inputType="text"
+                    android:textColorHint="@android:color/darker_gray"
                     android:alpha="0"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,6 +91,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
+                    android:textColorHint="@android:color/darker_gray"
                     android:alpha="0"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -128,8 +106,8 @@
                 android:id="@+id/btnForgetPassword"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_margin="16dp"
                 app:cornerRadius="8dp"
+                android:layout_marginTop="16dp"
                 app:strokeColor="@color/colorAccent"
                 app:strokeWidth="0.6dp"
                 android:textColor="@color/colorAccent"
@@ -141,12 +119,12 @@
                 android:id="@+id/btnSave"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="-14dp"
+                android:layout_marginTop="8dp"
                 app:cornerRadius="8dp"
                 android:text="@string/save"
+                android:textSize="16sp"
+                android:textColor="@color/colorSecondary"
+                app:rippleColor="@color/colorSecondary"
                 android:backgroundTint="@color/colorPrimary"
                 android:alpha="0"/>
 

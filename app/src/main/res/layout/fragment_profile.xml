@@ -7,35 +7,6 @@
     android:orientation="vertical"
     tools:context=".view.profile.ProfileFragment">
 
-<!--    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:elevation="0dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bottom_rounded_bg"
-            android:paddingStart="24dp"
-            android:paddingTop="32dp"
-            android:paddingEnd="24dp"
-            android:paddingBottom="32dp">
-
-            <TextView
-                android:id="@+id/profileTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/profil_saya"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.appbar.AppBarLayout>-->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
@@ -153,7 +124,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/full_name"
                         android:textSize="16sp"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/colorPrimary" />
 
                     <TextView
                         android:id="@+id/tvUsername"
@@ -161,7 +132,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/username"
                         android:textSize="14sp"
-                        android:textColor="#808080" />
+                        android:textColor="@android:color/darker_gray" />
 
                     <TextView
                         android:id="@+id/tvEmail"
@@ -169,7 +140,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/username_email_com"
                         android:textSize="14sp"
-                        android:textColor="#808080" />
+                        android:textColor="@android:color/darker_gray" />
                 </LinearLayout>
 
                 <ImageView
@@ -225,7 +196,7 @@
                             android:text="@string/panduan"
                             android:layout_marginStart="16dp"
                             android:textSize="16sp"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:layout_gravity="center_vertical" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -260,7 +231,7 @@
                             android:text="@string/bahasa"
                             android:layout_marginStart="16dp"
                             android:textSize="16sp"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:layout_gravity="center_vertical" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -295,7 +266,7 @@
                             android:text="@string/tema"
                             android:layout_marginStart="16dp"
                             android:textSize="16sp"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"/>
 
@@ -337,39 +308,49 @@
                             android:text="@string/tentang"
                             android:layout_marginStart="16dp"
                             android:textSize="16sp"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:layout_gravity="center_vertical" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/reportBugButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    app:cornerRadius="8dp"
+                    android:layout_marginTop="16dp"
+                    app:strokeColor="@color/colorAccent"
+                    app:strokeWidth="0.6dp"
+                    android:textColor="@color/colorAccent"
+                    android:text="@string/report_bug"
+                    app:backgroundTint="@android:color/transparent" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/logout_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:fontFamily="@font/anta"
+                    android:text="@string/logout_button"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    app:cornerRadius="8dp"
+                    app:iconGravity="textStart"
+                    app:rippleColor="@color/colorSecondary" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/delete_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:backgroundTint="@android:color/holo_red_dark"
+                    android:fontFamily="@font/anta"
+                    android:text="@string/delete_account"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    app:cornerRadius="8dp"
+                    app:iconGravity="textStart"
+                    app:rippleColor="@color/colorSecondary" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/reportBugButton"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="8dp"
-        app:cornerRadius="8dp"
-        app:strokeColor="@color/colorAccent"
-        app:strokeWidth="0.6dp"
-        android:textColor="@color/colorAccent"
-        android:text="@string/report_bug"
-        app:backgroundTint="@android:color/transparent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/logout_button"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginHorizontal="16dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:fontFamily="@font/anta"
-        android:text="@string/logout_button"
-        android:textColor="@color/colorSecondary"
-        android:textSize="16sp"
-        app:cornerRadius="8dp"
-        app:iconGravity="textStart"
-        app:rippleColor="@color/colorSecondary" />
 
 </LinearLayout>

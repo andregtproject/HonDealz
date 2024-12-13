@@ -4,17 +4,17 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
-import com.capstone.project.hondealz.databinding.UserManualActivityBinding
+import com.capstone.project.hondealz.databinding.ActivityUserManualBinding
 
 class UserManualActivity : AppCompatActivity() {
 
-    private lateinit var binding: UserManualActivityBinding
+    private lateinit var binding: ActivityUserManualBinding
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = UserManualActivityBinding.inflate(layoutInflater)
+        binding = ActivityUserManualBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.topAppBar.setNavigationOnClickListener {

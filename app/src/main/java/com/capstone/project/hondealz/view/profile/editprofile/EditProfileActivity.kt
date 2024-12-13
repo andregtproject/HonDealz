@@ -30,9 +30,8 @@ class EditProfileActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this, ViewModelFactory.getInstance(this))[EditProfileViewModel::class.java]
 
-        binding.btnBack.setOnClickListener {
-            @Suppress("DEPRECATION")
-            onBackPressed()
+        binding.topAppBar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
 
         binding.btnForgetPassword.setOnClickListener {
@@ -144,7 +143,6 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun playAnimation() {
         val ivProfile = ObjectAnimator.ofFloat(binding.ivProfile, View.ALPHA, 1f).setDuration(100)
-        val profileTitle = ObjectAnimator.ofFloat(binding.profileTitle, View.ALPHA, 1f).setDuration(100)
         val etUsername = ObjectAnimator.ofFloat(binding.etUsername, View.ALPHA, 1f).setDuration(100)
         val etFullName = ObjectAnimator.ofFloat(binding.etFullName, View.ALPHA, 1f).setDuration(100)
         val etEmail = ObjectAnimator.ofFloat(binding.etEmail, View.ALPHA, 1f).setDuration(100)
@@ -154,7 +152,6 @@ class EditProfileActivity : AppCompatActivity() {
         AnimatorSet().apply {
             playSequentially(
                 ivProfile,
-                profileTitle,
                 etUsername,
                 etFullName,
                 etEmail,

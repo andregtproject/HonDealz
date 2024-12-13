@@ -1,5 +1,6 @@
 package com.capstone.project.hondealz.data.api
 
+import com.capstone.project.hondealz.data.response.DeleteAccountResponse
 import com.capstone.project.hondealz.data.response.ForgotPasswordResponse
 import com.capstone.project.hondealz.data.response.ListHistoryResponse
 import com.capstone.project.hondealz.data.response.LoginResponse
@@ -10,6 +11,7 @@ import com.capstone.project.hondealz.data.response.SpesificHistoryResponse
 import com.capstone.project.hondealz.data.response.UserDataResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
+import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
@@ -92,4 +94,9 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("id") id: Int
     ): Call<SpesificHistoryResponse>
+
+    @DELETE("user")
+    fun deleteUserAccount(
+        @Header("Authorization") token: String
+    ): Call<DeleteAccountResponse>
 }

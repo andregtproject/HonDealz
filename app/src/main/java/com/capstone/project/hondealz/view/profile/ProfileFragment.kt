@@ -73,6 +73,8 @@ class ProfileFragment : Fragment() {
         }
         binding.reportBugButton.setOnClickListener { showReportBugDialog() }
 
+        binding.deleteButton.setOnClickListener{showDeleteAccountConfirmationDialog()}
+
         viewLifecycleOwner.lifecycleScope.launch {
             val userModel = honDealzRepository.getSession().first()
             val userDataResult = honDealzRepository.getUserData()
@@ -246,6 +248,35 @@ class ProfileFragment : Fragment() {
             showSuccessToast(getString(R.string.email_report_success))
         } catch (e: Exception) {
             showErrorToast(getString(R.string.email_report_failed))
+        }
+    }
+
+    private fun showDeleteAccountConfirmationDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.delete_account))
+            .setMessage(getString(R.string.delete_account_confirmation))
+            .setPositiveButton(getString(R.string.yes)) { _, _ ->
+                deleteAccount()
+            }
+            .setNegativeButton(getString(R.string.no), null)
+            .show()
+    }
+
+    private fun deleteAccount() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val result = honDealzRepository.deleteAccount()
+
+            when (result) {
+                is ResultState.Success -> {
+                    showSuccessToast(result.data)
+                    startActivity(Intent(requireContext(), WelcomeActivity::class.java))
+                    requireActivity().finish()
+                }
+                is ResultState.Error -> {
+                    showErrorToast(result.error)
+                }
+                else -> {}
+            }
         }
     }
 }
