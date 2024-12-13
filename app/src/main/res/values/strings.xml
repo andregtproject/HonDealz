@@ -146,4 +146,9 @@
     <string name="send_email">Kirim laporan</string>
     <string name="email_report_success">Laporan berhasil dikirim</string>
     <string name="email_report_failed">Gagal mengirim laporan</string>
+    <string name="disclaimer">*Estimasi harga berdasarkan data yang dimasukkan</string>
+    <string name="harga_maksimum">Harga Maksimum</string>
+    <string name="harga_minimum">Harga Minimum</string>
+    <string name="estimasi_harga">Estimasi Harga</string>
+    <string name="hasil_prediksi">Hasil Prediksi</string>
 </resources>
