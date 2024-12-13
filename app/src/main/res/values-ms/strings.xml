@@ -39,7 +39,7 @@
     <string name="toast_success_register">Pendaftaran Berjaya</string>
     <string name="toast_success_message_register">Akaun anda telah berjaya dibuat. Selamat datang ke HonDealz!</string>
     <string name="toast_fail_register">Pendaftaran Gagal</string>
-    <string name="username_format">^[a–zA-Z0-9_]+$</string>
+    <string name="username_format">^[a–zA–Z0-9_]+$</string>
     <string name="greetings">Halo, %1$s!</string>
     <string name="title_home">Ingin Tahu Harga Motosikal Anda?</string>
     <string name="subtitle_home">Dapatkan anggaran harga motosikal anda terus dari data pasaran</string>
@@ -64,7 +64,7 @@
     <string name="terms_of_service">Terma Perkhidmatan</string>
     <string name="about_title">Tentang HonDealz</string>
     <string name="report_bug">Lapor Ralat</string>
-    <string name="loading">Sedang Dimuat...</string>
+    <string name="loading">Sedang Dimuat…</string>
     <string name="panduan">Panduan</string>
     <string name="bahasa">Bahasa</string>
     <string name="tema">Tema</string>
