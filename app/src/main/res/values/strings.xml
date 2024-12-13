@@ -151,4 +151,8 @@
     <string name="harga_minimum">Harga Minimum</string>
     <string name="estimasi_harga">Estimasi Harga</string>
     <string name="hasil_prediksi">Hasil Prediksi</string>
+    <string name="empty_engine_size_message">Ukuran mesin tidak boleh kosong</string>
+    <string name="small_engine_size_message">Ukuran mesin terlalu kecil (minimal 50cc)</string>
+    <string name="large_engine_size_message">Ukuran mesin terlalu besar (maksimum 2000cc)</string>
+    <string name="invalid_engine_size_message">Format ukuran mesin tidak valid</string>
 </resources>
