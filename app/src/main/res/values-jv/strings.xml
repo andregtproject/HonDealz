@@ -97,4 +97,5 @@
     <string name="small_engine_size_message">Ukuran mesin terlalu cilik (minimal 50 cc)</string>
     <string name="large_engine_size_message">Ukuran mesin terlalu gedhe (maksimal 2000 cc)</string>
     <string name="invalid_engine_size_message">Format ukuran mesin ora sah</string>
+
 </resources>
