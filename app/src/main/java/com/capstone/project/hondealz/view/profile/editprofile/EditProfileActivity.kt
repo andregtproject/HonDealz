@@ -31,6 +31,7 @@ class EditProfileActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, ViewModelFactory.getInstance(this))[EditProfileViewModel::class.java]
 
         binding.btnBack.setOnClickListener {
+            @Suppress("DEPRECATION")
             onBackPressed()
         }
 
